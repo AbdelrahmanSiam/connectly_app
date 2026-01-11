@@ -8,51 +8,73 @@ import 'package:connectly/features/auth/presentation/views/widgets/page_header.d
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class RegisterViewBody extends StatelessWidget {
+class RegisterViewBody extends StatefulWidget {
   const RegisterViewBody({super.key});
 
+  @override
+  State<RegisterViewBody> createState() => _RegisterViewBodyState();
+}
+
+class _RegisterViewBodyState extends State<RegisterViewBody> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+  String? email, password;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            const PageHeader(header1: 'Create Account', header2: 'Register to get started'),
-            const SizedBox(height: 100),
-            const CustomTextFormField(
-              hintText: 'Email',
-              icon: Icons.email,
-            ),
-            const SizedBox(height: 20),
-            const CustomTextFormField(
-              hintText: 'Password',
-              isPassword: true,
-              icon: Icons.password,
-            ),
-            const SizedBox(height: 50),
-            const CustomAuthButton(
-              buttonText: "Register",
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Already have an account?",
-                    style: AppTextStyles.textStyle16),
-                CustomTextButton(
-                  text: 'Login',
-                  onPressed: () {
-                    context.go(AppRouter.loginView);
-                  },
-                ),
-              ],
-            ),
-          ],
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              const PageHeader(
+                  header1: 'Create Account', header2: 'Register to get started'),
+              const SizedBox(height: 100),
+              CustomTextFormField(
+                labelText: 'Email',
+                icon: Icons.email,
+                onSaved: (value) {
+                  email = value;
+                },
+              ),
+              const SizedBox(height: 20),
+              CustomTextFormField(
+                labelText: 'Password',
+                isPassword: true,
+                icon: Icons.password,
+                onSaved: (value) {
+                  password = value;
+                },
+              ),
+              const SizedBox(height: 50),
+              CustomAuthButton(
+                buttonText: "Register",
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Already have an account?",
+                      style: AppTextStyles.textStyle16),
+                  CustomTextButton(
+                    text: 'Login',
+                    onPressed: () {
+                      context.go(AppRouter.loginView);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

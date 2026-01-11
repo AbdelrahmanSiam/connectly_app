@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 
 class CustomAuthButton extends StatelessWidget {
   const CustomAuthButton({
-    super.key, required this.buttonText,
+    super.key,
+    required this.buttonText, this.onPressed,
   });
   final String buttonText;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         minimumSize: const Size(double.infinity, 50),

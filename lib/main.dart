@@ -1,8 +1,16 @@
 import 'package:connectly/core/routing/app_router.dart';
+import 'package:connectly/core/utils/service_locator.dart';
 import 'package:connectly/features/splash/presentation/views/splash_view.dart';
+import 'package:connectly/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  setupLocator();
   runApp(const MyApp());
 }
 

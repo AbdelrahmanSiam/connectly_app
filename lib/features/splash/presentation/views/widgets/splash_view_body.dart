@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:connectly/core/routing/app_router.dart';
+import 'package:connectly/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:connectly/features/splash/presentation/views/widgets/splash_view_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // statfull because we need time , animation and lifecyle
@@ -42,8 +44,8 @@ class _SplashViewBodyState extends State<SplashViewBody>
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(const Duration(milliseconds: 500), () {
-          context.go(AppRouter
-              .loginView); // navigation depened on compelet the animation
+          BlocProvider.of<AuthCubit>(context)
+              .checkIfLoggedIn(); // navigation depened on compelet the animation
         });
       }
     });
@@ -57,18 +59,27 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AnimatedBuilder(
-        animation: animationController,
-        builder: (context, child) {
-          return FadeTransition(
-            opacity: fadeAnimation,
-            child: ScaleTransition(
-              scale: scaleAnimation,
-              child: const SplashViewIcon(),
-            ),
-          );
-        },
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is AuthLoggedInState) {
+          context.go(AppRouter.homeView);
+        } else if (state is AuthLoggedOutState) {
+          context.go(AppRouter.loginView);
+        }
+      },
+      child: Center(
+        child: AnimatedBuilder(
+          animation: animationController,
+          builder: (context, child) {
+            return FadeTransition(
+              opacity: fadeAnimation,
+              child: ScaleTransition(
+                scale: scaleAnimation,
+                child: const SplashViewIcon(),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

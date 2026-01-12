@@ -15,21 +15,43 @@ class AuthCubit extends Cubit<AuthState> {
       await authRepo.login(email: email, password: password);
       emit(AuthSuccessState());
     } on FirebaseAuthException catch (e) {
-      emit(AuthFailureState(errMessage: e.message ?? 'Auth Error'));
-    } catch (e) {
-      emit(AuthFailureState(errMessage: 'Something went wrong'));
-    }
+      emit(AuthFailureState(errMessage: _mapError(e)));
+    } 
   }
 
-  Future<void> register({required String email, required String password}) async {
+  Future<void> register(
+      {required String email, required String password}) async {
     emit(AuthLoadingState());
     try {
       await authRepo.register(email: email, password: password);
       emit(AuthSuccessState());
     } on FirebaseAuthException catch (e) {
-      emit(AuthFailureState(errMessage: e.message ?? 'Auth Error'));
-    } catch (e) {
-      emit(AuthFailureState(errMessage: 'Something went wrong'));
+      emit(AuthFailureState(errMessage: _mapError(e)));
+    } 
+  }
+
+  Future<void> checkIfLoggedIn() async {
+    emit(AuthLoadingState());
+    final isLogged = await authRepo.isLogged();
+    if (isLogged) {
+      emit(AuthLoggedInState());
+    } else {
+      emit(AuthLoggedOutState());
     }
   }
+}
+String _mapError(dynamic error) {
+  if (error is FirebaseAuthException) {
+    switch (error.code) {
+      case 'user-not-found':
+        return 'No user found for this email';
+      case 'wrong-password':
+        return 'Wrong password';
+      case 'invalid-email':
+        return 'Invalid email format';
+      default:
+        return 'Something went wrong, try again';
+    }
+  }
+  return 'Unexpected error occurred';
 }

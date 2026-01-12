@@ -1,9 +1,12 @@
 import 'package:connectly/core/routing/app_router.dart';
 import 'package:connectly/core/utils/service_locator.dart';
+import 'package:connectly/features/auth/data/repo/auth_repo.dart';
+import 'package:connectly/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:connectly/features/splash/presentation/views/splash_view.dart';
 import 'package:connectly/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,10 +23,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: ThemeData.light(),
-      routerConfig: AppRouter.router,
-      debugShowCheckedModeBanner: false,
+    return BlocProvider(
+      create: (context) => AuthCubit(getIt.get<AuthRepo>()),
+      child: MaterialApp.router(
+        theme: ThemeData.light(),
+        routerConfig: AppRouter.router,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

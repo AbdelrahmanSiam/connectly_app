@@ -9,6 +9,10 @@ final class AuthLoadingState extends AuthState {}
 
 final class AuthSuccessState extends AuthState {}
 
+final class AuthLoggedInState extends AuthState {}
+
+final class AuthLoggedOutState extends AuthState {}
+
 final class AuthFailureState extends AuthState {
   final String errMessage;
 

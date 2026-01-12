@@ -17,4 +17,9 @@ class AuthRepoImpl implements AuthRepo {
       {required String email, required String password}) async {
     return await authService.register(email: email, password: password);
   }
+
+  @override
+  Future<bool> isLogged() async {
+    return authService.isLoggedIn();
+  }
 }

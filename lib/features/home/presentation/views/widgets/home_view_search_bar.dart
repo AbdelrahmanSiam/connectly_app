@@ -8,7 +8,10 @@ class HomeViewSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      cursorColor: AppColors.primary,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Color(0xFF1C1C1C),
         hintStyle: AppTextStyles.textStyle18,
         hintText: 'Search',
         prefixIcon: Icon(
@@ -16,11 +19,11 @@ class HomeViewSearchBar extends StatelessWidget {
           size: 28,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(width: 0),
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
             color: AppColors.primary, // حدود التركيز متناسقة مع AppBar
             width: 2,

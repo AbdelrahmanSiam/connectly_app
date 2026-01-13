@@ -25,7 +25,9 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => AuthCubit(getIt.get<AuthRepo>()),
       child: MaterialApp.router(
-        theme: ThemeData.dark(),
+        theme: ThemeData(
+            brightness: Brightness.dark,
+            scaffoldBackgroundColor: Color(0xFF121212)),
         routerConfig: AppRouter.router,
         debugShowCheckedModeBanner: false,
       ),

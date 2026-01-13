@@ -6,18 +6,21 @@ class HomeViewAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.onSurface;
+
     return Row(
       children: [
         Text(
           "Connectly",
-          style: AppTextStyles.textStyle32,
+          style: AppTextStyles.textStyle32.copyWith(color: color),
         ),
-        Spacer(),
+        const Spacer(),
         IconButton(
           onPressed: () {},
           icon: Icon(
             Icons.logout_outlined,
             size: 28,
+            color: color,
           ),
         ),
       ],

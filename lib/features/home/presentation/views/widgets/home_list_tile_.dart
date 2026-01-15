@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectly/core/routing/app_router.dart';
 import 'package:connectly/core/utils/app_text_styles.dart';
-import 'package:connectly/core/utils/assets_data.dart';
 import 'package:connectly/features/home/data/models/user_model.dart';
+import 'package:connectly/features/home/presentation/views/widgets/dot_widet.dart';
+import 'package:connectly/features/home/presentation/views/widgets/profile_pic_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,26 +19,9 @@ class HomeListTileWidget extends StatelessWidget {
       child: ListTile(
         leading: Stack(
           children: [
-            CircleAvatar(
-              radius: 25,
-              backgroundImage: userModel.profilePicUrl != null
-                  ? CachedNetworkImageProvider(userModel.profilePicUrl!)
-                  : AssetImage(AssetsData.logo) as ImageProvider,
-            ),
+            ProfilePicWidget(userModel: userModel),
             userModel.onlineState
-                ? Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.green, // online
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                    ),
-                  )
+                ? DotWidget()
                 : const SizedBox.shrink(),
           ],
         ),

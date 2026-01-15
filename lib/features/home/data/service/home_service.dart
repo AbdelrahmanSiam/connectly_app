@@ -3,8 +3,6 @@ import 'package:connectly/constants.dart';
 
 class HomeService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  HomeService(this.firestore);
-
   // fetch all users from firebase (this what home view do)
   Stream<List<Map<String, dynamic>>> fetchAllUsers() {
     return firestore
@@ -12,7 +10,7 @@ class HomeService {
         .snapshots()
         .map((querySnapshot) {
       return querySnapshot.docs.map((doc) {
-        return doc.data() as Map<String, dynamic>;
+        return doc.data();
       }).toList();
     });
   }

@@ -1,12 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectly/core/utils/app_text_styles.dart';
 import 'package:connectly/core/utils/assets_data.dart';
+import 'package:connectly/features/home/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class HomeListTileWidget extends StatelessWidget {
   const HomeListTileWidget({
-    super.key,
+    super.key, required this.userModel,
   });
-
+  final UserModel userModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,10 +17,11 @@ class HomeListTileWidget extends StatelessWidget {
         leading: Stack(
           children: [
             CircleAvatar(
-              radius: 25,
-              backgroundImage: AssetImage(AssetsData.logo),
-            ),
-            // Online Status Dot
+  radius: 25,
+  backgroundImage: userModel.profilePicUrl != null
+      ? CachedNetworkImageProvider(userModel.profilePicUrl!)
+      : AssetImage(AssetsData.logo) as ImageProvider,
+),userModel.onlineState ?
             Positioned(
               bottom: 0,
               right: 0,
@@ -31,15 +34,14 @@ class HomeListTileWidget extends StatelessWidget {
                   border: Border.all(color: Colors.white, width: 2),
                 ),
               ),
-            ),
+            ): const SizedBox.shrink(),
           ],
         ),
         title: Text(
-          "Abdo",
+          userModel.name,
           style: AppTextStyles.textStyle18,
         ),
-        subtitle: Text("data"),
-        trailing: Icon(Icons.check), // أيقونة للدردشة
+        subtitle: Text(userModel.lastMessage),
         onTap: () {
           // لاحقًا: navigate to Chat Screen
         },

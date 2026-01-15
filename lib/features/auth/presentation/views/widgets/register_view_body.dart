@@ -2,7 +2,7 @@ import 'package:connectly/core/routing/app_router.dart';
 import 'package:connectly/core/utils/app_text_styles.dart';
 import 'package:connectly/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:connectly/features/auth/presentation/views/widgets/custom_auth_button.dart';
-import 'package:connectly/features/auth/presentation/views/widgets/custom_snackbar.dart';
+import 'package:connectly/core/widgets/custom_snackbar.dart';
 import 'package:connectly/features/auth/presentation/views/widgets/custom_text_button.dart';
 import 'package:connectly/features/auth/presentation/views/widgets/custom_text_form_field.dart';
 import 'package:connectly/features/auth/presentation/views/widgets/page_header.dart';

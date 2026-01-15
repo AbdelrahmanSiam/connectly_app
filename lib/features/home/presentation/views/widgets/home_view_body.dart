@@ -1,38 +1,62 @@
+import 'package:connectly/core/utils/app_text_styles.dart';
+import 'package:connectly/core/widgets/custom_snackbar.dart';
+import 'package:connectly/features/home/presentation/manager/cubit/home_cubit.dart';
 import 'package:connectly/features/home/presentation/views/widgets/home_list_tile_.dart';
 import 'package:connectly/features/home/presentation/views/widgets/home_view_app_bar.dart';
 import 'package:connectly/features/home/presentation/views/widgets/home_view_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-              HomeViewAppBar(),
-              SizedBox(
-                height: 15,
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        if (state is HomeSuccessState) {
+          return CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    HomeViewAppBar(),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    HomeViewSearchBar(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
               ),
-              HomeViewSearchBar(),
-              SizedBox(
-                height: 20,
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return HomeListTileWidget(
+                      userModel: state.userModelList[index],
+                    );
+                  },
+                  childCount: state.userModelList.length,
+                ),
               ),
             ],
-          ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return HomeListTileWidget();
-            },
-            childCount: 10,
-          ),
-        ),
-      ],
+          );
+        } else if (state is HomeFailureState) {
+          return Center(
+            child: Text(
+              state.errMessage,
+              style: AppTextStyles.textStyle22,
+              textAlign: TextAlign.center,
+            ),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }

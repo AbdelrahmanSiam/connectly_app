@@ -1,6 +1,7 @@
 import 'package:connectly/core/utils/app_text_styles.dart';
 import 'package:connectly/core/widgets/custom_snackbar.dart';
 import 'package:connectly/features/home/presentation/manager/cubit/home_cubit.dart';
+import 'package:connectly/features/home/presentation/views/widgets/home_empty_state.dart';
 import 'package:connectly/features/home/presentation/views/widgets/home_list_tile_.dart';
 import 'package:connectly/features/home/presentation/views/widgets/home_view_app_bar.dart';
 import 'package:connectly/features/home/presentation/views/widgets/home_view_search_bar.dart';
@@ -24,23 +25,28 @@ class HomeViewBody extends StatelessWidget {
                     SizedBox(
                       height: 15,
                     ),
-                    HomeViewSearchBar(),
+                    HomeViewSearchBar(onChanged: (value) {
+                      BlocProvider.of<HomeCubit>(context).filteredUsers(value);
+                    }),
                     SizedBox(
                       height: 20,
                     ),
                   ],
                 ),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return HomeListTileWidget(
-                      userModel: state.userModelList[index],
-                    );
-                  },
-                  childCount: state.userModelList.length,
+              if (state.userModelList.isEmpty)
+                const HomeEmptyState()
+              else
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return HomeListTileWidget(
+                        userModel: state.userModelList[index],
+                      );
+                    },
+                    childCount: state.userModelList.length,
+                  ),
                 ),
-              ),
             ],
           );
         } else if (state is HomeFailureState) {

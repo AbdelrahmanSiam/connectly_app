@@ -4,6 +4,7 @@ import 'package:connectly/features/auth/data/service/auth_service.dart';
 import 'package:connectly/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:connectly/features/auth/presentation/views/login_view.dart';
 import 'package:connectly/features/auth/presentation/views/register_view.dart';
+import 'package:connectly/features/chat/presentation/views/chat_view.dart';
 import 'package:connectly/features/home/presentation/views/home_view.dart';
 import 'package:connectly/features/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ abstract class AppRouter {
   static const String loginView = '/login';
   static const String registerView = '/register';
   static const String homeView = '/home';
+  static const String chatView = '/chatView';
 
   static final GoRouter router = GoRouter(
     initialLocation: AppRouter.splashView,
@@ -55,6 +57,12 @@ abstract class AppRouter {
         path: homeView,
         builder: (BuildContext context, GoRouterState state) {
           return const HomeView();
+        },
+      ),
+      GoRoute(
+        path: chatView,
+        builder: (BuildContext context, GoRouterState state) {
+          return const ChatView();
         },
       ),
     ],

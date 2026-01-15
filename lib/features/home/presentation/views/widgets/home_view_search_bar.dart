@@ -3,11 +3,12 @@ import 'package:connectly/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewSearchBar extends StatelessWidget {
-  const HomeViewSearchBar({super.key});
-
+  const HomeViewSearchBar({super.key, this.onChanged});
+  final void Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextField(
+       onChanged: onChanged ,
       cursorColor: AppColors.primary,
       decoration: InputDecoration(
         filled: true,

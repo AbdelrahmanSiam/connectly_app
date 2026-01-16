@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectly/constants.dart';
 
 class ChatService {
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   Future<void> addMessage(Map<String, dynamic> message) async {
     await firebaseFirestore.collection(kMessagesCollection).add(message);

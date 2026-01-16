@@ -1,4 +1,5 @@
 import 'package:connectly/core/utils/app_text_styles.dart';
+import 'package:connectly/core/widgets/custom_error_widget.dart';
 import 'package:connectly/core/widgets/custom_snackbar.dart';
 import 'package:connectly/features/home/presentation/manager/cubit/home_cubit.dart';
 import 'package:connectly/features/home/presentation/views/widgets/home_empty_state.dart';
@@ -50,13 +51,7 @@ class HomeViewBody extends StatelessWidget {
             ],
           );
         } else if (state is HomeFailureState) {
-          return Center(
-            child: Text(
-              state.errMessage,
-              style: AppTextStyles.textStyle22,
-              textAlign: TextAlign.center,
-            ),
-          );
+          return CustomErrorWidget(message: state.errMessage,);
         } else {
           return Center(
             child: CircularProgressIndicator(),

@@ -8,7 +8,7 @@ class ChatService {
     await firebaseFirestore.collection(kMessagesCollection).add(message);
   }
 
-  Stream<List<Map<String, dynamic>>> fetchAllChatMessages(
+  Stream<List<Map<String, dynamic>>> fetchChatMessages(
       {required String chatId}) {
     return firebaseFirestore
         .collection(kMessagesCollection)

@@ -1,6 +1,5 @@
-import 'package:connectly/core/utils/app_text_styles.dart';
-import 'package:connectly/features/home/data/models/user_model.dart';
-import 'package:connectly/features/home/presentation/views/widgets/profile_pic_widget.dart';
+import 'package:connectly/core/utils/app_colors.dart';
+import 'package:connectly/features/chat/presentation/views/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
 
 class ChatViewBody extends StatelessWidget {
@@ -9,10 +8,15 @@ class ChatViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            
-            ],
+        SizedBox(
+          height: 20,
+        ),
+        Expanded(
+          child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return ChatBubble(message: "message", isMe: false);
+              }),
         ),
       ],
     );

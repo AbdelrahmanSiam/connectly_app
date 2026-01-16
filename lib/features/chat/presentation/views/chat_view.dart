@@ -23,7 +23,10 @@ class ChatView extends StatelessWidget {
           ],
         ),
       ),
-      body: ChatViewBody(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ChatViewBody(),
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:connectly/features/auth/presentation/manager/auth_cubit/auth_cub
 import 'package:connectly/features/auth/presentation/views/login_view.dart';
 import 'package:connectly/features/auth/presentation/views/register_view.dart';
 import 'package:connectly/features/chat/presentation/views/chat_view.dart';
+import 'package:connectly/features/home/data/models/user_model.dart';
 import 'package:connectly/features/home/presentation/views/home_view.dart';
 import 'package:connectly/features/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,8 @@ abstract class AppRouter {
     redirect: (context, state) {
       final authService = getIt.get<AuthService>();
       final isLoggedIn = authService.isLoggedIn();
-      final isAuthRoute = state.uri.path == loginView || state.uri.path == registerView;
+      final isAuthRoute =
+          state.uri.path == loginView || state.uri.path == registerView;
       final isSplash = state.uri.path == splashView;
 
       if (isSplash) return null;
@@ -43,16 +45,16 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-              path: loginView,
-              builder: (context, state) {
-                return LoginView();
-              }),
+          path: loginView,
+          builder: (context, state) {
+            return LoginView();
+          }),
       GoRoute(
-            path: registerView,
-            builder: (context, state) {
-              return RegisterView();
-            },
-          ),
+        path: registerView,
+        builder: (context, state) {
+          return RegisterView();
+        },
+      ),
       GoRoute(
         path: homeView,
         builder: (BuildContext context, GoRouterState state) {
@@ -62,7 +64,8 @@ abstract class AppRouter {
       GoRoute(
         path: chatView,
         builder: (BuildContext context, GoRouterState state) {
-          return const ChatView();
+          final userModel = state.extra as UserModel;
+          return ChatView(userModel: userModel);
         },
       ),
     ],

@@ -20,9 +20,7 @@ class HomeListTileWidget extends StatelessWidget {
         leading: Stack(
           children: [
             ProfilePicWidget(userModel: userModel),
-            userModel.onlineState
-                ? DotWidget()
-                : const SizedBox.shrink(),
+            userModel.onlineState ? DotWidget() : const SizedBox.shrink(),
           ],
         ),
         title: Text(
@@ -31,7 +29,7 @@ class HomeListTileWidget extends StatelessWidget {
         ),
         subtitle: Text(userModel.lastMessage),
         onTap: () {
-          (context).go(AppRouter.chatView);
+          (context).go(AppRouter.chatView, extra: userModel);
         },
       ),
     );

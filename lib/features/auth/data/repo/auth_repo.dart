@@ -1,0 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
+abstract class AuthRepo {
+  Future<UserCredential> register(
+      {required String email, required String password});
+
+  Future<UserCredential> login(
+      {required String email, required String password});
+
+  Future<bool> isLogged();
+
+  Future<void> logOut();
+
+  User? getCurrentUser();
+}

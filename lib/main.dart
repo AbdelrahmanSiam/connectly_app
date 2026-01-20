@@ -1,6 +1,6 @@
 import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/core/utils/service_locator.dart';
-import 'package:connectly_app/features/auth/data/repo/auth_repo_impl.dart';
+import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:connectly_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,8 +22,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(getIt.get<AuthRepoImpl>()),
+      create: (context) => AuthCubit(getIt.get<AuthRepo>()),
       child: MaterialApp.router(
+        theme: ThemeData(
+          scaffoldBackgroundColor: Color(0XFF141414),
+        ),
+        debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.router,
       ),
     );

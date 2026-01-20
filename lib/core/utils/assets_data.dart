@@ -1,3 +1,3 @@
 class AssetsData {
-  static String logo = 'assets/images/connectly_logo.jpg';
+  static String logo = 'assets/images/logo.webp';
 }

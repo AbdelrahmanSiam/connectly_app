@@ -6,6 +6,7 @@ import 'package:connectly_app/features/auth/presentation/views/widgets/custom_au
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_form_field.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/page_header.dart';
+import 'package:connectly_app/features/verifiy/presentation/manager/email_verification_cubit/email_verification_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -60,9 +61,13 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     CustomSnackBar.show(context,
                         message: state.errMessage, type: SnackBarType.error);
                   } else if (state is AuthSuccessState) {
-                    CustomSnackBar.show(context,
-                        message: "Account created successfully!", type: SnackBarType.success);
-                    context.go(AppRouter.homeView);
+                    BlocProvider.of<EmailVerificationCubit>(context).sendVerificationEmail() ;
+                    (context).go(AppRouter.verifyView);
+                    CustomSnackBar.show(
+                      context,
+                      message: "Account created successfully!",
+                      type: SnackBarType.success,
+                    );
                   }
                 },
                 builder: (context, state) {
@@ -83,8 +88,9 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Already have an account?",
-                      style: AppTextStyles.textStyle16),
+                  Text("Already have an account?",
+                      style: AppTextStyles.textStyle18
+                          .copyWith(color: Colors.white)),
                   CustomTextButton(
                     text: 'Login',
                     onPressed: () {

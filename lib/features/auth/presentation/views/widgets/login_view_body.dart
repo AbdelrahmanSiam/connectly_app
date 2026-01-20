@@ -71,7 +71,8 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       message: "Login Successful!",
                       type: SnackBarType.success,
                     );
-                    // context.go(AppRouter.homeView);
+
+                    (context).go(AppRouter.homeView);
                   }
                 },
                 builder: (context, state) {
@@ -93,8 +94,11 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don't have an account?",
-                      style: AppTextStyles.textStyle18),
+                  Text("Don't have an account?",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.textStyle18
+                          .copyWith(color: Colors.white)),
                   CustomTextButton(
                     text: 'Register',
                     onPressed: () {

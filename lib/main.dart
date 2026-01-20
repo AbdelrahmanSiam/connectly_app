@@ -1,4 +1,3 @@
-import 'package:connectly_app/core/cubit/auth_state_cubit/auth_state_cubit.dart';
 import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/core/utils/service_locator.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
@@ -26,12 +25,13 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider.value(value: getIt<AuthCubit>()),
         BlocProvider.value(value: getIt<EmailVerificationCubit>()),
-        BlocProvider.value(value: getIt<AuthStateCubit>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.router,
-        theme: ThemeData(scaffoldBackgroundColor: const Color(0XFF141414)),
+        theme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0XFF141414)),
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:connectly_app/core/cubit/auth_state_cubit/auth_state_cubit.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo_impl.dart';
 import 'package:connectly_app/features/auth/data/service/auth_service.dart';
@@ -13,5 +12,4 @@ void setupLocator() {
   getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(authService: getIt()));
   getIt.registerLazySingleton<AuthCubit>(() => AuthCubit(getIt()));
   getIt.registerLazySingleton<EmailVerificationCubit>(() => EmailVerificationCubit(getIt()));
-  getIt.registerLazySingleton<AuthStateCubit>(() => AuthStateCubit(getIt()));
 }

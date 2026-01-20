@@ -35,9 +35,11 @@ class AuthCubit extends Cubit<AuthState> {
     try {
        await authRepo.register(email: email, password: password);
       emit(AuthSuccessState());
-    } on FirebaseAuthException catch (e) {
+    } on AuthException catch (e) {
+    emit(AuthFailureState(errMessage: e.message));
+  }catch (e) {
       emit(AuthFailureState(errMessage: 'An unexpected error occurred'));
-    } 
+    }
   }
 
   Future<void> logout() async {

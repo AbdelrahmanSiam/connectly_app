@@ -1,3 +1,4 @@
+import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:connectly_app/features/auth/presentation/views/helpers/helper_methods.dart';
 import 'package:flutter/material.dart';
 
@@ -60,6 +61,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               )
             : null,
         labelText: widget.labelText,
+        labelStyle: AppTextStyles.textStyle16.copyWith(color:Colors.white),
         border: buildBorder(),
         enabledBorder: buildBorder(),
         focusedBorder: buildBorder(),

@@ -15,9 +15,7 @@ class ResendEmailButton extends StatelessWidget {
           onPressed: isLoading
               ? null
               : () {
-                  context
-                      .read<EmailVerificationCubit>()
-                      .sendVerificationEmail();
+                  BlocProvider.of<EmailVerificationCubit>(context).sendVerificationEmail();
                 },
           child: isLoading
               ? const CircularProgressIndicator()

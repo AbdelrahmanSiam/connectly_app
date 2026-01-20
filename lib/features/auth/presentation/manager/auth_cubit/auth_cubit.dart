@@ -17,13 +17,9 @@ class AuthCubit extends Cubit<AuthState> {
 }) async {
   emit(AuthLoadingState());
   try {
-    final userCredential =
         await authRepo.login(email: email, password: password);
 
-    emit(AuthSuccessState(
-      uid: userCredential.user!.uid,
-      email: userCredential.user!.email,
-    ));
+    emit(AuthSuccessState());
   } on FirebaseAuthException catch (e) {
     emit(AuthFailureState(errMessage: _mapError(e)));
   }
@@ -34,11 +30,8 @@ class AuthCubit extends Cubit<AuthState> {
       {required String email, required String password}) async {
     emit(AuthLoadingState());
     try {
-      final userCredintial = await authRepo.register(email: email, password: password);
-      emit(AuthSuccessState(
-        uid : userCredintial.user!.uid, // send ui to register to send it to profile view to add it to user collection
-        email : userCredintial.user!.email,
-      ));
+       await authRepo.register(email: email, password: password);
+      emit(AuthSuccessState());
     } on FirebaseAuthException catch (e) {
       emit(AuthFailureState(errMessage: _mapError(e)));
     } 
@@ -46,25 +39,24 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> checkIfLoggedIn() async {
   emit(AuthLoadingState());
-  final user = await authRepo.getCurrentUser();
+  final User? user =  authRepo.getCurrentUser();
 
   if (user != null) {
-    emit(AuthLoggedInState(
-      uid: user.uid,
-      email: user.email,
-    ));
+    emit(AuthLoggedInState());
   } else {
     emit(AuthLoggedOutState());
   }
 }
 
-String currentUserId(){
-  return authRepo.getCurrentUser()!.uid;
+bool isLogged(){
+  return  authRepo.isLogged();
 }
 
+bool isEmailVerified(){
+  return authRepo.isEmailVerified();
+}
   Future<void> logout() async {
     await authRepo.logOut();
-    emit(AuthInitialState());
   }
 }
 

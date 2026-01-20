@@ -7,9 +7,11 @@ abstract class AuthRepo {
   Future<UserCredential> login(
       {required String email, required String password});
 
-  Future<bool> isLogged();
+  bool isLogged();
 
   Future<void> logOut();
 
   User? getCurrentUser();
+  
+  bool isEmailVerified();
 }

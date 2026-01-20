@@ -11,9 +11,8 @@ abstract class AppRouter {
   static const String splashView = '/';
   static const String loginView = '/login';
   static const String registerView = '/register';
-  static const String userProfileView = '/userProfile';
   static const String homeView = '/home';
-  static const String chatView = '/chatView';
+
 
   static final GoRouter router = GoRouter(
     initialLocation: AppRouter.splashView,

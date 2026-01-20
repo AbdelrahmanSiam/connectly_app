@@ -19,7 +19,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<bool> isLogged() async {
+  bool isLogged()  {
     return authService.isLoggedIn();
   }
   
@@ -31,5 +31,10 @@ class AuthRepoImpl implements AuthRepo {
   @override
   User? getCurrentUser() {
     return authService.getCurrentUser();
+  }
+  
+  @override
+  bool isEmailVerified()  {
+    return  authService.emailIsVerified();
   }
 }

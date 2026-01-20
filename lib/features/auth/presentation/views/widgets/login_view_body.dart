@@ -71,7 +71,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       message: "Login Successful!",
                       type: SnackBarType.success,
                     );
-                    context.go(AppRouter.homeView);
+                    // context.go(AppRouter.homeView);
                   }
                 },
                 builder: (context, state) {

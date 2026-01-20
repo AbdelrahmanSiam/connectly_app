@@ -26,4 +26,8 @@ class AuthService {
   Future<void> logOut(){
     return firebaseAuth.signOut();
   }
+  // email verification
+  bool emailIsVerified(){
+    return firebaseAuth.currentUser!.emailVerified;
+  }
 }

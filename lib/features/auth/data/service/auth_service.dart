@@ -27,7 +27,11 @@ class AuthService {
     return firebaseAuth.signOut();
   }
   // email verification
-  bool emailIsVerified(){
+  Future<bool> isEmailVerified() async {
+    await firebaseAuth.currentUser!.reload();
     return firebaseAuth.currentUser!.emailVerified;
+  }
+  Future<void>sendEmailVerification()async{
+    await firebaseAuth.currentUser!.sendEmailVerification();
   }
 }

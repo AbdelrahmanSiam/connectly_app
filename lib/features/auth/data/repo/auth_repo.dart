@@ -13,5 +13,8 @@ abstract class AuthRepo {
 
   User? getCurrentUser();
   
-  bool isEmailVerified();
+  Future<bool> isEmailVerified();
+
+  Future<void> sendEmailVerification();
+
 }

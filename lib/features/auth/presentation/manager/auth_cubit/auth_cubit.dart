@@ -55,9 +55,7 @@ bool isLogged(){
   return  authRepo.isLogged();
 }
 
-bool isEmailVerified(){
-  return authRepo.isEmailVerified();
-}
+
   Future<void> logout() async {
     await authRepo.logOut();
   }

@@ -55,8 +55,8 @@ class AuthRepoImpl implements AuthRepo {
   }
   
   @override
-  bool isEmailVerified() {
-    return  authService.emailIsVerified();
+  Future<bool> isEmailVerified() async{
+    return await authService.isEmailVerified();
   }
   
   @override
@@ -68,6 +68,12 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> logOut() async {
    return await authService.logOut();
   }
+  
+  @override
+  Future<void> sendEmailVerification() async{
+    await authService.sendEmailVerification();
+  }
+  
   }
 
 

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
+import 'package:connectly_app/features/auth/domain/errors/auth_exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
@@ -20,9 +21,11 @@ class AuthCubit extends Cubit<AuthState> {
         await authRepo.login(email: email, password: password);
 
     emit(AuthSuccessState());
-  } on FirebaseAuthException catch (e) {
-    emit(AuthFailureState(errMessage: _mapError(e)));
-  }
+  } on AuthException catch (e) {
+    emit(AuthFailureState(errMessage: e.message));
+  }catch (e) {
+      emit(AuthFailureState(errMessage: 'An unexpected error occurred'));
+    }
 }
 
 

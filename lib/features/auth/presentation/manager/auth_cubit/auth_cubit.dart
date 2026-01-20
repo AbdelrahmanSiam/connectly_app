@@ -36,45 +36,12 @@ class AuthCubit extends Cubit<AuthState> {
        await authRepo.register(email: email, password: password);
       emit(AuthSuccessState());
     } on FirebaseAuthException catch (e) {
-      emit(AuthFailureState(errMessage: _mapError(e)));
+      emit(AuthFailureState(errMessage: 'An unexpected error occurred'));
     } 
   }
 
-  Future<void> checkIfLoggedIn() async {
-  emit(AuthLoadingState());
-  final User? user =  authRepo.getCurrentUser();
-
-  if (user != null) {
-    emit(AuthLoggedInState());
-  } else {
-    emit(AuthLoggedOutState());
-  }
-}
-
-bool isLogged(){
-  return  authRepo.isLogged();
-}
-
-
   Future<void> logout() async {
     await authRepo.logOut();
+    emit(AuthLoggedOutState());
   }
-}
-
-
-
-String _mapError(dynamic error) {
-  if (error is FirebaseAuthException) {
-    switch (error.code) {
-      case 'user-not-found':
-        return 'No user found for this email';
-      case 'wrong-password':
-        return 'Wrong password';
-      case 'invalid-email':
-        return 'Invalid email format';
-      default:
-        return 'Something went wrong, try again';
-    }
-  }
-  return 'Unexpected error occurred';
 }

@@ -18,10 +18,7 @@ class AuthService {
   User? getCurrentUser(){
     return firebaseAuth.currentUser;
   }
-  // check if logged in or not
-  bool isLoggedIn() {
-    return firebaseAuth.currentUser != null;
-  }
+
   // logged out
   Future<void> logOut(){
     return firebaseAuth.signOut();

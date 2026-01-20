@@ -21,11 +21,15 @@ class EmailVerificationCubit extends Cubit<EmailVerificationState> {
 
   Future<void> checkVerification()async{
     emit(EmailVerificationLoadingState());
-    if(await authRepo.isEmailVerified()){
-      emit(EmailVerificationVerified());
-    }
-    else{
-      emit(EmailVerificationNotVerified());
-    }
+    try {
+  if(await authRepo.isEmailVerified()){
+    emit(EmailVerificationVerified());
+  }
+  else{
+    emit(EmailVerificationNotVerified());
+  }
+} catch (e) {
+  emit(EmailVerificationFailure(errMessage: e.toString()));
+}
 }
 }

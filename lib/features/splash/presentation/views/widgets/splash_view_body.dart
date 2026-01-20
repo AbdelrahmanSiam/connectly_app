@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:connectly_app/core/cubit/auth_state_cubit/auth_state_cubit.dart';
 import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:connectly_app/features/splash/presentation/views/widgets/splash_view_icon.dart';
@@ -44,8 +45,8 @@ class _SplashViewBodyState extends State<SplashViewBody>
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(const Duration(milliseconds: 500), () {
-          BlocProvider.of<AuthCubit>(context)
-              .checkIfLoggedIn(); // navigation depened on compelet the animation
+          BlocProvider.of<AuthStateCubit>(context)
+              .checkAuthStatus(); // navigation depened on compelet the animation
         });
       }
     });
@@ -61,9 +62,12 @@ class _SplashViewBodyState extends State<SplashViewBody>
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthLoggedInState) {
+        if (state is UnauthenticatedState) {
           context.go(AppRouter.homeView);
-        } else if (state is AuthLoggedOutState) {
+        }else if(state is AuthenticatedNotVerifiedState){
+           context.go(AppRouter.verifiyView); 
+        }
+         else if (state is AuthenticatedVerifiedState) {
           context.go(AppRouter.loginView);
         }
       },

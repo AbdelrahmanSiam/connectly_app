@@ -59,10 +59,6 @@ class AuthRepoImpl implements AuthRepo {
     return await authService.isEmailVerified();
   }
   
-  @override
-  bool isLogged() {
-    return authService.isLoggedIn();
-  }
   
   @override
   Future<void> logOut() async {

@@ -30,7 +30,9 @@ environment:
 dependencies:
   bloc: ^8.1.2
   cupertino_icons: ^1.0.8
+  firebase: ^9.0.3
   firebase_auth: ^4.15.1
+  firebase_core: ^4.4.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3

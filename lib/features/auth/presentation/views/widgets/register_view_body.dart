@@ -62,7 +62,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                   } else if (state is AuthSuccessState) {
                     CustomSnackBar.show(context,
                         message: "Account created successfully!", type: SnackBarType.success);
-                    // context.go(AppRouter.userProfileView);
+                    context.go(AppRouter.homeView);
                   }
                 },
                 builder: (context, state) {

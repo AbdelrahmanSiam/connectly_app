@@ -19,8 +19,8 @@ class LoginViewBody extends StatefulWidget {
 
 class _LoginViewBodyState extends State<LoginViewBody> {
   final GlobalKey<FormState> formKey = GlobalKey();
-
-  String? email, password;
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,20 +41,18 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               CustomTextFormField(
                 labelText: 'Email',
                 icon: Icons.email,
-                onSaved: (value) {
-                  email = value;
-                },
+                controller: email,
               ),
               const SizedBox(height: 20),
               CustomTextFormField(
                 labelText: 'Password',
                 isPassword: true,
                 icon: Icons.password,
-                onSaved: (value) {
-                  password = value;
-                },
+                controller: password,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(
+                height: 20,
+              ),
               BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
                   if (state is AuthFailureState) {
@@ -63,30 +61,60 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       message: state.errMessage,
                       type: SnackBarType.error,
                     );
-                  }
-                  else if (state is AuthSuccessState) {
+                  } else if (state is AuthSuccessState) {
                     CustomSnackBar.show(
                       context,
                       message: "Login Successful!",
                       type: SnackBarType.success,
                     );
-                      (context).go(AppRouter.homeView);
-                  }else if(state is EmailNotVerifiedState){
-                    context.go(AppRouter.verifyView);
+                    (context).go(AppRouter.homeView);
+                  } else if (state is ForgetPasswordState) {
+                    CustomSnackBar.show(
+                      context,
+                      message: "Check your email to reset password. ",
+                      type: SnackBarType.success,
+                    );
+                  } else if (state is ForgetPasswordFailureState) {
+                    CustomSnackBar.show(
+                      context,
+                      message: state.errMessage,
+                      type: SnackBarType.error,
+                    );
                   }
                 },
                 builder: (context, state) {
-                  return CustomAuthButton(
-                    isLoading: state is AuthLoadingState,
-                    buttonText: "Login",
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        formKey.currentState!
-                            .save(); // to save input data on fields
-                        BlocProvider.of<AuthCubit>(context)
-                            .login(email: email!, password: password!);
-                      }
-                    },
+                  return Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          if (email.text == null || email.text.trim().isEmpty) {
+                            CustomSnackBar.show(
+                              context,
+                              message: "Please enter email first",
+                              type: SnackBarType.error,
+                            );
+                          } else {
+                            BlocProvider.of<AuthCubit>(context)
+                                .forgetPassword(email: email.text);
+                          }
+                        },
+                        child: Align(
+                          alignment: Alignment.centerLeft
+                          ,
+                          child: Text("Forget password ? ",style: AppTextStyles.textStyle18,)),
+                      ),
+                      const SizedBox(height: 50),
+                      CustomAuthButton(
+                        isLoading: state is AuthLoadingState,
+                        buttonText: "Login",
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            BlocProvider.of<AuthCubit>(context)
+                                .login(email: email.text, password: password.text);
+                          }
+                        },
+                      ),
+                    ],
                   );
                 },
               ),

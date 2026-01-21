@@ -11,7 +11,7 @@ class Verifiedbutton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
           onPressed:() {
-                  BlocProvider.of<AuthCubit>(context).checkVerification();
+                  context.go(AppRouter.loginView);
                 },
           child: const Text('I Verified My Email'),
         );

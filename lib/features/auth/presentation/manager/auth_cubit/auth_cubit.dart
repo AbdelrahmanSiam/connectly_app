@@ -22,7 +22,6 @@ class AuthCubit extends Cubit<AuthState> {
         if( authRepo.isEmailVerified()){
           emit(AuthSuccessState());
         }
-    emit(EmailNotVerifiedState());
   } on AuthException catch (e) {
     emit(AuthFailureState(errMessage: e.message));
   }catch (e) {
@@ -63,4 +62,13 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthFailureState(errMessage: e.toString()));
   }
 }
+
+  Future<void> forgetPassword({required String email})async{
+    try {
+  await authRepo.forgetPassword(email: email);
+  emit(ForgetPasswordState());
+} catch (e) {
+  emit(ForgetPasswordFailureState(errMessage: e.toString()));
+}
+  }
 }

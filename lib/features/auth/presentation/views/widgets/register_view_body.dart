@@ -19,7 +19,8 @@ class RegisterViewBody extends StatefulWidget {
 
 class _RegisterViewBodyState extends State<RegisterViewBody> {
   final GlobalKey<FormState> formKey = GlobalKey();
-  String? email, password;
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -40,18 +41,14 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               CustomTextFormField(
                 labelText: 'Email',
                 icon: Icons.email,
-                onSaved: (value) {
-                  email = value;
-                },
+                controller: email,
               ),
               const SizedBox(height: 20),
               CustomTextFormField(
                 labelText: 'Password',
                 isPassword: true,
                 icon: Icons.password,
-                onSaved: (value) {
-                  password = value;
-                },
+                controller: password,
               ),
               const SizedBox(height: 50),
               BlocConsumer<AuthCubit, AuthState>(
@@ -74,9 +71,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     buttonText: "Register",
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
                         BlocProvider.of<AuthCubit>(context)
-                            .register(email: email!, password: password!);
+                            .register(email: email.text, password: password.text);
                          (context).push(AppRouter.loginView);
                       }
                     },

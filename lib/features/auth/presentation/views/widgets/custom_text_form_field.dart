@@ -8,13 +8,17 @@ class CustomTextFormField extends StatefulWidget {
     required this.labelText,
     required this.icon,
     this.isPassword = false,
-    this.keyboardType = TextInputType.text, this.onSaved,
+    this.keyboardType = TextInputType.text,
+    //  this.onSaved,
+      required this.controller,
   });
   final String labelText;
   final IconData icon;
   final bool isPassword;
   final TextInputType keyboardType; // خلي الـ keyboardType dynamic
-  final void Function(String?)? onSaved;
+  // final void Function(String?)? onSaved;
+  final TextEditingController controller;
+
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -32,7 +36,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onSaved: widget.onSaved ,
+      controller: widget.controller,
+      // onSaved: widget.onSaved ,
       validator: (value) {
         return nullValidationMethod(value);
       },

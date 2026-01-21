@@ -49,12 +49,12 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        // if(FirebaseAuth.instance.currentUser != null && FirebaseAuth.instance.currentUser!.emailVerified){
-        //   context.go(AppRouter.homeView);
-        // }else{
-        //   context.go(AppRouter.loginView);
-        // }
-        context.go(AppRouter.homeView);
+        if(FirebaseAuth.instance.currentUser != null && FirebaseAuth.instance.currentUser!.emailVerified){
+          context.go(AppRouter.homeView);
+        }else{
+          context.go(AppRouter.loginView);
+        }
+        // context.go(AppRouter.homeView);
       }
     });
   }

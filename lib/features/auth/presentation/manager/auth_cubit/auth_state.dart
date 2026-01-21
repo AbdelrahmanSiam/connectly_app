@@ -11,6 +11,14 @@ final class AuthSuccessState extends AuthState {}
 
 final class AuthLoggedOutState extends AuthState {}
 
+final class ForgetPasswordState extends AuthState {}
+
+final class ForgetPasswordFailureState extends AuthState {
+  final String errMessage;
+
+  ForgetPasswordFailureState({required this.errMessage});
+}
+
 final class AuthFailureState extends AuthState {
   final String errMessage;
 

@@ -72,6 +72,11 @@ class AuthRepoImpl implements AuthRepo {
     await authService.deleteAccount();
   }
   
+  @override
+  Future<void> forgetPassword({required String email}) async{
+    await authService.forgetPassword(email: email);
+  }
+    
   }
 
 

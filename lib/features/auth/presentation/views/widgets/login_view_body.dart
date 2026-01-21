@@ -1,4 +1,5 @@
 import 'package:connectly_app/core/routing/app_router.dart';
+import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:connectly_app/core/widgets/custom_snackbar.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
@@ -101,7 +102,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                         child: Align(
                           alignment: Alignment.centerLeft
                           ,
-                          child: Text("Forget password ? ",style: AppTextStyles.textStyle18,)),
+                          child: Text("Forget password ? ",style: AppTextStyles.textStyle18.copyWith(color: AppColors.primary),)),
                       ),
                       const SizedBox(height: 50),
                       CustomAuthButton(
@@ -126,7 +127,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.textStyle18
-                          .copyWith(color: Colors.white)),
+                          .copyWith(color: Colors.black)),
                   CustomTextButton(
                     text: 'Register',
                     onPressed: () {

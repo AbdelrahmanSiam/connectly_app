@@ -59,7 +59,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                   } else if (state is EmailNotVerifiedState) {
                     CustomSnackBar.show(
                       context,
-                      message: "Account created successfully! , Now verifiy you email",
+                      message: "Account created successfully! , Now verifiy you email and Check your Spam. ",
                       type: SnackBarType.success,
                     );
                     context.go(AppRouter.verifyView);
@@ -85,7 +85,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 children: [
                   Text("Already have an account?",
                       style: AppTextStyles.textStyle18
-                          .copyWith(color: Colors.white)),
+                          .copyWith(color: Colors.black)),
                   CustomTextButton(
                     text: 'Login',
                     onPressed: () {

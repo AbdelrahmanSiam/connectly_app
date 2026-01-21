@@ -1,3 +1,4 @@
+import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class VerifyEmailHeader extends StatelessWidget {
@@ -7,7 +8,7 @@ class VerifyEmailHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: const [
-        Icon(Icons.mark_email_unread, size: 90, color: Colors.orange),
+        Icon(Icons.mark_email_unread, size: 90, color: AppColors.deepPrimary),
         SizedBox(height: 24),
         Text(
           'Verify your email',

@@ -1,3 +1,4 @@
+import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:connectly_app/features/auth/presentation/views/helpers/helper_methods.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ class CustomTextFormField extends StatefulWidget {
   final IconData icon;
   final bool isPassword;
   final TextInputType keyboardType; // خلي الـ keyboardType dynamic
-  // final void Function(String?)? onSaved;
   final TextEditingController controller;
 
 
@@ -37,7 +37,6 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      // onSaved: widget.onSaved ,
       validator: (value) {
         return nullValidationMethod(value);
       },
@@ -45,10 +44,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       obscureText: widget.isPassword ? isObscured : false, //is obscured depend on is pass or not if field is pass then make it obscure if not (email) do not make it obscure
       decoration: InputDecoration(
         filled: true,
-        fillColor: Color(0XFF1C1C1E),
+        fillColor: Colors.white,
         prefixIcon: Icon(
           widget.icon,
-          color: Colors.white,
+          color: AppColors.primary,
         ),
         suffixIcon: widget.isPassword  // Is field is pass ? if yes create Icon Button if not (email) return null
             ? IconButton(
@@ -61,12 +60,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 },
                 icon: Icon(
                   isObscured ? Icons.visibility_off : Icons.visibility,
-                  color: Colors.white,
+                  color: AppColors.primary,
                 ),
               )
             : null,
         labelText: widget.labelText,
-        labelStyle: AppTextStyles.textStyle16.copyWith(color:Colors.white),
+        labelStyle: AppTextStyles.textStyle16.copyWith(color:AppColors.primary),
         border: buildBorder(),
         enabledBorder: buildBorder(),
         focusedBorder: buildBorder(),

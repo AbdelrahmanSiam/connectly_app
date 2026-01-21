@@ -1,3 +1,4 @@
+import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -12,14 +13,14 @@ class PageHeader extends StatelessWidget {
         Text(
           header1,
           style:
-              AppTextStyles.textStyle32.copyWith(color: Colors.white),
+              AppTextStyles.textStyle32.copyWith(color: AppColors.deepPrimary),
         ),
         const SizedBox(
           height: 10,
         ),
         Text(
           header2,
-          style: AppTextStyles.textStyle22.copyWith(color: Colors.white),
+          style: AppTextStyles.textStyle22.copyWith(color: AppColors.deepPrimary),
         ),
       ],
     );

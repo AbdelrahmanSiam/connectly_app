@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.router,
         theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0XFF141414)),
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: const Color(0XFFF2F2F6)),
       ),
     );
   }

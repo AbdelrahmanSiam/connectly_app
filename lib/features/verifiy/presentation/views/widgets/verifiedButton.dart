@@ -1,4 +1,6 @@
 import 'package:connectly_app/core/routing/app_router.dart';
+import 'package:connectly_app/core/utils/app_colors.dart';
+import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +15,7 @@ class Verifiedbutton extends StatelessWidget {
           onPressed:() {
                   context.go(AppRouter.loginView);
                 },
-          child: const Text('I Verified My Email'),
+          child:  Text('I Verified My Email', style: AppTextStyles.textStyle16.copyWith(color: AppColors.primary),),
         );
   }
 }

@@ -19,8 +19,10 @@ class AuthCubit extends Cubit<AuthState> {
   emit(AuthLoadingState());
   try {
         await authRepo.login(email: email, password: password);
-
-    emit(AuthSuccessState());
+        if( authRepo.isEmailVerified()){
+          emit(AuthSuccessState());
+        }
+    emit(EmailNotVerifiedState());
   } on AuthException catch (e) {
     emit(AuthFailureState(errMessage: e.message));
   }catch (e) {
@@ -33,8 +35,9 @@ class AuthCubit extends Cubit<AuthState> {
       {required String email, required String password}) async {
     emit(AuthLoadingState());
     try {
-       await authRepo.register(email: email, password: password);
-      emit(AuthSuccessState());
+        await authRepo.register(email: email, password: password);
+        await authRepo.sendEmailVerification();
+      emit(EmailNotVerifiedState());
     } on AuthException catch (e) {
     emit(AuthFailureState(errMessage: e.message));
   }catch (e) {
@@ -46,4 +49,18 @@ class AuthCubit extends Cubit<AuthState> {
     await authRepo.logOut();
     emit(AuthLoggedOutState());
   }
+
+  Future<void> checkVerification() async {
+    if ( authRepo.isEmailVerified()) {
+      emit(AuthSuccessState());
+    }
+  }
+
+  Future<void> resendVerificationEmail() async {
+  try {
+    await authRepo.sendEmailVerification();
+  } catch (e) {
+    emit(AuthFailureState(errMessage: e.toString()));
+  }
+}
 }

@@ -50,13 +50,8 @@ class AuthRepoImpl implements AuthRepo {
   }
   
   @override
-  User? getCurrentUser() {
-    return authService.getCurrentUser();
-  }
-  
-  @override
-  Future<bool> isEmailVerified() async{
-    return await authService.isEmailVerified();
+  bool isEmailVerified(){
+    return authService.isEmailVerified();
   }
   
   
@@ -68,6 +63,13 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future<void> sendEmailVerification() async{
     await authService.sendEmailVerification();
+  }
+  
+
+  
+  @override
+  Future<void> deletAccount()async {
+    await authService.deleteAccount();
   }
   
   }

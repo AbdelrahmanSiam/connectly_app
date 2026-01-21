@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:connectly_app/core/routing/app_router.dart';
+import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:connectly_app/features/splash/presentation/views/widgets/splash_view_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -47,7 +49,12 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        context.go(AppRouter.loginView);
+        // if(FirebaseAuth.instance.currentUser != null && FirebaseAuth.instance.currentUser!.emailVerified){
+        //   context.go(AppRouter.homeView);
+        // }else{
+        //   context.go(AppRouter.loginView);
+        // }
+        context.go(AppRouter.homeView);
       }
     });
   }

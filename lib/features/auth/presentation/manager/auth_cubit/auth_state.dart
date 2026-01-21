@@ -16,3 +16,5 @@ final class AuthFailureState extends AuthState {
 
   AuthFailureState({required this.errMessage});
 }
+final class EmailNotVerifiedState extends AuthState {}
+

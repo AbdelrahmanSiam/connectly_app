@@ -6,7 +6,6 @@ import 'package:connectly_app/features/auth/presentation/views/widgets/custom_au
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_form_field.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/page_header.dart';
-import 'package:connectly_app/features/verifiy/presentation/manager/email_verification_cubit/email_verification_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -60,14 +59,13 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                   if (state is AuthFailureState) {
                     CustomSnackBar.show(context,
                         message: state.errMessage, type: SnackBarType.error);
-                  } else if (state is AuthSuccessState) {
-                    BlocProvider.of<EmailVerificationCubit>(context).sendVerificationEmail() ;
-                    (context).go(AppRouter.verifyView);
+                  } else if (state is EmailNotVerifiedState) {
                     CustomSnackBar.show(
                       context,
-                      message: "Account created successfully!",
+                      message: "Account created successfully! , Now verifiy you email",
                       type: SnackBarType.success,
                     );
+                    context.go(AppRouter.verifyView);
                   }
                 },
                 builder: (context, state) {
@@ -79,6 +77,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                         formKey.currentState!.save();
                         BlocProvider.of<AuthCubit>(context)
                             .register(email: email!, password: password!);
+                         (context).push(AppRouter.loginView);
                       }
                     },
                   );

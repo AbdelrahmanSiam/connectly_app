@@ -5,21 +5,17 @@ class AuthService {
   // register method
   Future<UserCredential> register(
       {required String email, required String password}) async {
-    return await FirebaseAuth.instance
+    return await firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password);
   }
 
   // login method
   Future<UserCredential> login(
       {required String email, required String password}) async {
-    return await FirebaseAuth.instance
+    return await firebaseAuth
         .signInWithEmailAndPassword(email: email, password: password);
   }
 
-  // to return current user
-  User? getCurrentUser() {
-    return firebaseAuth.currentUser;
-  }
 
   // logged out
   Future<void> logOut() {
@@ -27,19 +23,16 @@ class AuthService {
   }
 
   // email verification
-  Future<bool> isEmailVerified() async {
-    if (firebaseAuth.currentUser == null) {
-      return false;
-    }
-    await firebaseAuth.currentUser!.reload();
-    return firebaseAuth.currentUser!.emailVerified;
+  bool isEmailVerified() {
+        return firebaseAuth.currentUser!.emailVerified ;
+  }
+  // send email verification message
+  Future<void> sendEmailVerification() async {
+    await firebaseAuth.currentUser?.sendEmailVerification();
   }
 
-  Future<void> sendEmailVerification() async {
-    if (firebaseAuth.currentUser == null) {
-      throw Exception(
-          "No user is currently signed in"); // to know where is ther problem
-    }
-    await firebaseAuth.currentUser!.sendEmailVerification();
+   // Delete account
+  Future<void> deleteAccount() async {
+    await firebaseAuth.currentUser?.delete();
   }
 }

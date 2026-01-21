@@ -64,15 +64,15 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       type: SnackBarType.error,
                     );
                   }
-
-                  if (state is AuthSuccessState) {
+                  else if (state is AuthSuccessState) {
                     CustomSnackBar.show(
                       context,
                       message: "Login Successful!",
                       type: SnackBarType.success,
                     );
-
-                    (context).go(AppRouter.homeView);
+                      (context).go(AppRouter.homeView);
+                  }else if(state is EmailNotVerifiedState){
+                    context.go(AppRouter.verifyView);
                   }
                 },
                 builder: (context, state) {

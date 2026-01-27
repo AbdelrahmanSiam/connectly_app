@@ -76,6 +76,11 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> forgetPassword({required String email}) async{
     await authService.forgetPassword(email: email);
   }
+  
+  @override
+  bool loggedIn() {
+    return authService.loggedIn();
+  }
     
   }
 

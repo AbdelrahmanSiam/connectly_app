@@ -100,4 +100,12 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
+  
 }

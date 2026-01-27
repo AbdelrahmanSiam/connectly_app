@@ -12,6 +12,7 @@ abstract class AuthRepo {
   Future<void> deletAccount();
   
   bool isEmailVerified() ;
+  bool loggedIn() ;
 
   Future<void> sendEmailVerification();
 

@@ -142,4 +142,11 @@ class _LoginViewBodyState extends State<LoginViewBody> {
       ),
     );
   }
+@override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
+
 }

@@ -23,6 +23,9 @@ class AuthService {
   bool isEmailVerified() {
         return firebaseAuth.currentUser!.emailVerified ;
   }
+  bool loggedIn(){
+    return firebaseAuth.currentUser != null ;
+  }
   Future<void> sendEmailVerification() async {
     await firebaseAuth.currentUser?.sendEmailVerification();
   }

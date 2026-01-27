@@ -55,6 +55,12 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> checkAuthState()async{
+    if ( authRepo.isEmailVerified() && authRepo.loggedIn()) {
+      emit(AuthSuccessState());
+    }
+  }
+
   Future<void> resendVerificationEmail() async {
   try {
     await authRepo.sendEmailVerification();

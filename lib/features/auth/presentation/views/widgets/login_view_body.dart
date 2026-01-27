@@ -34,9 +34,6 @@ class _LoginViewBodyState extends State<LoginViewBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 50,
-              ),
               const PageHeader(
                   header1: "Welcome back!", header2: 'Login to continue'),
               const SizedBox(height: 100),

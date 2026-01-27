@@ -10,6 +10,9 @@ class PageHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: 50,
+        ),
         Text(
           header1,
           style:
@@ -20,7 +23,8 @@ class PageHeader extends StatelessWidget {
         ),
         Text(
           header2,
-          style: AppTextStyles.textStyle22.copyWith(color: AppColors.deepPrimary),
+          style:
+              AppTextStyles.textStyle22.copyWith(color: AppColors.deepPrimary),
         ),
       ],
     );

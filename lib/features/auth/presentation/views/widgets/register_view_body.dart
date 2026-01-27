@@ -7,6 +7,7 @@ import 'package:connectly_app/features/auth/presentation/views/widgets/custom_au
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_form_field.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/page_header.dart';
+import 'package:connectly_app/features/auth/presentation/views/widgets/profile_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -34,16 +35,16 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 50,
-              ),
               const PageHeader(
                   header1: 'Create Account',
                   header2: 'Register to get started'),
-              const SizedBox(height: 100),
+              const SizedBox(height: 50),
+              ProfileImagePicker(),
+              SizedBox(height: 20,),
               CustomTextFormField(
                 labelText: 'Name',
                 controller: name,
+                icon: Icons.person,
                 validator: (value) {
                   return nullValidationMethod(value);
                 },
@@ -75,7 +76,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 controller: confirmPassword,
                 validator: (value) {
                   if (value != password.text) {
-                    return 'Confirm password is required';
+                    return 'Confirm password is wrong';
                   }
                   return nullValidationMethod(value);
                 },

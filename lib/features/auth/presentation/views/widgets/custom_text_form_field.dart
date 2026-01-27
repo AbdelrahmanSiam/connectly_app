@@ -7,17 +7,17 @@ class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
     super.key,
     required this.labelText,
-    required this.icon,
+     this.icon,
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
-    //  this.onSaved,
-      required this.controller,
+      required this.controller, this.validator,
   });
   final String labelText;
-  final IconData icon;
+  final IconData? icon;
   final bool isPassword;
   final TextInputType keyboardType; // خلي الـ keyboardType dynamic
   final TextEditingController controller;
+  final String? Function(String?)? validator;
 
 
   @override
@@ -37,9 +37,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      validator: (value) {
-        return nullValidationMethod(value);
-      },
+      validator: widget.validator,
       keyboardType: widget.keyboardType,
       obscureText: widget.isPassword ? isObscured : false, //is obscured depend on is pass or not if field is pass then make it obscure if not (email) do not make it obscure
       decoration: InputDecoration(

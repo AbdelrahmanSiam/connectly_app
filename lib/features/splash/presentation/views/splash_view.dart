@@ -24,6 +24,8 @@ class SplashView extends StatelessWidget {
             listener: (context, state) {
               if(state is AuthSuccessState){
                 context.go(AppRouter.homeView);
+              }else if (state is GoToLoginView){
+                context.go(AppRouter.loginView);
               }
             },
             child: SplashViewBody(),

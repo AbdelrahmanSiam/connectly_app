@@ -2,6 +2,7 @@ import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:connectly_app/core/widgets/custom_snackbar.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:connectly_app/features/auth/presentation/views/helpers/helper_methods.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_auth_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_form_field.dart';
@@ -21,6 +22,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
   final GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
+  TextEditingController name = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -39,9 +42,20 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                   header2: 'Register to get started'),
               const SizedBox(height: 100),
               CustomTextFormField(
+                labelText: 'Name',
+                controller: name,
+                validator: (value) {
+                  return nullValidationMethod(value);
+                },
+              ),
+              const SizedBox(height: 20),
+              CustomTextFormField(
                 labelText: 'Email',
                 icon: Icons.email,
                 controller: email,
+                validator: (value) {
+                  return nullValidationMethod(value);
+                },
               ),
               const SizedBox(height: 20),
               CustomTextFormField(
@@ -49,6 +63,22 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 isPassword: true,
                 icon: Icons.password,
                 controller: password,
+                validator: (value) {
+                  return nullValidationMethod(value);
+                },
+              ),
+              const SizedBox(height: 20),
+              CustomTextFormField(
+                labelText: 'Confirm password',
+                isPassword: true,
+                icon: Icons.password,
+                controller: confirmPassword,
+                validator: (value) {
+                  if (value != password.text) {
+                    return 'Confirm password is required';
+                  }
+                  return nullValidationMethod(value);
+                },
               ),
               const SizedBox(height: 50),
               BlocConsumer<AuthCubit, AuthState>(
@@ -59,7 +89,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                   } else if (state is EmailNotVerifiedState) {
                     CustomSnackBar.show(
                       context,
-                      message: "Account created successfully! , Now verifiy you email and Check your Spam. ",
+                      message:
+                          "Account created successfully! , Now verifiy you email and Check your Spam. ",
                       type: SnackBarType.success,
                     );
                     context.go(AppRouter.verifyView);
@@ -71,9 +102,9 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     buttonText: "Register",
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        BlocProvider.of<AuthCubit>(context)
-                            .register(email: email.text, password: password.text);
-                         (context).push(AppRouter.loginView);
+                        BlocProvider.of<AuthCubit>(context).register(
+                            email: email.text, password: password.text);
+                        (context).push(AppRouter.loginView);
                       }
                     },
                   );
@@ -105,7 +136,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
   void dispose() {
     email.dispose();
     password.dispose();
+    confirmPassword.dispose();
     super.dispose();
   }
-  
 }

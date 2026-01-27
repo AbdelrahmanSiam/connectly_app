@@ -18,7 +18,7 @@ class SplashViewIcon extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
                 child: Image.asset(AssetsData.logo))),
         Text(
-          "Connectly",
+          "Connect Ly",
           style: AppTextStyles.textStyle32.copyWith(color: Colors.white),
         ),
       ],

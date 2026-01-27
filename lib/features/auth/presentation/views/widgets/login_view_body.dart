@@ -3,6 +3,7 @@ import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:connectly_app/core/widgets/custom_snackbar.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:connectly_app/features/auth/presentation/views/helpers/helper_methods.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_auth_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_form_field.dart';
@@ -43,6 +44,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 labelText: 'Email',
                 icon: Icons.email,
                 controller: email,
+                validator: (value) {
+        return nullValidationMethod(value);
+      },
               ),
               const SizedBox(height: 20),
               CustomTextFormField(
@@ -50,6 +54,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 isPassword: true,
                 icon: Icons.password,
                 controller: password,
+                validator: (value) {
+        return nullValidationMethod(value);
+      },
               ),
               const SizedBox(
                 height: 20,
@@ -142,11 +149,11 @@ class _LoginViewBodyState extends State<LoginViewBody> {
       ),
     );
   }
-@override
-  void dispose() {
-    email.dispose();
-    password.dispose();
-    super.dispose();
-  }
+// @override
+//   void dispose() {
+//     email.dispose();
+//     password.dispose();
+//     super.dispose();
+//   }
 
 }

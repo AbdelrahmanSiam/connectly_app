@@ -57,7 +57,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       message: "Login Successful!",
                       type: SnackBarType.success,
                     );
-                    (context).go(AppRouter.homeView);
+                    GoRouter.of(context).push(AppRouter.homeView);
                   } else if (state is ForgetPasswordState) {
                     CustomSnackBar.show(
                       context,

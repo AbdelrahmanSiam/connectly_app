@@ -22,7 +22,7 @@ class NavigateToRegisterSection extends StatelessWidget {
         CustomTextButton(
           text: 'Register',
           onPressed: () {
-            context.go(AppRouter.registerView);
+            GoRouter.of(context).push(AppRouter.registerView);
           },
         ),
       ],

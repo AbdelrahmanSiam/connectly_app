@@ -20,7 +20,7 @@ class NavigatorToLoginSection extends StatelessWidget {
         CustomTextButton(
           text: 'Login',
           onPressed: () {
-            context.go(AppRouter.loginView);
+            GoRouter.of(context).push(AppRouter.loginView);
           },
         ),
       ],

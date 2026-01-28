@@ -23,9 +23,9 @@ class SplashView extends StatelessWidget {
           child: BlocListener<AuthCubit, AuthState>(
             listener: (context, state) {
               if(state is AuthSuccessState){
-                context.go(AppRouter.homeView);
+                GoRouter.of(context).push(AppRouter.homeView);
               }else if (state is GoToLoginView){
-                context.go(AppRouter.loginView);
+                GoRouter.of(context).push(AppRouter.loginView);
               }
             },
             child: SplashViewBody(),

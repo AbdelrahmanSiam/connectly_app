@@ -57,7 +57,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           "Account created successfully! , Now verifiy you email and Check your Spam. ",
                       type: SnackBarType.success,
                     );
-                    context.go(AppRouter.verifyView);
+                   GoRouter.of(context).push(AppRouter.verifyView);
                   }
                 },
                 builder: (context, state) {

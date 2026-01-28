@@ -14,7 +14,7 @@ const VerifyEmailViewBody({super.key});
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccessState) {
-          context.go(AppRouter.homeView); // if email verified and logged in this is success state
+         GoRouter.of(context).push(AppRouter.homeView); // if email verified and logged in this is success state
         }
 
         if (state is AuthFailureState) {

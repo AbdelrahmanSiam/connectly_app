@@ -1,4 +1,5 @@
 import 'package:connectly_app/core/routing/app_router.dart';
+import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/core/utils/service_locator.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:connectly_app/firebase_options.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         routerConfig: AppRouter.router,
         theme: ThemeData(
         brightness: Brightness.light,
-        scaffoldBackgroundColor: const Color(0XFFF2F2F6)),
+        scaffoldBackgroundColor: AppColors.backgroundColor),
       ),
     );
   }

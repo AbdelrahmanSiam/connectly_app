@@ -11,6 +11,8 @@ class HomeViewMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
+      offset: const Offset(0, 45), // to open down
+      color: AppColors.backgroundColor,
       icon: const Icon(Icons.more_vert),
       iconSize: 32,
       iconColor: AppColors.deepPrimary,
@@ -19,7 +21,7 @@ class HomeViewMenu extends StatelessWidget {
       ),
       onSelected: (value) {
         if (value == 'profile') {
-          context.push(AppRouter.profileView);
+          GoRouter.of(context).push(AppRouter.profileView);
         } else if (value == 'logout') {
           showDialog(
             context: context,

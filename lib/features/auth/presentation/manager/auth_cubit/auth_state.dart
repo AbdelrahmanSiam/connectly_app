@@ -10,6 +10,7 @@ final class AuthLoadingState extends AuthState {}
 final class AuthSuccessState extends AuthState {}
 
 final class AuthLoggedOutState extends AuthState {}
+final class LogoutLoadingState extends AuthState {}
 
 final class ForgetPasswordState extends AuthState {}
 

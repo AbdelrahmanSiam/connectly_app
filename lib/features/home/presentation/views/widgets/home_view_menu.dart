@@ -21,7 +21,7 @@ class HomeViewMenu extends StatelessWidget {
       ),
       onSelected: (value) {
         if (value == 'profile') {
-          GoRouter.of(context).push(AppRouter.profileView);
+          context.push(AppRouter.profileView);
         } else if (value == 'logout') {
           showDialog(
             context: context,
@@ -43,7 +43,7 @@ class HomeViewMenu extends StatelessWidget {
           child: MenuItem(
             icon: Icons.logout,
             text: 'Logout',
-            isDanger: true,
+            isDanger: true,// colore become red
           ),
         ),
       ],

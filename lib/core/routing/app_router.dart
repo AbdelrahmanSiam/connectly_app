@@ -17,7 +17,7 @@ abstract class AppRouter {
   static const String homeView = '/home';
   static const String verifyView = '/verify';
   static const String profileView = '/profile';
-  
+
   static final GoRouter router = GoRouter(
     initialLocation: splashView,
     routes: [
@@ -34,22 +34,22 @@ abstract class AppRouter {
         builder: (_, __) => const RegisterView(),
       ),
       GoRoute(
-        path: verifyView,
-        builder: (context , state){
-          return VerifyEmailView();
-        }
-      ),
+          path: verifyView,
+          builder: (context, state) {
+            return VerifyEmailView();
+          }),
       GoRoute(
         path: homeView,
-        builder: (context, state) { 
-          return HomeView();},
+        builder: (context, state) {
+          return HomeView();
+        },
       ),
       GoRoute(
         path: profileView,
-        builder: (context, state) { 
-          return ProfileView();},
+        builder: (context, state) {
+          return ProfileView();
+        },
       ),
     ],
   );
 }
-

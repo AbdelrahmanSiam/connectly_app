@@ -2,8 +2,8 @@ import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class PageHeader extends StatelessWidget {
-  const PageHeader({super.key, required this.header1, required this.header2});
+class PageHeaderSection extends StatelessWidget {
+  const PageHeaderSection({super.key, required this.header1, required this.header2});
   final String header1;
   final String header2;
   @override

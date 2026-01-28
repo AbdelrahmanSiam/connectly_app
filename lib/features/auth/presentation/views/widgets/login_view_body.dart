@@ -7,6 +7,8 @@ import 'package:connectly_app/features/auth/presentation/views/helpers/helper_me
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_auth_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_form_field.dart';
+import 'package:connectly_app/features/auth/presentation/views/widgets/login_form_section.dart';
+import 'package:connectly_app/features/auth/presentation/views/widgets/navigate_to_register_section.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/page_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,27 +36,10 @@ class _LoginViewBodyState extends State<LoginViewBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const PageHeader(
+              const PageHeaderSection(
                   header1: "Welcome back!", header2: 'Login to continue'),
               const SizedBox(height: 100),
-              CustomTextFormField(
-                labelText: 'Email',
-                icon: Icons.email,
-                controller: email,
-                validator: (value) {
-        return nullValidationMethod(value);
-      },
-              ),
-              const SizedBox(height: 20),
-              CustomTextFormField(
-                labelText: 'Password',
-                isPassword: true,
-                icon: Icons.password,
-                controller: password,
-                validator: (value) {
-        return nullValidationMethod(value);
-      },
-              ),
+              FormSection(email: email, password: password),
               const SizedBox(
                 height: 20,
               ),
@@ -124,22 +109,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 },
               ),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Don't have an account?",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.textStyle18
-                          .copyWith(color: Colors.black)),
-                  CustomTextButton(
-                    text: 'Register',
-                    onPressed: () {
-                      context.go(AppRouter.registerView);
-                    },
-                  ),
-                ],
-              ),
+              NavigateToRegisterSection(),
             ],
           ),
         ),
@@ -154,3 +124,6 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   }
 
 }
+
+
+

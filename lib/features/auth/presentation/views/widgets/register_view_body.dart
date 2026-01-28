@@ -6,8 +6,10 @@ import 'package:connectly_app/features/auth/presentation/views/helpers/helper_me
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_auth_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_form_field.dart';
+import 'package:connectly_app/features/auth/presentation/views/widgets/navigator_to_login_section.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/page_header.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/profile_image_picker.dart';
+import 'package:connectly_app/features/auth/presentation/views/widgets/register_form_section.dart' show FormSection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -35,52 +37,13 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const PageHeader(
+              const PageHeaderSection(
                   header1: 'Create Account',
                   header2: 'Register to get started'),
               const SizedBox(height: 50),
               ProfileImagePicker(),
               SizedBox(height: 20,),
-              CustomTextFormField(
-                labelText: 'Name',
-                controller: name,
-                icon: Icons.person,
-                validator: (value) {
-                  return nullValidationMethod(value);
-                },
-              ),
-              const SizedBox(height: 20),
-              CustomTextFormField(
-                labelText: 'Email',
-                icon: Icons.email,
-                controller: email,
-                validator: (value) {
-                  return nullValidationMethod(value);
-                },
-              ),
-              const SizedBox(height: 20),
-              CustomTextFormField(
-                labelText: 'Password',
-                isPassword: true,
-                icon: Icons.password,
-                controller: password,
-                validator: (value) {
-                  return nullValidationMethod(value);
-                },
-              ),
-              const SizedBox(height: 20),
-              CustomTextFormField(
-                labelText: 'Confirm password',
-                isPassword: true,
-                icon: Icons.password,
-                controller: confirmPassword,
-                validator: (value) {
-                  if (value != password.text) {
-                    return 'Confirm password is wrong';
-                  }
-                  return nullValidationMethod(value);
-                },
-              ),
+              FormSection(name: name, email: email, password: password, confirmPassword: confirmPassword),
               const SizedBox(height: 50),
               BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
@@ -111,20 +74,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 },
               ),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Already have an account?",
-                      style: AppTextStyles.textStyle18
-                          .copyWith(color: Colors.black)),
-                  CustomTextButton(
-                    text: 'Login',
-                    onPressed: () {
-                      context.go(AppRouter.loginView);
-                    },
-                  ),
-                ],
-              ),
+              NavigatorToLoginSection(),
             ],
           ),
         ),
@@ -141,3 +91,4 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
     super.dispose();
   }
 }
+

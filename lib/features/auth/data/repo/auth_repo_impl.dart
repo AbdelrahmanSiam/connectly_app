@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/data/service/auth_service.dart';
 import 'package:connectly_app/features/auth/domain/errors/auth_exceptions.dart';
+import 'package:connectly_app/core/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepoImpl implements AuthRepo {
@@ -10,7 +11,7 @@ class AuthRepoImpl implements AuthRepo {
 
   AuthRepoImpl({required this.authService});
   @override
-  Future<UserCredential> login(
+  Future<UserModel> login(
       {required String email, required String password}) async {
         try{
     return await authService.login(email: email, password: password);
@@ -30,10 +31,10 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<UserCredential> register(
-      {required String email, required String password}) async {
+  Future<UserModel> register(
+      {required String email, required String password , required String name}) async {
         try{
-    return await authService.register(email: email, password: password);
+    return await authService.register(email: email, password: password , name: name);
         }on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         throw EmailAlreadyIsUsedException();
@@ -61,20 +62,29 @@ class AuthRepoImpl implements AuthRepo {
   }
   
   @override
-  Future<void> sendEmailVerification() async{
+Future<void> sendEmailVerification() async {
+  try {
     await authService.sendEmailVerification();
+  } catch (e) {
+    throw AuthException('Failed to send verification email: $e');
   }
+}
   
 
   
   @override
   Future<void> deletAccount()async {
-    await authService.deleteAccount();
+    try {
+  await authService.deleteAccount();
+} catch (e) {
+  throw Exception('Failed to delete account: $e');
+}
   }
   
   @override
   Future<void> forgetPassword({required String email}) async{
-    await authService.forgetPassword(email: email);
+  await authService.forgetPassword(email: email);
+
   }
   
   @override

@@ -104,8 +104,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         BlocProvider.of<AuthCubit>(context).register(
-                            email: email.text, password: password.text);
-                        (context).push(AppRouter.loginView);
+                            email: email.text, password: password.text , name: name.text);
                       }
                     },
                   );
@@ -138,6 +137,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
     email.dispose();
     password.dispose();
     confirmPassword.dispose();
+    name.dispose();
     super.dispose();
   }
 }

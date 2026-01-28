@@ -1,10 +1,11 @@
+import 'package:connectly_app/core/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepo {
-  Future<UserCredential> register(
-      {required String email, required String password});
+  Future<UserModel> register(
+      {required String email, required String password , required String name});
 
-  Future<UserCredential> login(
+  Future<UserModel> login(
       {required String email, required String password});
 
   Future<void> logOut();
@@ -12,6 +13,7 @@ abstract class AuthRepo {
   Future<void> deletAccount();
   
   bool isEmailVerified() ;
+
   bool loggedIn() ;
 
   Future<void> sendEmailVerification();

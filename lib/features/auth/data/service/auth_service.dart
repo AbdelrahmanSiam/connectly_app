@@ -1,40 +1,100 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectly_app/features/auth/domain/errors/auth_exceptions.dart';
+import 'package:connectly_app/core/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance ;
 
-  Future<UserCredential> register(
-      {required String email, required String password}) async {
-    return await firebaseAuth
-        .createUserWithEmailAndPassword(email: email, password: password);
+  Future<UserModel> register(
+      {required String email,
+      required String password,
+      required String name}) async {
+    // step 1 : auth
+    final UserCredential = await firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    // step 2 : add user
+    final userId = UserCredential.user!.uid; // fetch user id
+
+    final userModel = UserModel(   // create userModel to add it to firebase
+        id: userId,
+        name: name,
+        email: email,
+        profilePictureUrl: "",
+        isOnline: true,
+        createdAt: DateTime.now(),
+        lastSeen: DateTime.now());
+      await firebaseFirestore.collection("users").doc(userId).set(userModel.toJson()); // add model to firestore
+      return userModel;
   }
 
-  Future<UserCredential> login(
+  Future<UserModel> login(
       {required String email, required String password}) async {
-    return await firebaseAuth
-        .signInWithEmailAndPassword(email: email, password: password);
+        // step 1 : auth
+    final userCredential = await firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+        // step 2 : get user data
+    final userId = userCredential.user!.uid; // fetch doc id
+    final userDoc = await firebaseFirestore.collection("users").doc(userId).get(); // get the data
+    if(!userDoc.exists){
+      throw AuthException("User data not found in database");
+    }
+    final userModel = UserModel.fromJson(userDoc.data()!);
+    await firebaseFirestore.collection("users").doc(userId).update({"isOnline" : true}); // update user state to be true
+    return userModel ;
   }
 
-
-  Future<void> logOut() {
-    return firebaseAuth.signOut();
+  Future<void> logOut() async{
+    try {
+  final userId = firebaseAuth.currentUser?.uid;
+  if(userId != null){
+    await firebaseFirestore.collection("users").doc(userId).update({"isOnline" : false , "lastSeen" : FieldValue.serverTimestamp()}); // update user state to be false
+  }
+  await firebaseAuth.signOut();
+} catch (e) {
+  throw Exception('Logout failed: $e');
+}
+    
   }
 
   bool isEmailVerified() {
-        return firebaseAuth.currentUser!.emailVerified ;
+    return firebaseAuth.currentUser?.emailVerified ?? false;
   }
-  bool loggedIn(){
-    return firebaseAuth.currentUser != null ;
+
+  bool loggedIn() {
+    return firebaseAuth.currentUser != null;
   }
+
   Future<void> sendEmailVerification() async {
     await firebaseAuth.currentUser?.sendEmailVerification();
   }
 
   Future<void> deleteAccount() async {
-    await firebaseAuth.currentUser?.delete();
-  }
+    final userId = firebaseAuth.currentUser?.uid;
+    
+    if (userId != null) {
+      // 1. مسح من Firestore
+      await firebaseFirestore.collection('users').doc(userId).delete();
+      
+      // 2. مسح الصورة من Storage (لو فيه)
+      // TODO: delete from Supabase/Firebase Storage
+      
+      // 3. مسح من Auth
+      await firebaseAuth.currentUser?.delete();
+    }
+}
 
-  Future<void> forgetPassword({required String email})async{
+  Future<void> forgetPassword({required String email}) async {
+  try {
     await firebaseAuth.sendPasswordResetEmail(email: email);
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      throw UserNotFoundException();
+    } else if (e.code == 'invalid-email') {
+      throw AuthException('Invalid email address');
+    }
+    throw AuthException(e.message ?? 'Failed to send reset email');
   }
+}
 }

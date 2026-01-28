@@ -2,6 +2,9 @@ class AuthException implements Exception {
   final String message;
   
   AuthException(this.message);
+
+  @override
+  String toString() => message; // toString() عشان الـ error message يظهر لما تعمل print
 }
 
 class UserNotFoundException extends AuthException {

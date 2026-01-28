@@ -31,10 +31,10 @@ class AuthCubit extends Cubit<AuthState> {
 
 
   Future<void> register(
-      {required String email, required String password}) async {
+      {required String email, required String password, required String name}) async {
     emit(AuthLoadingState());
     try {
-        await authRepo.register(email: email, password: password);
+        await authRepo.register(email: email, password: password , name : name);
         await authRepo.sendEmailVerification();
       emit(EmailNotVerifiedState());
     } on AuthException catch (e) {

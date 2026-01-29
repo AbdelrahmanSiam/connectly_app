@@ -16,7 +16,7 @@ class UserService {
       
     } catch (e) {
       print('❌ UserService: Error getting chats count - $e');
-      return 0;  
+      throw Exception('Failed to get chats count');  
     }
   }
   }

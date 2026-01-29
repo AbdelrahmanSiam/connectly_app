@@ -8,9 +8,31 @@ import 'package:connectly_app/features/profile/presentation/views/widgets/state_
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProfileViewBody extends StatelessWidget {
+class ProfileViewBody extends StatefulWidget {
   const ProfileViewBody({super.key});
 
+  @override
+  State<ProfileViewBody> createState() => _ProfileViewBodyState();
+}
+
+class _ProfileViewBodyState extends State<ProfileViewBody> {
+  Map<String, int>? stats;
+  @override
+  void initState() {
+    super.initState();
+    _loadStats();  // fetch states first
+  }
+  Future<void> _loadStats() async {
+    final userCubit = context.read<UserCubit>();
+    final userId = userCubit.currentUser?.id;
+    
+    if (userId != null) {
+      final loadedStats = await userCubit.getUserStats(userId: userId);
+      setState(() {
+        stats = loadedStats;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
@@ -46,7 +68,7 @@ class ProfileViewBody extends StatelessWidget {
                   height: 10,
                 ),
                 StatsSection(
-                  chatsCount: 15,
+                  chatsCount: stats?['chats'] ?? 0,
                   createdAt: state.userModel.createdAt,
                 ),
                 const SizedBox(height: 24),
@@ -67,4 +89,3 @@ class ProfileViewBody extends StatelessWidget {
     );
   }
 }
-

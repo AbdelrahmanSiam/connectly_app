@@ -1,12 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:connectly_app/features/profile/data/model/user_model.dart';
+import 'package:connectly_app/features/profile/data/repo/user_repo.dart';
 import 'package:meta/meta.dart';
 
 part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
-  UserCubit() : super(UserInitialState());
-
+  UserCubit(this.userRepo) : super(UserInitialState());
+final UserRepo userRepo;
   void setUser(UserModel userModel){
     emit(UserSuccessState(userModel: userModel));
   }
@@ -43,4 +44,8 @@ class UserCubit extends Cubit<UserState> {
 
     bool get isUserLoaded => state is UserSuccessState; // check there user or not
 
+  Future<Map<String ,int>> getUserStats({required String userId})async{
+    final chatCount = await userRepo.getChatsCount(userId: userId);
+    return {"chats" : chatCount};
+  }
 }

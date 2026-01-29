@@ -23,7 +23,6 @@ class ProfileViewBody extends StatelessWidget {
               createdAt: DateTime(2024, 1, 15),
             ),
             const SizedBox(height: 24),
-            // 4. Settings Section
             SettingsSection(
               onEditProfile: () {
                 ScaffoldMessenger.of(context).showSnackBar(

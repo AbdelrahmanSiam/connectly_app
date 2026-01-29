@@ -22,57 +22,54 @@ class _SettingsSectionState extends State<SettingsSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Title
-          Text(
-            "Settings",
-            style: AppTextStyles.textStyle18.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Title
+        Text(
+          "Settings",
+          style: AppTextStyles.textStyle18.copyWith(
+            fontWeight: FontWeight.bold,
           ),
-
-          const SizedBox(height: 12),
-
-          Card(
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              children: [
-                // 1. Edit Profile
-                SettingTile(
-                  icon: Icons.edit_outlined,
-                  iconColor: AppColors.primary,
-                  title: "Edit Profile",
-                  subtitle: "Update your information",
-                  onTap: widget.onEditProfile,
-                ),
-
-                const Divider(height: 1),
-
-                // 2. Logout
-                SettingTile(
-                  icon: Icons.logout,
-                  iconColor: Colors.red,
-                  title: "Logout",
-                  subtitle: "Sign out of your account",
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => const LogoutDialog(),
-                    );
-                  },
-                ),
-              ],
-            ),
+        ),
+    
+        const SizedBox(height: 12),
+    
+        Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
-        ],
-      ),
+          child: Column(
+            children: [
+              // 1. Edit Profile
+              SettingTile(
+                icon: Icons.edit_outlined,
+                iconColor: AppColors.primary,
+                title: "Edit Profile",
+                subtitle: "Update your information",
+                onTap: widget.onEditProfile,
+              ),
+    
+              const Divider(height: 1),
+    
+              // 2. Logout
+              SettingTile(
+                icon: Icons.logout,
+                iconColor: Colors.red,
+                title: "Logout",
+                subtitle: "Sign out of your account",
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => const LogoutDialog(),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

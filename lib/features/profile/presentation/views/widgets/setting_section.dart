@@ -1,4 +1,3 @@
-import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/features/home/presentation/views/widgets/logout_dialog.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/setting_tile.dart';
 import 'package:flutter/material.dart';
@@ -26,48 +25,44 @@ class _SettingsSectionState extends State<SettingsSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Title
-        Text(
-          "Settings",
-          style: AppTextStyles.textStyle18.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+        Row(
+          children: [
+            Icon(
+              Icons.settings_outlined,
+              size: 20,
+              color: Theme.of(context).primaryColor,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              "Settings",
+              style: AppTextStyles.textStyle18.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
     
-        const SizedBox(height: 12),
+        const SizedBox(height: 16),
     
-        Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            children: [
-              // 1. Edit Profile
-              SettingTile(
-                icon: Icons.edit_outlined,
-                iconColor: AppColors.primary,
-                title: "Edit Profile",
-                subtitle: "Update your information",
-                onTap: widget.onEditProfile,
-              ),
+        // Settings Tiles
+        SettingTile(
+          icon: Icons.edit_outlined,
+          title: "Edit Profile",
+          subtitle: "Update your information",
+          onTap: widget.onEditProfile,
+        ),
     
-              const Divider(height: 1),
-    
-              // 2. Logout
-              SettingTile(
-                icon: Icons.logout,
-                iconColor: Colors.red,
-                title: "Logout",
-                subtitle: "Sign out of your account",
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => const LogoutDialog(),
-                  );
-                },
-              ),
-            ],
-          ),
+        SettingTile(
+          icon: Icons.logout,
+          iconColor: Colors.red,
+          title: "Logout",
+          subtitle: "Sign out of your account",
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (_) => const LogoutDialog(),
+            );
+          },
         ),
       ],
     );

@@ -1,3 +1,4 @@
+import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/features/profile/presentation/manager/cubit/user_cubit.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/bio_section.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/failure_user_profile_body.dart';
@@ -7,6 +8,7 @@ import 'package:connectly_app/features/profile/presentation/views/widgets/settin
 import 'package:connectly_app/features/profile/presentation/views/widgets/state_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileViewBody extends StatefulWidget {
   const ProfileViewBody({super.key});
@@ -45,43 +47,42 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
         }
         if(state is UserSuccessState){
         return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 20,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ProfileHeaderSection(
+                name: state.userModel.name,
+                email: state.userModel.email,
+                isOnline: true,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    BioSection(
+                      bio: state.userModel.bio ?? "No bio yet",
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    StatsSection(
+                      chatsCount: stats?['chats'] ?? 0,
+                      createdAt: state.userModel.createdAt,
+                    ),
+                    const SizedBox(height: 24),
+                    SettingsSection(
+                      onEditProfile: () {
+                        context.push(AppRouter.editProfileView);
+                      },
+                    ),
+                  ],
                 ),
-                ProfileHeaderSection(
-                  name: state.userModel.name,
-                  email: state.userModel.email,
-                  isOnline: true,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                BioSection(
-                  bio: state.userModel.bio ?? "No bio yet",
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                StatsSection(
-                  chatsCount: stats?['chats'] ?? 0,
-                  createdAt: state.userModel.createdAt,
-                ),
-                const SizedBox(height: 24),
-                SettingsSection(
-                  onEditProfile: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Edit Profile - Coming soon")),
-                    );
-                  },
-                ),
-                const SizedBox(height: 24),
-              ],
-            ),
+              ),
+              const SizedBox(height: 24),
+            ],
           ),
         );
         }return const SizedBox();

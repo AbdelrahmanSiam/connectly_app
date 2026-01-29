@@ -4,6 +4,7 @@ import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/presentation/views/login_view.dart';
 import 'package:connectly_app/features/auth/presentation/views/register_view.dart';
 import 'package:connectly_app/features/home/presentation/views/home_view.dart';
+import 'package:connectly_app/features/profile/presentation/views/edit_profile_view.dart';
 import 'package:connectly_app/features/profile/presentation/views/profile_view.dart';
 import 'package:connectly_app/features/splash/presentation/views/splash_view.dart';
 import 'package:connectly_app/features/verifiy/presentation/views/verify_email_view.dart';
@@ -17,6 +18,7 @@ abstract class AppRouter {
   static const String homeView = '/home';
   static const String verifyView = '/verify';
   static const String profileView = '/profile';
+  static const String editProfileView = '/editProfile';
 
   static final GoRouter router = GoRouter(
     initialLocation: splashView,
@@ -48,6 +50,12 @@ abstract class AppRouter {
         path: profileView,
         builder: (context, state) {
           return ProfileView();
+        },
+      ),
+      GoRoute(
+        path: editProfileView,
+        builder: (context, state) {
+          return EditProfileView();
         },
       ),
     ],

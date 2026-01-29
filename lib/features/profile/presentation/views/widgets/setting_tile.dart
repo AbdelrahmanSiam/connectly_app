@@ -23,42 +23,80 @@ class SettingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveIconColor = iconColor ?? Theme.of(context).primaryColor;
 
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: effectiveIconColor.withOpacity(0.1),
-        child: Icon(
-          icon,
-          color: effectiveIconColor,
-          size: 22,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 4),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.white,
+            Colors.grey.shade50,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-      ),
-
-      title: Text(
-        title,
-        style: AppTextStyles.textStyle18.copyWith(
-          fontWeight: FontWeight.w500,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.grey.shade200,
         ),
-      ),
-
-      subtitle: subtitle != null
-          ? Text(
-              subtitle!,
-              style: AppTextStyles.textStyle16.copyWith(
-                color: Colors.grey.shade600,
-              ),
-            )
-          : null,
-
-      trailing: trailing ??
-          Icon(
-            Icons.arrow_forward_ios,
-            size: 16,
-            color: Colors.grey.shade400,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
+        ],
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 8,
+        ),
+        // Leading - Icon Container
+        leading: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                effectiveIconColor.withOpacity(0.15),
+                effectiveIconColor.withOpacity(0.05),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            icon,
+            color: effectiveIconColor,
+            size: 24,
+          ),
+        ),
 
-      onTap: onTap,
+        // Title & Subtitle
+        title: Text(
+          title,
+          style: AppTextStyles.textStyle16.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        subtitle: subtitle != null
+            ? Text(
+                subtitle!,
+                style: AppTextStyles.textStyle16.copyWith(
+                  color: Colors.grey.shade600,
+                ),
+              )
+            : null,
 
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        // Trailing
+        trailing: trailing ??
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+              color: Colors.grey.shade400,
+            ),
+
+        // OnTap
+        onTap: onTap,
+      ),
     );
   }
 }

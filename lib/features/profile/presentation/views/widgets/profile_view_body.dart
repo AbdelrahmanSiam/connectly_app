@@ -1,15 +1,12 @@
 import 'package:connectly_app/features/profile/presentation/views/widgets/bio_section.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/profile_header_section.dart';
+import 'package:connectly_app/features/profile/presentation/views/widgets/setting_section.dart';
+import 'package:connectly_app/features/profile/presentation/views/widgets/state_section.dart';
 import 'package:flutter/material.dart';
 
-class ProfileViewBody extends StatefulWidget {
+class ProfileViewBody extends StatelessWidget {
   const ProfileViewBody({super.key});
 
-  @override
-  State<ProfileViewBody> createState() => _MyWidgetState();
-}
-
-class _MyWidgetState extends State<ProfileViewBody> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -20,6 +17,22 @@ class _MyWidgetState extends State<ProfileViewBody> {
           ProfileHeaderSection(name: "Abdulrahman",email:"email@gmail.com",isOnline: true,),
           SizedBox(height: 10,),
           BioSection(bio: "No bio yet",),
+          StatsSection(
+              chatsCount: 15,
+              friendsCount: 14,
+              createdAt: DateTime(2024, 1, 15),
+            ),
+            const SizedBox(height: 24),
+            // 4. Settings Section
+            SettingsSection(
+              onEditProfile: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Edit Profile - Coming soon")),
+                );
+              },
+            ),
+
+            const SizedBox(height: 24),
         ],
           ),
     );

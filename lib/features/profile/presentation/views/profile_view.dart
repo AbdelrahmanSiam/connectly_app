@@ -12,7 +12,7 @@ class ProfileView extends StatelessWidget {
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: AppColors.primary,
-        title: Text("Profile" ,style: AppTextStyles.textStyle22,),
+        title: Text("My Profile" ,style: AppTextStyles.textStyle22,),
       ),
       body: ProfileViewBody(),
     );

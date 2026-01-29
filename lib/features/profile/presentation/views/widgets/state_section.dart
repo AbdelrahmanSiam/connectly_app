@@ -6,12 +6,10 @@ class StatsSection extends StatelessWidget {
   const StatsSection({
     super.key,
     required this.chatsCount,
-    required this.friendsCount,
     required this.createdAt,
   });
 
   final int chatsCount;
-  final int friendsCount;
   final DateTime createdAt;
 
   @override
@@ -24,17 +22,6 @@ class StatsSection extends StatelessWidget {
             label: "Chats",
             value: chatsCount.toString(),
             color: Colors.blue,
-          ),
-        ),
-    
-        const SizedBox(width: 12),
-    
-        Expanded(
-          child: InfoCard(
-            icon: Icons.people_outline,
-            label: "Friends",
-            value: friendsCount.toString(),
-            color: Colors.green,
           ),
         ),
     

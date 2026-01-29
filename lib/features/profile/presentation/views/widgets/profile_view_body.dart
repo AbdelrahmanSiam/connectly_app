@@ -42,9 +42,11 @@ class ProfileViewBody extends StatelessWidget {
                 BioSection(
                   bio: state.userModel.bio ?? "No bio yet",
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 StatsSection(
                   chatsCount: 15,
-                  friendsCount: 14,
                   createdAt: state.userModel.createdAt,
                 ),
                 const SizedBox(height: 24),

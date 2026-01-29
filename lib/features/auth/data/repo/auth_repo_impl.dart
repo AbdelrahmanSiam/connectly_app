@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/data/service/auth_service.dart';
 import 'package:connectly_app/features/auth/domain/errors/auth_exceptions.dart';
-import 'package:connectly_app/core/models/user_model.dart';
+import 'package:connectly_app/features/profile/data/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepoImpl implements AuthRepo {

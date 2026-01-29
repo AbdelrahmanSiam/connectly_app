@@ -2,6 +2,7 @@ import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/core/utils/service_locator.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:connectly_app/features/profile/presentation/manager/cubit/user_cubit.dart';
 import 'package:connectly_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => UserCubit(),
+        ),
         BlocProvider.value(value: getIt<AuthCubit>()),
       ],
       child: MaterialApp.router(

@@ -1,15 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/domain/errors/auth_exceptions.dart';
+import 'package:connectly_app/features/profile/presentation/manager/cubit/user_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this.authRepo) : super(AuthInitialState());
+  AuthCubit(this.authRepo, {required this.userCubit}) : super(AuthInitialState());
 
   final AuthRepo authRepo;
+  final UserCubit userCubit;
 
   
   Future<void> login({
@@ -18,7 +20,9 @@ class AuthCubit extends Cubit<AuthState> {
 }) async {
   emit(AuthLoadingState());
   try {
-        await authRepo.login(email: email, password: password);
+        final userModel = await authRepo.login(email: email, password: password);
+        userCubit.setUser(userModel); // fetch user model to use it at profile view
+        print('✅ AuthCubit: User stored in UserCubit');
         if( authRepo.isEmailVerified()){
           emit(AuthSuccessState());
         }
@@ -34,7 +38,8 @@ class AuthCubit extends Cubit<AuthState> {
       {required String email, required String password, required String name}) async {
     emit(AuthLoadingState());
     try {
-        await authRepo.register(email: email, password: password , name : name);
+        final userModel = await authRepo.register(email: email, password: password , name : name);
+        userCubit.setUser(userModel); // receive user model from user and use it at profile view and login
         await authRepo.sendEmailVerification();
       emit(EmailNotVerifiedState());
     } on AuthException catch (e) {
@@ -47,6 +52,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout() async {
     emit(LogoutLoadingState());
     await authRepo.logOut();
+    userCubit.clearUser();
+      print('✅ AuthCubit: User cleared from UserCubit');
     emit(AuthLoggedOutState());
   }
 

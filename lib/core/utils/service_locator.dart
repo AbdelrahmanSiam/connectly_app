@@ -2,12 +2,18 @@ import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo_impl.dart';
 import 'package:connectly_app/features/auth/data/service/auth_service.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:connectly_app/features/profile/presentation/manager/cubit/user_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt getIt = GetIt.instance; // This is our global ServiceLocator
 
 void setupLocator() {
+  getIt.registerLazySingleton<UserCubit>(
+    () => UserCubit(),
+  );
   getIt.registerLazySingleton<AuthService>(() => AuthService());
-  getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(authService: getIt()));
-  getIt.registerLazySingleton<AuthCubit>(() => AuthCubit(getIt()));
+  getIt.registerLazySingleton<AuthRepo>(
+      () => AuthRepoImpl(authService: getIt()));
+  getIt.registerLazySingleton<AuthCubit>(
+      () => AuthCubit(getIt(), userCubit: getIt<UserCubit>()));
 }

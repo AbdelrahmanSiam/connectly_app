@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => UserCubit(),
+        BlocProvider.value(
+          value: getIt<UserCubit>(),
         ),
         BlocProvider.value(value: getIt<AuthCubit>()),
       ],
@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.router,
         theme: ThemeData(
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: AppColors.backgroundColor),
+            brightness: Brightness.light,
+            scaffoldBackgroundColor: AppColors.backgroundColor),
       ),
     );
   }

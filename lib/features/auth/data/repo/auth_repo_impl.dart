@@ -32,9 +32,9 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<UserModel> register(
-      {required String email, required String password , required String name}) async {
+      {required String email, required String password , required String name , required File imageFile,}) async {
         try{
-    return await authService.register(email: email, password: password , name: name);
+    return await authService.register(email: email, password: password , name: name, imageFile: imageFile);
         }on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         throw EmailAlreadyIsUsedException();

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:connectly_app/core/widgets/custom_snackbar.dart';
@@ -9,7 +11,9 @@ import 'package:connectly_app/features/auth/presentation/views/widgets/custom_te
 import 'package:connectly_app/features/auth/presentation/views/widgets/navigator_to_login_section.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/page_header.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/profile_image_picker.dart';
-import 'package:connectly_app/features/auth/presentation/views/widgets/register_form_section.dart' show FormSection;
+import 'package:connectly_app/features/auth/presentation/views/widgets/register_form_section.dart'
+    show FormSection;
+import 'package:connectly_app/features/profile/presentation/views/helper/profile_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -27,6 +31,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController name = TextEditingController();
+  File? selectedImage;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -41,9 +46,25 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                   header1: 'Create Account',
                   header2: 'Register to get started'),
               const SizedBox(height: 50),
-              ProfileImagePicker(),
-              SizedBox(height: 20,),
-              FormSection(name: name, email: email, password: password, confirmPassword: confirmPassword),
+              ProfileImagePicker(
+                imageFile: selectedImage,
+                onTap: () async {
+                  final image = await pickCameraPhoto();
+                  if (image != null) {
+                    setState(() {
+                      selectedImage = image;
+                    });
+                  }
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              FormSection(
+                  name: name,
+                  email: email,
+                  password: password,
+                  confirmPassword: confirmPassword),
               const SizedBox(height: 50),
               BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
@@ -57,7 +78,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           "Account created successfully! , Now verifiy you email and Check your Spam. ",
                       type: SnackBarType.success,
                     );
-                   GoRouter.of(context).push(AppRouter.verifyView);
+                    GoRouter.of(context).push(AppRouter.verifyView);
                   }
                 },
                 builder: (context, state) {
@@ -66,8 +87,20 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     buttonText: "Register",
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
+                        if (selectedImage == null) {
+                          CustomSnackBar.show(
+                            context,
+                            message: "Please select profile image",
+                            type: SnackBarType.error,
+                          );
+                          return;
+                        }
                         BlocProvider.of<AuthCubit>(context).register(
-                            email: email.text, password: password.text , name: name.text);
+                            email: email.text,
+                            password: password.text,
+                            name: name.text,
+                            imageFile : selectedImage!
+                            );
                       }
                     },
                   );
@@ -91,4 +124,3 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
     super.dispose();
   }
 }
-

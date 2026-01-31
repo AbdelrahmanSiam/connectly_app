@@ -18,7 +18,7 @@ Future<String> uploadImageToSupabase({
 }) async {
   final supabase = Supabase.instance.client;
 
-  final filePath = 'avatars/$uid.jpg';
+  final filePath = '$uid.jpg';
 
   await supabase.storage
       .from('avatars')

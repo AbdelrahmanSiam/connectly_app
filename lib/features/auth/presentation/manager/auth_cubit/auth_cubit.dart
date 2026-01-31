@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/domain/errors/auth_exceptions.dart';
@@ -36,10 +38,10 @@ class AuthCubit extends Cubit<AuthState> {
 }
 
   Future<void> register(
-      {required String email, required String password, required String name}) async {
+      {required String email, required String password, required String name ,required File imageFile,}) async {
     emit(AuthLoadingState());
     try {
-        final userModel = await authRepo.register(email: email, password: password , name : name);
+        final userModel = await authRepo.register(email: email, password: password , name : name , imageFile: imageFile);
         userCubit.setUser(userModel); // receive user model from user and use it at profile view and login
         await authRepo.sendEmailVerification();
       emit(EmailNotVerifiedState());

@@ -5,7 +5,7 @@ import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth
 import 'package:connectly_app/features/profile/data/repo/user_repo.dart';
 import 'package:connectly_app/features/profile/data/repo/user_repo_impl.dart';
 import 'package:connectly_app/features/profile/data/service/user_service.dart';
-import 'package:connectly_app/features/profile/presentation/manager/cubit/user_cubit.dart';
+import 'package:connectly_app/features/profile/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt getIt = GetIt.instance; // This is our global ServiceLocator

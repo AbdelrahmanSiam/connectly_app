@@ -1,5 +1,5 @@
 import 'package:connectly_app/core/routing/app_router.dart';
-import 'package:connectly_app/features/profile/presentation/manager/cubit/user_cubit.dart';
+import 'package:connectly_app/features/profile/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/bio_section.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/failure_user_profile_body.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/initial_user_profile_body.dart';
@@ -54,6 +54,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                 name: state.userModel.name,
                 email: state.userModel.email,
                 isOnline: state.userModel.isOnline,
+                imageUrl: state.userModel.profilePictureUrl,
               ),
               SizedBox(
                 height: 10,

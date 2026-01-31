@@ -46,7 +46,7 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
               ),
               CustomTextFormField(
                 labelText: 'Bio',
-                icon: Icons.merge_type,
+                icon: Icons.edit_note,
                 controller: bio,
                 validator: (value) {
                   return nullValidationMethod(value);

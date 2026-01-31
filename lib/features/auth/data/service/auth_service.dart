@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectly_app/features/auth/domain/errors/auth_exceptions.dart';
 import 'package:connectly_app/features/profile/data/model/user_model.dart';
+import 'package:connectly_app/features/profile/presentation/views/helper/profile_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -10,19 +13,23 @@ class AuthService {
   Future<UserModel> register(
       {required String email,
       required String password,
-      required String name}) async {
+      required String name,
+      File? imageFile,
+      }) async {
     // step 1 : auth
     final UserCredential = await firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
     // step 2 : add user
     final userId = UserCredential.user!.uid; // fetch user id
 
+    String profilePictureUrl = await uploadImageToSupabase(imageFile: imageFile!, uid: userId);
+    
     final userModel = UserModel(   // create userModel to add it to firebase
         id: userId,
         name: name,
         email: email,
         bio: "",
-        profilePictureUrl: "",
+        profilePictureUrl: profilePictureUrl,
         isOnline: true,
         createdAt: DateTime.now(),
         lastSeen: DateTime.now());

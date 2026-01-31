@@ -16,14 +16,13 @@ final UserRepo userRepo;
     emit(UserInitialState());
   }
   
-  void updateUser({ String ? name , String ? bio , String ? profilePictureUrl , bool ? isOnline}){
+  void updateUser({ String ? name , String ? bio , String ? profilePictureUrl }){
     final currentState  = state ;
     if(currentState is UserSuccessState){
       final updatedState = currentState.copyWith(
         name: name,
         bio: bio,
         profilePictureUrl: profilePictureUrl,
-        isOnline: isOnline,
       );
       
       emit(updatedState);

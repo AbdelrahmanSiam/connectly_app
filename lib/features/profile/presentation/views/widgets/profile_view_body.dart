@@ -53,7 +53,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
               ProfileHeaderSection(
                 name: state.userModel.name,
                 email: state.userModel.email,
-                isOnline: true,
+                isOnline: state.userModel.isOnline,
               ),
               SizedBox(
                 height: 10,
@@ -63,7 +63,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                 child: Column(
                   children: [
                     BioSection(
-                      bio: state.userModel.bio ?? "No bio yet",
+                      bio: state.userModel.bio ,
                     ),
                     SizedBox(
                       height: 10,

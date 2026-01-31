@@ -6,7 +6,7 @@ class ProfileAvatar extends StatelessWidget {
     this.imageUrl,
     this.radius = 60,
     this.showOnlineIndicator = false,
-    this.isOnline = false,
+    this.isOnline = true,
     this.borderWidth = 4,
   });
 

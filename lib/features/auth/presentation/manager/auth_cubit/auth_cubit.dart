@@ -14,25 +14,26 @@ class AuthCubit extends Cubit<AuthState> {
   final UserCubit userCubit;
 
   
-  Future<void> login({
-  required String email,
-  required String password,
-}) async {
+  Future<void> login({required String email, required String password}) async {
   emit(AuthLoadingState());
+  
   try {
-        final userModel = await authRepo.login(email: email, password: password);
-        userCubit.setUser(userModel); // fetch user model to use it at profile view
-        print('✅ AuthCubit: User stored in UserCubit');
-        if( authRepo.isEmailVerified()){
-          emit(AuthSuccessState());
-        }
+    final userModel = await authRepo.login(email: email, password: password);
+    
+    userCubit.setUser(userModel);
+
+    if (!authRepo.isEmailVerified()) {
+      emit(EmailNotVerifiedState());
+      return;
+    }
+
+    emit(AuthSuccessState());
   } on AuthException catch (e) {
     emit(AuthFailureState(errMessage: e.message));
-  }catch (e) {
-      emit(AuthFailureState(errMessage: 'An unexpected error occurred'));
-    }
+  } catch (e) {
+    emit(AuthFailureState(errMessage: 'An unexpected error occurred'));
+  }
 }
-
 
   Future<void> register(
       {required String email, required String password, required String name}) async {

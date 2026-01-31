@@ -21,6 +21,7 @@ class AuthService {
         id: userId,
         name: name,
         email: email,
+        bio: "",
         profilePictureUrl: "",
         isOnline: true,
         createdAt: DateTime.now(),

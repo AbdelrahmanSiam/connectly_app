@@ -15,7 +15,6 @@ final class UserSuccessState extends UserState {
     String? name,
     String? bio,
     String? profilePictureUrl,
-    bool? isOnline,
   }) {
     return UserSuccessState(userModel: 
       UserModel(
@@ -24,7 +23,7 @@ final class UserSuccessState extends UserState {
         email: userModel.email,
         profilePictureUrl: profilePictureUrl ?? userModel.profilePictureUrl,
         bio: bio ?? userModel.bio,
-        isOnline: isOnline ?? userModel.isOnline,
+        isOnline:  userModel.isOnline,
         createdAt: userModel.createdAt,
         lastSeen: userModel.lastSeen,
       ),

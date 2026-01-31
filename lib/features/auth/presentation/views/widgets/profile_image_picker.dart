@@ -48,7 +48,6 @@ class ProfileImagePicker extends StatelessWidget {
             ),
           ),
 
-          // Camera Icon
           Container(
             width: 36,
             height: 36,

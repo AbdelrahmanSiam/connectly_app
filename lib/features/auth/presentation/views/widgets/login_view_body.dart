@@ -57,11 +57,16 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       message: "Login Successful!",
                       type: SnackBarType.success,
                     );
-                    GoRouter.of(context).push(AppRouter.homeView);
+
+                    Future.delayed(const Duration(milliseconds: 800), () {
+                      GoRouter.of(context).pushReplacement(AppRouter.homeView);
+                    });
+                  } else if (state is EmailNotVerifiedState) {
+                    GoRouter.of(context).go(AppRouter.verifyView);
                   } else if (state is ForgetPasswordState) {
                     CustomSnackBar.show(
                       context,
-                      message: "Check your email to reset password. ",
+                      message: "Check your email to reset password.",
                       type: SnackBarType.success,
                     );
                   } else if (state is ForgetPasswordFailureState) {
@@ -77,7 +82,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          if (email.text == null || email.text.trim().isEmpty) {
+                          if (email.text.trim().isEmpty) {
                             CustomSnackBar.show(
                               context,
                               message: "Please enter email first",
@@ -89,9 +94,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                           }
                         },
                         child: Align(
-                          alignment: Alignment.centerLeft
-                          ,
-                          child: Text("Forget password ? ",style: AppTextStyles.textStyle18.copyWith(color: AppColors.primary),)),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Forget password ? ",
+                              style: AppTextStyles.textStyle18
+                                  .copyWith(color: AppColors.primary),
+                            )),
                       ),
                       const SizedBox(height: 50),
                       CustomAuthButton(
@@ -99,8 +107,8 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                         buttonText: "Login",
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            BlocProvider.of<AuthCubit>(context)
-                                .login(email: email.text, password: password.text);
+                            BlocProvider.of<AuthCubit>(context).login(
+                                email: email.text, password: password.text);
                           }
                         },
                       ),
@@ -116,14 +124,11 @@ class _LoginViewBodyState extends State<LoginViewBody> {
       ),
     );
   }
-@override
+
+  @override
   void dispose() {
     email.dispose();
     password.dispose();
     super.dispose();
   }
-
 }
-
-
-

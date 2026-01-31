@@ -8,7 +8,7 @@ class ProfileHeaderSection extends StatelessWidget {
     required this.name,
     required this.email,
     this.imageUrl,
-    this.isOnline = false,
+    this.isOnline = true,
   });
 
   final String name;

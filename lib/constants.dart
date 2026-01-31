@@ -1,0 +1,2 @@
+const supabaseUrl = 'https://mcrzsjndadoswemlmrny.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jcnpzam5kYWRvc3dlbWxtcm55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk4MTg5MDcsImV4cCI6MjA4NTM5NDkwN30.lJU3HLuU227M8QX8Ipwl8y-tT5WiiuE6szS-RiWUvTU';

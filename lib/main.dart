@@ -1,3 +1,4 @@
+import 'package:connectly_app/constants.dart';
 import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/core/utils/service_locator.dart';
@@ -12,13 +13,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
-    url: 'https://mcrzsjndadoswemlmrny.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jcnpzam5kYWRvc3dlbWxtcm55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk4MTg5MDcsImV4cCI6MjA4NTM5NDkwN30.lJU3HLuU227M8QX8Ipwl8y-tT5WiiuE6szS-RiWUvTU',
+    url: supabaseUrl,
+    anonKey: supabaseAnonKey,
   );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  setupLocator();
+   setupLocator();
   runApp(const MyApp());
 }
 

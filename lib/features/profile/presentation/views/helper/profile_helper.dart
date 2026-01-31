@@ -16,21 +16,25 @@ Future<String> uploadImageToSupabase({
   required File imageFile,
   required String uid,
 }) async {
-  final supabase = Supabase.instance.client;
+  try {
+    final supabase = Supabase.instance.client;
+    final filePath = '$uid.jpg';
 
-  final filePath = '$uid.jpg';
+    await supabase.storage
+        .from('avatars')
+        .upload(
+          filePath,
+          imageFile,
+          fileOptions: const FileOptions(upsert: true),
+        );
 
-  await supabase.storage
-      .from('avatars')
-      .upload(
-        filePath,
-        imageFile,
-        fileOptions: const FileOptions(upsert: true),
-      );
+    final imageUrl = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
 
-  final imageUrl = supabase.storage
-      .from('avatars')
-      .getPublicUrl(filePath);
-
-  return imageUrl;
+    return imageUrl;
+  } catch (e) {
+    print('❌ Upload failed: $e');
+    throw Exception('Failed to upload image: $e');
+  }
 }

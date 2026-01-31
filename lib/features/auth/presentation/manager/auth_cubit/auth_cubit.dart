@@ -37,20 +37,35 @@ class AuthCubit extends Cubit<AuthState> {
   }
 }
 
-  Future<void> register(
-      {required String email, required String password, required String name ,required File imageFile,}) async {
-    emit(AuthLoadingState());
-    try {
-        final userModel = await authRepo.register(email: email, password: password , name : name , imageFile: imageFile);
-        userCubit.setUser(userModel); // receive user model from user and use it at profile view and login
-        await authRepo.sendEmailVerification();
-      emit(EmailNotVerifiedState());
-    } on AuthException catch (e) {
+  Future<void> register({
+  required String email,
+  required String password,
+  required String name,
+  required File imageFile,
+}) async {
+  emit(AuthLoadingState());
+  try {
+    final userModel = await authRepo.register(
+      email: email,
+      password: password,
+      name: name,
+      imageFile: imageFile,
+    );
+    userCubit.setUser(userModel);
+    await authRepo.sendEmailVerification();
+    emit(EmailNotVerifiedState());
+  } on AuthException catch (e) {
     emit(AuthFailureState(errMessage: e.message));
-  }catch (e) {
-      emit(AuthFailureState(errMessage: 'An unexpected error occurred'));
+  } on Exception catch (e) {
+    if (e.toString().contains('Storage')) {
+      emit(AuthFailureState(errMessage: 'Failed to upload profile image'));
+    } else {
+      emit(AuthFailureState(errMessage: 'Registration failed. Please try again.'));
     }
+  } catch (e) {
+    emit(AuthFailureState(errMessage: 'An unexpected error occurred'));
   }
+}
 
   Future<void> logout() async {
     emit(LogoutLoadingState());

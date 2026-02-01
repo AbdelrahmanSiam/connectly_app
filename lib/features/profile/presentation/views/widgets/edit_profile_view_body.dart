@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:connectly_app/core/routing/app_router.dart';
+import 'package:connectly_app/core/widgets/custom_snackbar.dart';
 import 'package:connectly_app/features/auth/presentation/views/helpers/helper_methods.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_auth_button.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_form_field.dart';
@@ -36,6 +37,7 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
       imageUrl = user.profilePictureUrl;
     }
   }
+
   @override
   void dispose() {
     newName.dispose();
@@ -94,17 +96,35 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
               SizedBox(
                 height: 100,
               ),
-              CustomAuthButton(
-                // isLoading: state is AuthLoadingState,
-                buttonText: "Save",
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    context.read<EditProfileCubit>().updateProfile(
-                        name: newName.text,
-                        bio: bio.text,
-                        newProfilePic: selectedImage);
-                        context.push(AppRouter.profileView);
+              BlocConsumer<EditProfileCubit, EditProfileState>(
+                listener: (context, state) {
+                  if(state is EditProfileSuccessState){
+                    CustomSnackBar.show(
+                      context,
+                      message:
+                          "Profile updated ",
+                      type: SnackBarType.success,
+                    );
                   }
+                  else if(state is EditProfileFailureState){
+                    CustomSnackBar.show(context,
+                        message: state.errMessage, type: SnackBarType.error);
+                  }
+                },
+                builder: (context, state) {
+                  return CustomAuthButton(
+                    isLoading: state is EditProfileLoadingState,
+                    buttonText: "Save",
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        context.read<EditProfileCubit>().updateProfile(
+                            name: newName.text,
+                            bio: bio.text,
+                            newProfilePic: selectedImage);
+                        context.push(AppRouter.profileView);
+                      }
+                    },
+                  );
                 },
               ),
             ],

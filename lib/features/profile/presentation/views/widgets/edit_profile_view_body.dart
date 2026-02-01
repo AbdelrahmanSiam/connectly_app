@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:connectly_app/core/routing/app_router.dart';
+import 'package:connectly_app/core/utils/app_colors.dart';
+import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:connectly_app/core/widgets/custom_snackbar.dart';
 import 'package:connectly_app/features/auth/presentation/views/helpers/helper_methods.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_auth_button.dart';
@@ -56,8 +58,13 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 70,
+                height: 40,
               ),
+              Text(
+                "Update your information",
+                style: AppTextStyles.textStyle32.copyWith(color: AppColors.deepPrimary),
+              ),
+              const SizedBox(height: 40),
               ProfileImagePicker(
                 imageFile: selectedImage, // new image
                 imageUrl: imageUrl, // old image
@@ -98,15 +105,14 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
               ),
               BlocConsumer<EditProfileCubit, EditProfileState>(
                 listener: (context, state) {
-                  if(state is EditProfileSuccessState){
+                  if (state is EditProfileSuccessState) {
                     CustomSnackBar.show(
                       context,
-                      message:
-                          "Profile updated ",
+                      message: "Profile updated ",
                       type: SnackBarType.success,
                     );
-                  }
-                  else if(state is EditProfileFailureState){
+                    Navigator.pop(context);
+                  } else if (state is EditProfileFailureState) {
                     CustomSnackBar.show(context,
                         message: state.errMessage, type: SnackBarType.error);
                   }
@@ -121,7 +127,6 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
                             name: newName.text,
                             bio: bio.text,
                             newProfilePic: selectedImage);
-                        context.push(AppRouter.profileView);
                       }
                     },
                   );

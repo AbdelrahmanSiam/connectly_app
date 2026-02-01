@@ -3,51 +3,44 @@ import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileImagePicker extends StatelessWidget {
-  final File? imageFile;
+  final File? imageFile;        // new photo
+  final String? imageUrl;       // old image
   final VoidCallback? onTap;
 
   const ProfileImagePicker({
     super.key,
-     this.imageFile,
-     this.onTap,
+    this.imageFile,
+    this.imageUrl,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    ImageProvider? imageProvider;
+
+    if (imageFile != null) {
+      imageProvider = FileImage(imageFile!);
+    } else if (imageUrl != null && imageUrl!.isNotEmpty) {
+      imageProvider = NetworkImage(imageUrl!);
+    }
+
     return GestureDetector(
       onTap: onTap,
       child: Stack(
         alignment: Alignment.bottomRight,
         children: [
-          // Avatar
-          Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.15),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: CircleAvatar(
-              radius: 60,
-              backgroundColor: Colors.grey.shade300,
-              backgroundImage:
-                  imageFile != null ? FileImage(imageFile!) : null,
-              child: imageFile == null
-                  ? const Icon(
-                      Icons.person,
-                      size: 60,
-                      color: Colors.white,
-                    )
-                  : null,
-            ),
+          CircleAvatar(
+            radius: 60,
+            backgroundColor: Colors.grey.shade300,
+            backgroundImage: imageProvider,
+            child: imageProvider == null
+                ? const Icon(
+                    Icons.person,
+                    size: 60,
+                    color: Colors.white,
+                  )
+                : null,
           ),
-
           Container(
             width: 36,
             height: 36,

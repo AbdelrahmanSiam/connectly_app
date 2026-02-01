@@ -17,11 +17,11 @@ class AuthService {
       required File imageFile,
       }) async {
     // step 1 : auth
-    final UserCredential = await firebaseAuth.createUserWithEmailAndPassword(
+    final userCredential = await firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
     // step 2 : add user
-    final userId = UserCredential.user!.uid; // fetch user id
-
+    final userId = userCredential.user!.uid; // fetch user id
+    // upload file to supbase and return url from this func
     String profilePictureUrl = await uploadImageToSupabase(imageFile: imageFile, uid: userId);
     
     final userModel = UserModel(   // create userModel to add it to firebase

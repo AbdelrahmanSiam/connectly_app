@@ -10,32 +10,46 @@ class CustomChatListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom:22.0),
+      padding: const EdgeInsets.only(bottom: 22.0),
       child: Row(
         children: [
           ProfileAvatar(
-                radius: 30,
-                showOnlineIndicator: true,
-                isOnline: true,
-                borderWidth: 3,
-                showBoxShadow: false,
-                onlineCircularSize: 15,
-                onlineCircularPosition: 2,
+            radius: 30,
+            showOnlineIndicator: true,
+            isOnline: true,
+            borderWidth: 3,
+            showBoxShadow: false,
+            onlineCircularSize: 15,
+            onlineCircularPosition: 2,
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Abdo Rabea",
+                style: AppTextStyles.textStyle22,
               ),
-              SizedBox(width: 15,),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Ahmed Siam" , style: AppTextStyles.textStyle22,),
-                  SizedBox(height: 5,),
-                  Text("last message" , style: AppTextStyles.textStyle16.copyWith(fontWeight: FontWeight.bold),),
-                ],
+              SizedBox(
+                height: 5,
               ),
-        Spacer(),
-        Text("10.18 PM",style: AppTextStyles.textStyle16,),
+              Text(
+                "last message",
+                style: AppTextStyles.textStyle16.copyWith(
+                    fontWeight: FontWeight.bold, color: Colors.grey.shade600),
+              ),
+            ],
+          ),
+          Spacer(),
+          Text(
+            "10:18 PM",
+            style: AppTextStyles.textStyle16.copyWith(
+                fontWeight: FontWeight.bold, color: Colors.grey.shade600),
+          ),
         ],
       ),
     );
   }
 }
-

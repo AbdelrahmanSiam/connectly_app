@@ -8,6 +8,9 @@ class ProfileAvatar extends StatelessWidget {
     this.showOnlineIndicator = false,
     this.isOnline = true,
     this.borderWidth = 4,
+    this.showBoxShadow = true,
+    this.onlineCircularSize = 24 ,
+    this.onlineCircularPosition = 8 ,
   });
 
   final String? imageUrl;
@@ -15,6 +18,9 @@ class ProfileAvatar extends StatelessWidget {
   final bool showOnlineIndicator;
   final bool isOnline;
   final double borderWidth;
+  final bool showBoxShadow;
+  final double onlineCircularSize;
+  final double onlineCircularPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +39,7 @@ class ProfileAvatar extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            boxShadow: [
+            boxShadow: showBoxShadow? [
               BoxShadow(
                 color: Theme.of(context).primaryColor.withOpacity(0.4),
                 blurRadius: 20,
@@ -44,7 +50,7 @@ class ProfileAvatar extends StatelessWidget {
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),
-            ],
+            ] : null,
           ),
           padding: EdgeInsets.all(borderWidth),
           child: Container(
@@ -72,12 +78,12 @@ class ProfileAvatar extends StatelessWidget {
 
         if (showOnlineIndicator)
           Positioned(
-            bottom: 8,
-            right: 8,
+            bottom: onlineCircularPosition,
+            right: onlineCircularPosition,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
-              width: 24,
-              height: 24,
+              width: onlineCircularSize,
+              height: onlineCircularSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isOnline ? Colors.greenAccent : Colors.grey.shade400,
@@ -85,14 +91,14 @@ class ProfileAvatar extends StatelessWidget {
                   color: Colors.white,
                   width: 3,
                 ),
-                boxShadow: isOnline
-                    ? [
+                boxShadow: isOnline 
+                    ? showBoxShadow ?[
                         BoxShadow(
                           color: Colors.greenAccent.withOpacity(0.6),
                           blurRadius: 10,
                           spreadRadius: 2,
                         ),
-                      ]
+                      ]:null
                     : null,
               ),
             ),

@@ -20,7 +20,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-   setupLocator();
+  setupLocator();
   runApp(const MyApp());
 }
 
@@ -35,7 +35,9 @@ class MyApp extends StatelessWidget {
           value: getIt<UserCubit>(),
         ),
         BlocProvider.value(value: getIt<AuthCubit>()),
-        BlocProvider.value(value: getIt<ChatsCubit>()),
+        BlocProvider(
+          create: (_) => getIt<ChatsCubit>()..loadChats(),
+        ),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

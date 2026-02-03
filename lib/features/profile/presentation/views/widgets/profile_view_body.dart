@@ -40,10 +40,10 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (state is UserFailureState) {
-          return FailureUserProfileBody(text:'Error: ${state.errMessage}',);
+          return CustomFailureBody(text:'Error: ${state.errMessage}',);
         }
         if (state is UserInitialState) {
-          return InitialUserProfileBody();
+          return CustomInitialBody(text: 'No user data available',);
         }
         if(state is UserSuccessState){
         return SingleChildScrollView(

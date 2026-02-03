@@ -32,7 +32,8 @@ void setupLocator() {
   getIt.registerLazySingleton<HomeService>(() => HomeService());
   getIt.registerLazySingleton<HomeRepo>(
       () => HomeRepoImpl(homeService: getIt()));
-  getIt.registerLazySingleton<ChatsCubit>(
-    () => ChatsCubit(getIt()),
-  );    
+  getIt.registerFactory<ChatsCubit>(
+  () => ChatsCubit(getIt<HomeRepo>()),
+);
+
 }

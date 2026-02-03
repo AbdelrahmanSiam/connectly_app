@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FailureUserProfileBody extends StatelessWidget {
-  const FailureUserProfileBody({
+class CustomFailureBody extends StatelessWidget {
+  const CustomFailureBody({
     super.key, required this.text,
   });
       final String text;

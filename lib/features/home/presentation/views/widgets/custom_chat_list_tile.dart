@@ -1,12 +1,16 @@
 import 'package:connectly_app/core/utils/app_text_styles.dart';
+import 'package:connectly_app/features/home/data/model/chat_model.dart';
+import 'package:connectly_app/features/profile/data/model/user_model.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CustomChatListTile extends StatelessWidget {
   const CustomChatListTile({
-    super.key,
+    super.key, required this.chatModel, required this.userModel,
   });
-
+  final ChatModel chatModel;
+  final UserModel userModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,6 +18,7 @@ class CustomChatListTile extends StatelessWidget {
       child: Row(
         children: [
           ProfileAvatar(
+            imageUrl: userModel.profilePictureUrl,
             radius: 30,
             showOnlineIndicator: true,
             isOnline: true,
@@ -29,14 +34,14 @@ class CustomChatListTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Abdelrahman",
+                userModel.name,
                 style: AppTextStyles.textStyle22,
               ),
               SizedBox(
                 height: 5,
               ),
               Text(
-                "last message",
+                chatModel.lastMessage,
                 style: AppTextStyles.textStyle16.copyWith(
                     fontWeight: FontWeight.bold, color: Colors.grey.shade600),
               ),
@@ -44,7 +49,7 @@ class CustomChatListTile extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            "10:18 PM",
+            DateFormat.jm().format(chatModel.lastMessageTime),
             style: AppTextStyles.textStyle16.copyWith(
                 fontWeight: FontWeight.bold, color: Colors.grey.shade600),
           ),

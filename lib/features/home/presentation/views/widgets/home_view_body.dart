@@ -1,4 +1,3 @@
-import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_form_field.dart';
 import 'package:connectly_app/features/home/presentation/views/widgets/custom_chat_list_tile.dart';
 import 'package:connectly_app/features/home/presentation/views/widgets/home_view_app_bar.dart';

@@ -29,7 +29,7 @@ class CustomChatListTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Abdo Rabea",
+                "Abdelrahman",
                 style: AppTextStyles.textStyle22,
               ),
               SizedBox(

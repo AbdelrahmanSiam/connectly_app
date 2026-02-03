@@ -3,6 +3,7 @@ import 'package:connectly_app/core/utils/service_locator.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/presentation/views/login_view.dart';
 import 'package:connectly_app/features/auth/presentation/views/register_view.dart';
+import 'package:connectly_app/features/chat/presentation/views/chat_view.dart';
 import 'package:connectly_app/features/home/presentation/views/home_view.dart';
 import 'package:connectly_app/features/profile/presentation/views/edit_profile_view.dart';
 import 'package:connectly_app/features/profile/presentation/views/profile_view.dart';
@@ -19,6 +20,7 @@ abstract class AppRouter {
   static const String verifyView = '/verify';
   static const String profileView = '/profile';
   static const String editProfileView = '/editProfile';
+  static const String chatView = '/chatView';
 
   static final GoRouter router = GoRouter(
     initialLocation: splashView,
@@ -56,6 +58,12 @@ abstract class AppRouter {
         path: editProfileView,
         builder: (context, state) {
           return EditProfileView();
+        },
+      ),
+      GoRoute(
+        path: chatView,
+        builder: (context, state) {
+          return ChatView();
         },
       ),
     ],

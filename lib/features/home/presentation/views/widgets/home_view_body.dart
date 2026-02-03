@@ -33,14 +33,22 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           height: 10,
         ),
         CustomTextFormField(
-            icon: Icons.search, labelText: "Search", controller: search),
+          icon: Icons.search,
+          labelText: "Search by name or message",
+          controller: search,
+          onChanged: (query) {
+            context.read<ChatsCubit>().searchChat(query: query);
+          },
+        ),
         BlocBuilder<ChatsCubit, ChatsState>(
           builder: (context, state) {
             if (state is ChatsSuccessState && state.chats.isEmpty) {
               return Column(
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height/3,),
-                  CustomInitialBody(text: 'No chats yet'),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 1.5,
+                    child: CustomInitialBody(text: 'No chats yet'),
+                  ),
                 ],
               );
             }
@@ -55,18 +63,21 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                 child: ListView.builder(
                     itemCount: state.chats.length,
                     itemBuilder: (context, index) => GestureDetector(
-                      onTap: (){
-                        GoRouter.of(context).push(AppRouter.chatView);
-                      },
-                      child: CustomChatListTile(
+                          onTap: () {
+                            GoRouter.of(context).push(AppRouter.chatView);
+                          },
+                          child: CustomChatListTile(
                             chatModel: state.chats[index].chatModel,
                             userModel: state.chats[index].userModel,
                           ),
-                    )),
+                        )),
               );
             } else {
-              return Center(
-                child: CircularProgressIndicator(),
+              return SizedBox(
+                height: MediaQuery.of(context).size.height / 1.5,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             }
           },

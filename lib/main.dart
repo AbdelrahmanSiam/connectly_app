@@ -3,6 +3,7 @@ import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/core/utils/service_locator.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:connectly_app/features/home/presentation/manager/chats_cubit/chats_cubit.dart';
 import 'package:connectly_app/features/profile/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:connectly_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           value: getIt<UserCubit>(),
         ),
         BlocProvider.value(value: getIt<AuthCubit>()),
+        BlocProvider.value(value: getIt<ChatsCubit>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

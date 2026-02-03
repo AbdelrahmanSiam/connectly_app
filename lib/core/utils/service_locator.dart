@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo_impl.dart';
 import 'package:connectly_app/features/auth/data/service/auth_service.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:connectly_app/features/home/data/repo/home_repo.dart';
+import 'package:connectly_app/features/home/data/repo/home_repo_impl.dart';
+import 'package:connectly_app/features/home/data/service/home_service.dart';
+import 'package:connectly_app/features/home/presentation/manager/chats_cubit/chats_cubit.dart';
 import 'package:connectly_app/features/profile/data/repo/user_repo.dart';
 import 'package:connectly_app/features/profile/data/repo/user_repo_impl.dart';
 import 'package:connectly_app/features/profile/data/service/user_service.dart';
@@ -23,4 +28,11 @@ void setupLocator() {
       () => AuthRepoImpl(authService: getIt()));
   getIt.registerLazySingleton<AuthCubit>(
       () => AuthCubit(getIt(), userCubit: getIt<UserCubit>()));
+
+  getIt.registerLazySingleton<HomeService>(() => HomeService());
+  getIt.registerLazySingleton<HomeRepo>(
+      () => HomeRepoImpl(homeService: getIt()));
+  getIt.registerLazySingleton<ChatsCubit>(
+    () => ChatsCubit(getIt()),
+  );    
 }

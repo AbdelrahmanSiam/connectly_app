@@ -3,9 +3,7 @@ import 'package:connectly_app/features/home/data/model/chat_model.dart';
 import 'package:connectly_app/features/profile/data/model/user_model.dart';
 
 class HomeService {
-  final FirebaseFirestore firestore;
-
-  HomeService({required this.firestore});
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   // 1- Fetch all chats for the login user from chats collection (Stream) ordering it depend on last chatting
   Stream<QuerySnapshot> getChats(String uid) {

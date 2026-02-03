@@ -1,15 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:connectly_app/features/home/data/model/chat_list_tile.dart';
 import 'package:connectly_app/features/home/data/repo/home_repo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
 part 'chats_state.dart';
 
 class ChatsCubit extends Cubit<ChatsState> {
-  ChatsCubit(this.homeRepo, {required this.currentUserId}) : super(ChatsInitialState());
+  ChatsCubit(this.homeRepo) : super(ChatsInitialState());
 
   final HomeRepo homeRepo;
-  final String currentUserId;
+  final String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
   void loadChats(){
     emit(ChatsLoadingState());

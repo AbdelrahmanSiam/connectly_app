@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectly_app/features/home/data/model/chat_list_tile.dart';
 import 'package:connectly_app/features/home/data/model/chat_model.dart';
 import 'package:connectly_app/features/profile/data/model/user_model.dart';
 
@@ -25,6 +26,6 @@ class HomeService {
     final doc = await firestore.collection("users").doc(userId).get(); // return all doc
     return UserModel.fromJson(doc.data()!);
   }
-
+  
 
 }

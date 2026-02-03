@@ -14,7 +14,7 @@ class ChatsCubit extends Cubit<ChatsState> {
   String get currentUserId =>
     FirebaseAuth.instance.currentUser!.uid;
 
-
+  List<ChatListTileModel> allChats = [];
   void loadChats(){
     emit(ChatsLoadingState());
     homeRepo.getChats(currentUserId).listen((allChatsList)async{
@@ -24,10 +24,27 @@ class ChatsCubit extends Cubit<ChatsState> {
         final otherUserModel = await homeRepo.getUserById(otherUserId); // get UserModel of other user id to show his photo , name , online state
         chatsListTile.add(ChatListTileModel(chatModel: chat, userModel: otherUserModel));
       }
-      emit(ChatsSuccessState(chats: chatsListTile ));
+      allChats = chatsListTile;
+      emit(ChatsSuccessState(chats: allChats ));
     },
     onError: (error) {
       emit(ChatsFailureState(errMessage: error.toString()));},
     );
+  }
+
+  void searchChat ({required String query}){
+    // if no query return all chats
+    if(query.isEmpty){
+      emit(ChatsSuccessState(chats: allChats));
+      return;
+    }
+    // search by name or last message
+    final filterdChats = allChats.where((ChatListTileModel chatTile){
+      final name = chatTile.userModel.name.toLowerCase();
+      final lastMessage = chatTile.chatModel.lastMessage.toLowerCase();
+      final q = query.toLowerCase();
+      return name.contains(q) || lastMessage.contains(q);
+    }).toList();
+    emit(ChatsSuccessState(chats: filterdChats));
   }
 }

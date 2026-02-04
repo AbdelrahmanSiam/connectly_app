@@ -10,6 +10,10 @@ final class CreateChatSucessState extends CreateChatState {
 
   CreateChatSucessState({required this.userList});
 }
+class CreateChatCreated extends CreateChatState {
+  final String chatId;
+  CreateChatCreated(this.chatId);
+}
 final class CreateChatFailureState extends CreateChatState {
   final String errMessage;
 

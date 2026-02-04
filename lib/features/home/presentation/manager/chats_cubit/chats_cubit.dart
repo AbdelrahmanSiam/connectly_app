@@ -18,11 +18,7 @@ class ChatsCubit extends Cubit<ChatsState> {
 
   List<ChatListTileModel> allChats = [];
   StreamSubscription? _chatsSub;
-  @override
-  Future<void> close() {
-    _chatsSub?.cancel();
-    return super.close();
-  }
+  
 
   void loadChats(){
     emit(ChatsLoadingState());
@@ -56,5 +52,11 @@ class ChatsCubit extends Cubit<ChatsState> {
       return name.contains(q) || lastMessage.contains(q);
     }).toList();
     emit(ChatsSuccessState(chats: filterdChats));
+  }
+
+  @override
+  Future<void> close() {
+    _chatsSub?.cancel();
+    return super.close();
   }
 }

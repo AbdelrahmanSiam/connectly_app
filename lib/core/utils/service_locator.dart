@@ -3,6 +3,10 @@ import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo_impl.dart';
 import 'package:connectly_app/features/auth/data/service/auth_service.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:connectly_app/features/chat/data/repo/chat_repo.dart';
+import 'package:connectly_app/features/chat/data/repo/chat_repo_impl.dart';
+import 'package:connectly_app/features/chat/data/service/chat_service.dart';
+import 'package:connectly_app/features/chat/presentation/manager/chat_cubit/chat_cubit.dart';
 import 'package:connectly_app/features/home/data/repo/home_repo.dart';
 import 'package:connectly_app/features/home/data/repo/home_repo_impl.dart';
 import 'package:connectly_app/features/home/data/service/home_service.dart';
@@ -39,5 +43,10 @@ void setupLocator() {
 getIt.registerFactory<CreateChatCubit>(
   () => CreateChatCubit(getIt<HomeRepo>()),
 );
-
+getIt.registerLazySingleton<ChatService>(() => ChatService());
+  getIt.registerLazySingleton<ChatRepo>(
+      () => ChatRepoImpl(chatService: getIt()));
+  getIt.registerFactory<ChatCubit>(
+  () => ChatCubit(getIt<ChatRepo>()),
+);
 }

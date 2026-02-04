@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:connectly_app/features/home/data/model/chat_list_tile.dart';
 import 'package:connectly_app/features/home/data/repo/home_repo.dart';
@@ -15,9 +17,17 @@ class ChatsCubit extends Cubit<ChatsState> {
     FirebaseAuth.instance.currentUser!.uid;
 
   List<ChatListTileModel> allChats = [];
+  StreamSubscription? _chatsSub;
+  @override
+  Future<void> close() {
+    _chatsSub?.cancel();
+    return super.close();
+  }
+
   void loadChats(){
     emit(ChatsLoadingState());
-    homeRepo.getChats(currentUserId).listen((allChatsList)async{
+    _chatsSub?.cancel();
+    _chatsSub= homeRepo.getChats(currentUserId).listen((allChatsList)async{
       final List <ChatListTileModel> chatsListTile = []; // we add this model that contains two models , because screen need data from these two different models 
       for(final chat in allChatsList){
         final otherUserId = chat.users.firstWhere((id) => id != currentUserId); // get uid of the other person who chat me from list users in chat model

@@ -7,7 +7,9 @@ import 'package:intl/intl.dart';
 
 class CustomChatListTile extends StatelessWidget {
   const CustomChatListTile({
-    super.key, required this.chatModel, required this.userModel,
+    super.key,
+    required this.chatModel,
+    required this.userModel,
   });
   final ChatModel chatModel;
   final UserModel userModel;
@@ -35,6 +37,8 @@ class CustomChatListTile extends StatelessWidget {
             children: [
               Text(
                 userModel.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.textStyle22,
               ),
               SizedBox(
@@ -42,17 +46,25 @@ class CustomChatListTile extends StatelessWidget {
               ),
               Text(
                 chatModel.lastMessage,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.textStyle16.copyWith(
                     fontWeight: FontWeight.bold, color: Colors.grey.shade600),
               ),
             ],
           ),
           Spacer(),
-          Text(
-            DateFormat.jm().format(chatModel.lastMessageTime),
-            style: AppTextStyles.textStyle16.copyWith(
-                fontWeight: FontWeight.bold, color: Colors.grey.shade600),
-          ),
+          Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    DateFormat('hh:mm a').format(chatModel.lastMessageTime),
+                    style: AppTextStyles.textStyle16,
+                  ),
+                  if (chatModel.lastSenderId == userModel.id)
+                    const Icon(Icons.done_all, size: 16)
+                ],
+              ),
         ],
       ),
     );

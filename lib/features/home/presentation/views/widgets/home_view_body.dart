@@ -64,7 +64,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     itemCount: state.chats.length,
                     itemBuilder: (context, index) => GestureDetector(
                           onTap: () {
-                            GoRouter.of(context).push(AppRouter.chatView);
+                            GoRouter.of(context).push(
+                              AppRouter.chatView,
+                              extra: state.chats[index].chatModel.chatId,
+                            );
                           },
                           child: CustomChatListTile(
                             chatModel: state.chats[index].chatModel,

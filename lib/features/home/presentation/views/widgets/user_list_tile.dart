@@ -26,6 +26,8 @@ class UserListTile extends StatelessWidget {
       ),
       title: Text(
         otherUserModel.name,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: AppTextStyles.textStyle18,
       ),
       subtitle: Text(

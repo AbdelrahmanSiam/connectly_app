@@ -23,22 +23,46 @@ class HomeService {
   //   return chatModel.users.firstWhere((id) => id != currentUserId);
   // }
   // 2.2 get the UserModel
-  Future<UserModel>getUserById(String userId) async{
-    final doc = await firestore.collection("users").doc(userId).get(); // return all doc
+  Future<UserModel> getUserById(String userId) async {
+    final doc =
+        await firestore.collection("users").doc(userId).get(); // return all doc
     return UserModel.fromJson(doc.data()!);
   }
-  
+
   //3- get all users from firebase
   Stream<QuerySnapshot> getOAllUsers() {
-    return firestore
-        .collection("users")
-        .snapshots();
+    return firestore.collection("users").snapshots();
   }
-   // 4- create chat when click on list tile
-  //  Future<String> createChat(String myId , String ohterId) async{
-  //   final doc = firestore.collection("chats").doc();
-  //   final chatModel =ChatModel(chatId: doc.id, lastMessage: "", lastSenderId: "", users: [myId , ohterId], lastMessageTime: DateTime.now());
-  //   doc.set(chatModel.toFirebase());
-  //   return doc.id;
-  //  }
+
+  // 4- create chat when click on list tile
+  Future<String> createChat(String myId, String otherId) async {
+    // - Check if thid chat existed or no
+    try {
+      final existingChat = await firestore
+          .collection("chats")
+          .where("users", arrayContains: myId)
+          .get(); // return all chats that contains me
+      for (final doc in existingChat.docs) {
+        final users = List<String>.from(doc["users"]);
+        if (users.contains(otherId)) {
+          return doc.id; // return its id to open it and dont create new chat
+        }
+      }
+
+      // 2- Create new Chat
+      final doc = firestore.collection("chats").doc();
+      final chatModel = ChatModel(
+          chatId: doc.id,
+          lastMessage: "",
+          lastSenderId: "",
+          users: [myId, otherId],
+          lastMessageTime: DateTime.now(),
+          createdAt: DateTime.now());
+
+      doc.set(chatModel.toFirebase()); // add doc to chats coll
+      return doc.id;
+    } catch (e) {
+      throw Exception("Failed to create chat");
+    }
+  }
 }

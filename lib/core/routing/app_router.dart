@@ -5,6 +5,7 @@ import 'package:connectly_app/features/auth/presentation/views/login_view.dart';
 import 'package:connectly_app/features/auth/presentation/views/register_view.dart';
 import 'package:connectly_app/features/chat/presentation/views/chat_view.dart';
 import 'package:connectly_app/features/home/presentation/views/home_view.dart';
+import 'package:connectly_app/features/profile/data/model/user_model.dart';
 import 'package:connectly_app/features/profile/presentation/views/edit_profile_view.dart';
 import 'package:connectly_app/features/profile/presentation/views/profile_view.dart';
 import 'package:connectly_app/features/splash/presentation/views/splash_view.dart';
@@ -64,7 +65,11 @@ abstract class AppRouter {
         path: chatView,
         builder: (context, state) {
           final String chatId = state.extra as String;
-          return ChatView(chatId: chatId,);
+          final UserModel otherUser = state.extra as UserModel;
+          return ChatView(
+            chatId: chatId,
+            otherUser: otherUser,
+            );
         },
       ),
     ],

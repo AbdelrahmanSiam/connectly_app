@@ -15,5 +15,15 @@ class ChatService {
         .snapshots();
   }
 
-
+  //2- send message
+  Future<void> sendMessage({required String chatId , required MessageModel messageModel})async{
+    final doc = firestore.collection("chats").doc(chatId).collection("messages").doc();
+    await doc.set(messageModel.toFirebase());
+    // update last message text and time and last sender id that appears on home view
+    await firestore.collection("chats").doc(chatId).update({
+      "lastMessage" : messageModel.text ,
+      "lastMessageTime" : Timestamp.fromDate(messageModel.createdAt) , 
+      "lastSenderId" : messageModel.senderId,
+    });
+  }
 }

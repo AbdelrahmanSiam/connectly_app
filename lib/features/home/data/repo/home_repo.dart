@@ -4,5 +4,6 @@ import 'package:connectly_app/features/profile/data/model/user_model.dart';
 abstract class HomeRepo {
   Stream<List<ChatModel>> getChats(String uid);
   Future<UserModel> getUserById(String userId); // to use it in showing list tile data
-  Stream<List<UserModel>> getOtherUsers(String uid); // to use it in showing list tile data
+  Stream<List<UserModel>> getOtherUsers(String uid); 
+  Future<String> createChat(String myId , String otherId);
 }

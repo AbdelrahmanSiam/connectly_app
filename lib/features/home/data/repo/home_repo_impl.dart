@@ -21,19 +21,30 @@ class HomeRepoImpl implements HomeRepo {
 
   @override
   Stream<List<UserModel>> getOtherUsers(String uid) async* { // *async is Genrator fun return Stream user yield instand of return
-    final usersStream = homeService.getOAllUsers().map((snapshot) =>
-        snapshot.docs.map((doc) => UserModel.fromJson(doc.data() as Map<String , dynamic>)).toList());
-    final chats = await getChats(uid).first; //.first => take only first value and stop
-
-    final chattedIds = chats
-    .expand((e) => e.users)
-    .where((e) => e != uid)
-    .toSet(); // .expand => expand list as array
-
-    await for (final users in usersStream) {
-    yield users
-        .where((u) => u.id != uid && !chattedIds.contains(u.id)) // return all users except me and chatted users
-        .toList();
-    }
+    try {
+  final usersStream = homeService.getOAllUsers().map((snapshot) =>
+      snapshot.docs.map((doc) => UserModel.fromJson(doc.data() as Map<String , dynamic>)).toList());
+  final chats = await getChats(uid).first; //.first => take only first value and stop
+  
+  final chattedIds = chats
+  .expand((e) => e.users)
+  .where((e) => e != uid)
+  .toSet(); // .expand => expand list as array
+  
+  await for (final users in usersStream) {
+  yield users
+      .where((u) => u.id != uid && !chattedIds.contains(u.id)) // return all users except me and chatted users
+      .toList();
+  }
+} catch (e) {
+  throw Exception("Failed to fetch ohter users");
 }
+}
+
+  @override
+  Future<String> createChat(String myId, String otherId) async{
+    return await homeService.createChat(myId, otherId);
+  }
+
+
 }

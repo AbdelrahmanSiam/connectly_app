@@ -7,6 +7,7 @@ import 'package:connectly_app/features/home/data/repo/home_repo.dart';
 import 'package:connectly_app/features/home/data/repo/home_repo_impl.dart';
 import 'package:connectly_app/features/home/data/service/home_service.dart';
 import 'package:connectly_app/features/home/presentation/manager/chats_cubit/chats_cubit.dart';
+import 'package:connectly_app/features/home/presentation/manager/create_chat_cubit/create_chat_cubit.dart';
 import 'package:connectly_app/features/profile/data/repo/user_repo.dart';
 import 'package:connectly_app/features/profile/data/repo/user_repo_impl.dart';
 import 'package:connectly_app/features/profile/data/service/user_service.dart';
@@ -34,6 +35,9 @@ void setupLocator() {
       () => HomeRepoImpl(homeService: getIt()));
   getIt.registerFactory<ChatsCubit>(
   () => ChatsCubit(getIt<HomeRepo>()),
+);
+getIt.registerFactory<CreateChatCubit>(
+  () => CreateChatCubit(getIt<HomeRepo>()),
 );
 
 }

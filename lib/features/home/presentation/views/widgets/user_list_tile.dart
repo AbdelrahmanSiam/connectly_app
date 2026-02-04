@@ -16,13 +16,13 @@ class UserListTile extends StatelessWidget {
     return ListTile(
       leading: ProfileAvatar(
         imageUrl: otherUserModel.profilePictureUrl,
-        radius: 20,
+        radius: 35,
         showOnlineIndicator: true,
         isOnline: otherUserModel.isOnline,
-        borderWidth: 2,
+        borderWidth: 5,
         showBoxShadow: false,
-        onlineCircularSize: 10,
-        onlineCircularPosition: 1,
+        onlineCircularSize: 15,
+        onlineCircularPosition: 3,
       ),
       title: Text(
         otherUserModel.name,

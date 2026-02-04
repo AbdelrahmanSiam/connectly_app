@@ -15,7 +15,25 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<UserModel> getUserById(String userId) async{
+  Future<UserModel> getUserById(String userId) async {
     return await homeService.getUserById(userId);
   }
+
+  @override
+  Stream<List<UserModel>> getOtherUsers(String uid) async* { // *async is Genrator fun return Stream user yield instand of return
+    final usersStream = homeService.getOAllUsers().map((snapshot) =>
+        snapshot.docs.map((doc) => UserModel.fromJson(doc.data() as Map<String , dynamic>)).toList());
+    final chats = await getChats(uid).first; //.first => take only first value and stop
+
+    final chattedIds = chats
+    .expand((e) => e.users)
+    .where((e) => e != uid)
+    .toSet(); // .expand => expand list as array
+
+    await for (final users in usersStream) {
+    yield users
+        .where((u) => u.id != uid && !chattedIds.contains(u.id)) // return all users except me and chatted users
+        .toList();
+    }
+}
 }

@@ -17,15 +17,21 @@ class HomeService {
 
   // 2- We want ot get use other user id from users list on chat model
 
-  //2.1 first get other user id from users list
-  String getOtherUserId(ChatModel chatModel , String currentUserId){
-    return chatModel.users.firstWhere((id) => id != currentUserId);
-  }
+  // //2.1 first get other user id from users list
+  // String getOtherUserId(ChatModel chatModel , String currentUserId){
+  //   return chatModel.users.firstWhere((id) => id != currentUserId);
+  // }
   // 2.2 get the UserModel
   Future<UserModel>getUserById(String userId) async{
     final doc = await firestore.collection("users").doc(userId).get(); // return all doc
     return UserModel.fromJson(doc.data()!);
   }
   
+  //3- get all users from firebase
+  Stream<QuerySnapshot> getOAllUsers() {
+    return firestore
+        .collection("users")
+        .snapshots();
+  }
 
 }

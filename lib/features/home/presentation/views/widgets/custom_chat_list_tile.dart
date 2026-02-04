@@ -21,7 +21,7 @@ class CustomChatListTile extends StatelessWidget {
             imageUrl: userModel.profilePictureUrl,
             radius: 30,
             showOnlineIndicator: true,
-            isOnline: true,
+            isOnline: userModel.isOnline,
             borderWidth: 3,
             showBoxShadow: false,
             onlineCircularSize: 15,

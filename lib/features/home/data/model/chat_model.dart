@@ -6,22 +6,36 @@ class ChatModel {
   final String lastSenderId;
   final List<String> users;
   final DateTime lastMessageTime;
+  final DateTime createdAt;
 
-  ChatModel(
-      {required this.chatId,
-      required this.lastMessage,
-      required this.lastSenderId,
-      required this.users,
-      required this.lastMessageTime});
+  ChatModel({
+    required this.chatId,
+    required this.lastMessage,
+    required this.lastSenderId,
+    required this.users,
+    required this.lastMessageTime,
+    required this.createdAt,
+  });
 
-// We will receive doc from firebase as Map<String , dynamic > we want it to convert it to model
   factory ChatModel.fromFirebase(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String , dynamic>; // to fetch fields from doc (doc.data())
+    final data = doc.data() as Map<String, dynamic>;
     return ChatModel(
-        chatId: doc.id,
-        lastMessage: data["lastMessage"] ?? "",
-        lastSenderId: data["lastSenderId"],
-        users: List<String>.from(data["users"]),
-        lastMessageTime: (data["lastMessageTime"] as Timestamp).toDate());
+      chatId: doc.id,
+      lastMessage: data["lastMessage"] ?? "",
+      lastSenderId: data["lastSenderId"] ?? "",
+      users: List<String>.from(data["users"]),
+      lastMessageTime: (data["lastMessageTime"] as Timestamp).toDate(),
+      createdAt: (data["createdAt"] as Timestamp).toDate(),
+    );
+  }
+
+  Map<String, dynamic> toFirebase() {
+    return {
+      "lastMessage": lastMessage,
+      "lastSenderId": lastSenderId,
+      "users": users,
+      "lastMessageTime": Timestamp.fromDate(lastMessageTime),
+      "createdAt": Timestamp.fromDate(createdAt),
+    };
   }
 }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectly_app/features/home/data/model/chat_list_tile.dart';
 import 'package:connectly_app/features/home/data/model/chat_model.dart';
 import 'package:connectly_app/features/profile/data/model/user_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -33,5 +34,11 @@ class HomeService {
         .collection("users")
         .snapshots();
   }
-
+   // 4- create chat when click on list tile
+  //  Future<String> createChat(String myId , String ohterId) async{
+  //   final doc = firestore.collection("chats").doc();
+  //   final chatModel =ChatModel(chatId: doc.id, lastMessage: "", lastSenderId: "", users: [myId , ohterId], lastMessageTime: DateTime.now());
+  //   doc.set(chatModel.toFirebase());
+  //   return doc.id;
+  //  }
 }

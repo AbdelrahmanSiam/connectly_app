@@ -17,10 +17,13 @@ class ChatViewAppBar extends StatelessWidget implements PreferredSizeWidget {
         children: [
           ProfileAvatar(
             imageUrl: otherUser.profilePictureUrl,
-            radius: 18,
-            isOnline: otherUser.isOnline,
+            radius: 25,
             showOnlineIndicator: true,
-            onlineCircularSize: 10,
+            isOnline: otherUser.isOnline,
+            borderWidth: 3,
+            showBoxShadow: false,
+            onlineCircularSize: 15,
+            onlineCircularPosition: -1,
           ),
           const SizedBox(width: 10),
           Column(

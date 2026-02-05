@@ -21,4 +21,5 @@ abstract class AuthRepo {
   Future<void> sendEmailVerification();
 
   Future<void> forgetPassword({required String email});
+  String currentUserId();
 }

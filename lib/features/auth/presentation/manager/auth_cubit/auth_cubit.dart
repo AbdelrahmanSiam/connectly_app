@@ -105,4 +105,8 @@ class AuthCubit extends Cubit<AuthState> {
   emit(ForgetPasswordFailureState(errMessage: e.toString()));
 }
   }
+
+  String currentUserId() {
+    return  authRepo.currentUserId();
+  }
 }

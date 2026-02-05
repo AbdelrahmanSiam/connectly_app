@@ -105,4 +105,8 @@ class AuthService {
     throw AuthException(e.message ?? 'Failed to send reset email');
   }
 }
+
+String currentUserId() {
+  return firebaseAuth.currentUser!.uid;
+}
 }

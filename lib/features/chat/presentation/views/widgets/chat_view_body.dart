@@ -1,4 +1,10 @@
+import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:connectly_app/features/chat/presentation/manager/chat_cubit/chat_cubit.dart';
+import 'package:connectly_app/features/chat/presentation/views/widgets/message_bubble.dart';
+import 'package:connectly_app/features/profile/presentation/views/widgets/failure_user_profile_body.dart';
+import 'package:connectly_app/features/profile/presentation/views/widgets/initial_user_profile_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatViewBody extends StatelessWidget {
   const ChatViewBody({super.key, required this.chatId});
@@ -7,7 +13,34 @@ class ChatViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        
+        Expanded(
+          child: BlocBuilder<ChatCubit, ChatState>(
+            builder: (context, state) {
+              if (state is ChatInitialState) {
+                return CustomInitialBody(
+                    text: "No messages yet , start Chatting. ");
+              }
+              if (state is ChatFailureState) {
+                return CustomFailureBody(
+                  text: 'Error: ${state.errMessage}',
+                );
+              }
+              if (state is ChatSuccesState) {
+                return ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    final isMe = state.messageList[index].senderId ==
+                        context.read<AuthCubit>().currentUserId();
+                    return MessageBubble(
+                        messageModel: state.messageList[index], isMe: isMe);
+                  },
+                );
+              }else{
+                return Center(child: CircularProgressIndicator(),);
+              }
+            },
+          ),
+        )
       ],
     );
   }

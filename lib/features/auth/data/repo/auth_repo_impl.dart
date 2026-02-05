@@ -91,6 +91,11 @@ Future<void> sendEmailVerification() async {
   bool loggedIn() {
     return authService.loggedIn();
   }
+  
+  @override
+  String currentUserId() {
+    return  authService.currentUserId();
+  }
     
   }
 

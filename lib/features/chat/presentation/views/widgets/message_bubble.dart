@@ -1,6 +1,7 @@
 import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/features/chat/data/model/message_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class MessageBubble extends StatelessWidget {
   final MessageModel messageModel;
@@ -23,7 +24,7 @@ class MessageBubble extends StatelessWidget {
           maxWidth: MediaQuery.of(context).size.width * 0.75, // to be responsive
         ),
         decoration: BoxDecoration(
-          color: isMe ? AppColors.primary : Colors.grey.shade200,
+          color: isMe ? AppColors.primary : Colors.grey.shade300,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(18),
             topRight: const Radius.circular(18),
@@ -41,6 +42,7 @@ class MessageBubble extends StatelessWidget {
           ),
         ),
       ),
-    );
+    )
+    .animate().fadeIn(duration: 200.ms).scale(begin: Offset(0.8, 0.8) , curve: Curves.easeInOutBack);
   }
 }

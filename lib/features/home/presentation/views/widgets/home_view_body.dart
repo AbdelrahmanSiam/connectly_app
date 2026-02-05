@@ -1,5 +1,6 @@
 import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/features/auth/presentation/views/widgets/custom_text_form_field.dart';
+import 'package:connectly_app/features/chat/data/model/chat_arguments_model.dart';
 import 'package:connectly_app/features/home/presentation/manager/chats_cubit/chats_cubit.dart';
 import 'package:connectly_app/features/home/presentation/views/widgets/custom_chat_list_tile.dart';
 import 'package:connectly_app/features/home/presentation/views/widgets/home_view_app_bar.dart';
@@ -66,7 +67,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           onTap: () {
                             GoRouter.of(context).push(
                               AppRouter.chatView,
-                              extra: state.chats[index].chatModel.chatId,
+                              extra: ChatArgumentsModel(chatId: state.chats[index].chatModel.chatId, otherUser: state.chats[index].userModel)
                             );
                           },
                           child: CustomChatListTile(

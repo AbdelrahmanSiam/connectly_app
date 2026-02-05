@@ -3,6 +3,7 @@ import 'package:connectly_app/core/utils/service_locator.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/presentation/views/login_view.dart';
 import 'package:connectly_app/features/auth/presentation/views/register_view.dart';
+import 'package:connectly_app/features/chat/data/model/chat_arguments_model.dart';
 import 'package:connectly_app/features/chat/presentation/views/chat_view.dart';
 import 'package:connectly_app/features/home/presentation/views/home_view.dart';
 import 'package:connectly_app/features/profile/data/model/user_model.dart';
@@ -64,11 +65,10 @@ abstract class AppRouter {
       GoRoute(
         path: chatView,
         builder: (context, state) {
-          final String chatId = state.extra as String;
-          final UserModel otherUser = state.extra as UserModel;
+          final  chatArgumentsModel = state.extra as ChatArgumentsModel;
           return ChatView(
-            chatId: chatId,
-            otherUser: otherUser,
+            chatId: chatArgumentsModel.chatId,
+            otherUser: chatArgumentsModel.otherUser,
             );
         },
       ),

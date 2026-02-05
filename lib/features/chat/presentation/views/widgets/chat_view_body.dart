@@ -2,8 +2,8 @@ import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth
 import 'package:connectly_app/features/chat/presentation/manager/chat_cubit/chat_cubit.dart';
 import 'package:connectly_app/features/chat/presentation/views/widgets/message_bubble.dart';
 import 'package:connectly_app/features/chat/presentation/views/widgets/message_input_field.dart';
-import 'package:connectly_app/features/profile/presentation/views/widgets/failure_user_profile_body.dart';
-import 'package:connectly_app/features/profile/presentation/views/widgets/initial_user_profile_body.dart';
+import 'package:connectly_app/core/widgets/custom_failure_body.dart';
+import 'package:connectly_app/core/widgets/custom_initial_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,8 +1,8 @@
 import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/features/profile/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/bio_section.dart';
-import 'package:connectly_app/features/profile/presentation/views/widgets/failure_user_profile_body.dart';
-import 'package:connectly_app/features/profile/presentation/views/widgets/initial_user_profile_body.dart';
+import 'package:connectly_app/core/widgets/custom_failure_body.dart';
+import 'package:connectly_app/core/widgets/custom_initial_body.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/profile_header_section.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/setting_section.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/state_section.dart';

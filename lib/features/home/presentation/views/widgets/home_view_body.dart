@@ -4,8 +4,8 @@ import 'package:connectly_app/features/chat/data/model/chat_arguments_model.dart
 import 'package:connectly_app/features/home/presentation/manager/chats_cubit/chats_cubit.dart';
 import 'package:connectly_app/features/home/presentation/views/widgets/custom_chat_list_tile.dart';
 import 'package:connectly_app/features/home/presentation/views/widgets/home_view_app_bar.dart';
-import 'package:connectly_app/features/profile/presentation/views/widgets/failure_user_profile_body.dart';
-import 'package:connectly_app/features/profile/presentation/views/widgets/initial_user_profile_body.dart';
+import 'package:connectly_app/core/widgets/custom_failure_body.dart';
+import 'package:connectly_app/core/widgets/custom_initial_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

@@ -1,6 +1,7 @@
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:connectly_app/features/chat/presentation/manager/chat_cubit/chat_cubit.dart';
 import 'package:connectly_app/features/chat/presentation/views/widgets/message_bubble.dart';
+import 'package:connectly_app/features/chat/presentation/views/widgets/message_input_field.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/failure_user_profile_body.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/initial_user_profile_body.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class ChatViewBody extends StatelessWidget {
   final String chatId;
   @override
   Widget build(BuildContext context) {
+    TextEditingController messageController = TextEditingController();
     return Column(
       children: [
         Expanded(
@@ -27,6 +29,7 @@ class ChatViewBody extends StatelessWidget {
               }
               if (state is ChatSuccesState) {
                 return ListView.builder(
+                  reverse: true,
                   itemCount: 10,
                   itemBuilder: (context, index) {
                     final isMe = state.messageList[index].senderId ==
@@ -35,12 +38,23 @@ class ChatViewBody extends StatelessWidget {
                         messageModel: state.messageList[index], isMe: isMe);
                   },
                 );
-              }else{
-                return Center(child: CircularProgressIndicator(),);
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
             },
           ),
-        )
+        ),
+        MessageInputField(
+            controller: messageController,
+            onSend: () {
+              context.read<ChatCubit>().sendMessage(
+                    chatId,
+                    messageController.text,
+                  );
+              messageController.clear();
+            })
       ],
     );
   }

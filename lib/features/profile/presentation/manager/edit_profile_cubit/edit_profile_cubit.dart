@@ -21,10 +21,12 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       final currentUser = userCubit.currentUser;
       if (currentUser == null) {
         emit(EditProfileFailureState(errMessage: "No user logged in"));
+        return;
       }
       String profilePicUrl = currentUser!.profilePictureUrl;
       // Upload selected image to supabase
       if (newProfilePic != null) {
+        emit(EditProfileImageUploadingState());
       profilePicUrl = await uploadImageToSupabase(
         imageFile: newProfilePic,
         uid: currentUser.id,

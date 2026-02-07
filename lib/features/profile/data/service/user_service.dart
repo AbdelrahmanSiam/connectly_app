@@ -20,9 +20,22 @@ class UserService {
     }
   }
 
-  Future<UserModel> getUserModelById(String userId) async {
-    final doc =
-        await firestore.collection("users").doc(userId).get(); // return all doc
-    return UserModel.fromJson(doc.data()!);
+  Future<UserModel?> getUserModelById({required String userId}) async {
+    try {
+      print('📡 UserRepo: Fetching user data for $userId');
+      
+      final doc = await firestore.collection('users').doc(userId).get();
+      
+      if (doc.exists && doc.data() != null) {
+        print('✅ UserRepo: User data found');
+        return UserModel.fromJson(doc.data()!);
+      } else {
+        print('⚠️ UserRepo: User not found');
+        return null;
+      }
+    } catch (e) {
+      print('❌ UserRepo: Error getting user - $e');
+      rethrow;
+    }
   }
   }

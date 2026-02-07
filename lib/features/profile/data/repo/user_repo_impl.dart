@@ -12,8 +12,8 @@ class UserRepoImpl implements UserRepo{
   }
 
   @override
-  Future<UserModel> getUserModelById(String userId) async {
-    return await userService.getUserModelById(userId);
+  Future<UserModel?> getUserModelById(String userId) async {
+    return await userService.getUserModelById(userId:userId);
   }
 
 }

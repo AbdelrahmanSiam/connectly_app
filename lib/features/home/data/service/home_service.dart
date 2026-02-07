@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectly_app/features/home/data/model/chat_list_tile.dart';
 import 'package:connectly_app/features/home/data/model/chat_model.dart';
 import 'package:connectly_app/features/profile/data/model/user_model.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;

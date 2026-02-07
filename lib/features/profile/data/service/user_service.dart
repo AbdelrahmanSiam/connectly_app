@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectly_app/features/profile/data/model/user_model.dart';
 
 class UserService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -17,5 +18,11 @@ class UserService {
     } catch (e) {
       throw Exception('Failed to get chats count');  
     }
+  }
+
+  Future<UserModel> getUserModelById(String userId) async {
+    final doc =
+        await firestore.collection("users").doc(userId).get(); // return all doc
+    return UserModel.fromJson(doc.data()!);
   }
   }

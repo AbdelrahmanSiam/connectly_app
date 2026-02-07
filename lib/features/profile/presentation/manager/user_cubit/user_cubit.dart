@@ -47,4 +47,6 @@ final UserRepo userRepo;
     final chatCount = await userRepo.getChatsCount(userId: userId);
     return chatCount;
   }
+
+  
 }

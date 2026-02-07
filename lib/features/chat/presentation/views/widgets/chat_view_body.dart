@@ -30,7 +30,6 @@ class ChatViewBody extends StatelessWidget {
               }
               if (state is ChatSuccesState) {
                 return ListView.builder(
-                  reverse: true,
                   itemCount: state.messageList.length,
                   itemBuilder: (context, index) {
                     final isMe = state.messageList[index].senderId ==

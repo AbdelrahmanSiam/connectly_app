@@ -46,10 +46,10 @@ class _MyAppState extends State<MyApp> {
         final userCubit = getIt<UserCubit>();
         await userCubit.getUserData(userId: firebaseUser.uid);
               } else {
-        throw Exception(' No user logged in');
+        throw Exception('No user logged in');
       }
     } catch (e) {
-      throw Exception('❌ Error initializing app: $e');
+      throw Exception('Error initializing app: $e');
     }
   }
 

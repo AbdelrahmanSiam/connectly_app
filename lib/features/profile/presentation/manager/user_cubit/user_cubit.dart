@@ -43,8 +43,8 @@ final UserRepo userRepo;
 
     bool get isUserLoaded => state is UserSuccessState; // check there user or not
 
-  Future<Map<String ,int>> getUserStats({required String userId})async{
+  Future<int> getUserStats({required String userId})async{
     final chatCount = await userRepo.getChatsCount(userId: userId);
-    return {"chats" : chatCount};
+    return chatCount;
   }
 }

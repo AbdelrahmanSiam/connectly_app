@@ -20,6 +20,7 @@ class ChatViewBody extends StatelessWidget {
             builder: (context, state) {
               if (state is ChatInitialState) {
                 return CustomInitialBody(
+                  icon: Icons.edit_off,
                     text: "No messages yet , start Chatting. ");
               }
               if (state is ChatFailureState) {

@@ -7,7 +7,7 @@ class UserService {
     try {
             final querySnapshot = await firestore
           .collection('chats')
-          .where('participants', arrayContains: userId)
+          .where('users', arrayContains: userId)
           .get();
       
       final count = querySnapshot.docs.length;
@@ -15,7 +15,6 @@ class UserService {
       return count;
       
     } catch (e) {
-      print('❌ UserService: Error getting chats count - $e');
       throw Exception('Failed to get chats count');  
     }
   }

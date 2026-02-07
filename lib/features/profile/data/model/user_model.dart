@@ -28,7 +28,7 @@ class UserModel {
         email: user["email"]?? "",
         profilePictureUrl: user["profilePictureUrl"]?? "",
         bio: user["bio"]?? "",
-        isOnline: user["isOnline"] ?? true,
+        isOnline: user["isOnline"] ?? false,
         createdAt: (user["createdAt"] as Timestamp).toDate(),
         lastSeen: (user["lastSeen"] as Timestamp).toDate(),);
   }

@@ -1,4 +1,5 @@
 import 'package:connectly_app/core/routing/app_router.dart';
+import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:connectly_app/features/profile/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:connectly_app/features/profile/presentation/views/widgets/bio_section.dart';
 import 'package:connectly_app/core/widgets/custom_failure_body.dart';
@@ -18,15 +19,15 @@ class ProfileViewBody extends StatefulWidget {
 }
 
 class _ProfileViewBodyState extends State<ProfileViewBody> {
-  Map<String, int>? stats;
+  int? stats;
   @override
   void initState() {
     super.initState();
-    _loadStats();  // fetch states first
+    _loadStats();  // fetch number of chats first
   }
   Future<void> _loadStats() async {
     final userCubit = context.read<UserCubit>();
-    final userId = userCubit.currentUser?.id;
+    final userId = context.read<AuthCubit>().currentUserId();
     
     if (userId != null) {
       final loadedStats = await userCubit.getUserStats(userId: userId);
@@ -70,7 +71,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                       height: 10,
                     ),
                     StatsSection(
-                      chatsCount: stats?['chats'] ?? 0,
+                      chatsCount: stats?? 0,
                       createdAt: state.userModel.createdAt,
                     ),
                     const SizedBox(height: 24),

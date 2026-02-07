@@ -9,8 +9,8 @@ class ProfileAvatar extends StatelessWidget {
     this.isOnline = true,
     this.borderWidth = 4,
     this.showBoxShadow = true,
-    this.onlineCircularSize = 24 ,
-    this.onlineCircularPosition = 8 ,
+    this.onlineCircularSize = 24,
+    this.onlineCircularPosition = 8,
   });
 
   final String? imageUrl;
@@ -39,18 +39,20 @@ class ProfileAvatar extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            boxShadow: showBoxShadow? [
-              BoxShadow(
-                color: Theme.of(context).primaryColor.withOpacity(0.4),
-                blurRadius: 20,
-                spreadRadius: 5,
-              ),
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                blurRadius: 10,
-                offset: const Offset(0, 5),
-              ),
-            ] : null,
+            boxShadow: showBoxShadow
+                ? [
+                    BoxShadow(
+                      color: Theme.of(context).primaryColor.withOpacity(0.4),
+                      blurRadius: 20,
+                      spreadRadius: 5,
+                    ),
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ]
+                : null,
           ),
           padding: EdgeInsets.all(borderWidth),
           child: Container(
@@ -74,8 +76,6 @@ class ProfileAvatar extends StatelessWidget {
             ),
           ),
         ),
-
-
         if (showOnlineIndicator)
           Positioned(
             bottom: onlineCircularPosition,
@@ -91,14 +91,16 @@ class ProfileAvatar extends StatelessWidget {
                   color: Colors.white,
                   width: 3,
                 ),
-                boxShadow: isOnline 
-                    ? showBoxShadow ?[
-                        BoxShadow(
-                          color: Colors.greenAccent.withOpacity(0.6),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                        ),
-                      ]:null
+                boxShadow: isOnline
+                    ? showBoxShadow
+                        ? [
+                            BoxShadow(
+                              color: Colors.greenAccent.withOpacity(0.6),
+                              blurRadius: 10,
+                              spreadRadius: 2,
+                            ),
+                          ]
+                        : null
                     : null,
               ),
             ),

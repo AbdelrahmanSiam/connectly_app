@@ -78,20 +78,6 @@ class AuthService {
     await firebaseAuth.currentUser?.sendEmailVerification();
   }
 
-  Future<void> deleteAccount() async {
-    final userId = firebaseAuth.currentUser?.uid;
-    
-    if (userId != null) {
-      // 1. مسح من Firestore
-      await firebaseFirestore.collection('users').doc(userId).delete();
-      
-      // 2. مسح الصورة من Storage (لو فيه)
-      // TODO: delete from Supabase/Firebase Storage
-      
-      // 3. مسح من Auth
-      await firebaseAuth.currentUser?.delete();
-    }
-}
 
   Future<void> forgetPassword({required String email}) async {
   try {

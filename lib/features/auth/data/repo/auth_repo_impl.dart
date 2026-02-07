@@ -73,15 +73,6 @@ Future<void> sendEmailVerification() async {
 
   
   @override
-  Future<void> deletAccount()async {
-    try {
-  await authService.deleteAccount();
-} catch (e) {
-  throw Exception('Failed to delete account: $e');
-}
-  }
-  
-  @override
   Future<void> forgetPassword({required String email}) async{
   await authService.forgetPassword(email: email);
 

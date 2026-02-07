@@ -3,8 +3,8 @@ import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileImagePicker extends StatelessWidget {
-  final File? imageFile;        // new photo
-  final String? imageUrl;       // old image
+  final File? imageFile; // new photo
+  final String? imageUrl; // old image
   final VoidCallback? onTap;
 
   const ProfileImagePicker({

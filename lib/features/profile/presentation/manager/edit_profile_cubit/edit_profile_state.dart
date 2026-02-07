@@ -6,7 +6,6 @@ sealed class EditProfileState {}
 final class EditProfileInitialState extends EditProfileState {}
 final class EditProfileLoadingState extends EditProfileState {}
 final class EditProfileSuccessState extends EditProfileState {}
-class EditProfileImageUploadingState extends EditProfileState {}
 final class EditProfileFailureState extends EditProfileState {
   final String errMessage;
 

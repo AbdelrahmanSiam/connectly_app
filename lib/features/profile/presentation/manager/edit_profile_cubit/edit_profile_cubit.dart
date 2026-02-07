@@ -26,7 +26,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       String profilePicUrl = currentUser!.profilePictureUrl;
       // Upload selected image to supabase
       if (newProfilePic != null) {
-        emit(EditProfileImageUploadingState());
       profilePicUrl = await uploadImageToSupabase(
         imageFile: newProfilePic,
         uid: currentUser.id,

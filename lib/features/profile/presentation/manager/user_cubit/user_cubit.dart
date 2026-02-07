@@ -48,5 +48,20 @@ final UserRepo userRepo;
     return chatCount;
   }
 
-  
+  Future<void> getUserData({required String userId}) async {
+    try {      
+      final userModel = await userRepo.getUserModelById(userId);
+      
+      if (userModel != null) {
+        print('✅ UserCubit: User data loaded successfully');
+        emit(UserSuccessState(userModel: userModel));
+      } else {
+        print('❌ UserCubit: User not found');
+        emit(UserFailureState(errMessage: 'User not found'));
+      }
+    } catch (e) {
+      print('❌ UserCubit: Error loading user data - $e');
+      emit(UserFailureState(errMessage: e.toString()));
+    }
+  }
 }

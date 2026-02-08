@@ -103,6 +103,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   await NotificationService().saveToken(user.uid);
+  NotificationService().listenToTokenRefresh(user.uid);
 
   emit(AuthSuccessState());
 }

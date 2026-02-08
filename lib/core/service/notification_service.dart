@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 
 class NotificationService {
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -25,12 +26,19 @@ class NotificationService {
   }
 
   void listenToTokenRefresh(String userId) {
-  FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .update({'fcmToken': newToken});
-  });
-}
+    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({'fcmToken': newToken});
+    });
+  }
 
+  void listenToForegroundMessages() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification == null) return;
+
+      debugPrint('🔔 Foreground Notification: ${message.notification!.title}');
+    });
+  }
 }

@@ -17,4 +17,14 @@ class ChatRepoImpl implements ChatRepo {
       {required String chatId, required MessageModel messageModel}) async{
     await chatService.sendMessage(chatId: chatId, messageModel: messageModel);
   }
+  
+  @override
+  Future<void> deleteMessage({required String chatId, required String messageId})async {
+    await chatService.deleteMessage(chatId: chatId, messageId: messageId);
+  }
+  
+  @override
+  Future<void> editMessage({required String chatId, required String messageId, required String newText})async {
+    await chatService.editMessage(chatId: chatId, messageId: messageId, newText: newText);
+  }
 }

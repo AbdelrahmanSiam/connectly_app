@@ -35,7 +35,7 @@ class ChatViewBody extends StatelessWidget {
                     final isMe = state.messageList[index].senderId ==
                         context.read<AuthCubit>().currentUserId();
                     return MessageBubble(
-                        messageModel: state.messageList[index], isMe: isMe);
+                        messageModel: state.messageList[index], isMe: isMe,chatId: chatId,);
                   },
                 );
               } else {

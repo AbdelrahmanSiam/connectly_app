@@ -7,11 +7,12 @@ import 'package:flutter_animate/flutter_animate.dart';
 class MessageBubble extends StatelessWidget {
   final MessageModel messageModel;
   final bool isMe;
+  final String chatId;
 
   const MessageBubble({
     super.key,
     required this.messageModel,
-    required this.isMe,
+    required this.isMe, required this.chatId,
   });
 
   @override

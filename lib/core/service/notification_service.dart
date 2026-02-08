@@ -10,4 +10,9 @@ class NotificationService {
       sound: true,
     );
   }
+
+  Future<String?> getFcmToken() async {
+  return await FirebaseMessaging.instance.getToken();
+}
+
 }

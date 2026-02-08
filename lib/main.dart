@@ -8,6 +8,7 @@ import 'package:connectly_app/features/profile/presentation/manager/user_cubit/u
 import 'package:connectly_app/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,8 +22,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   setupLocator();
   runApp(const MyApp());
+}
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
 }
 
 class MyApp extends StatefulWidget {
@@ -38,14 +44,15 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _initializeApp(); // to load user profile data
   }
+
   Future<void> _initializeApp() async {
     try {
       final firebaseUser = FirebaseAuth.instance.currentUser;
-      
-      if (firebaseUser != null) {        
+
+      if (firebaseUser != null) {
         final userCubit = getIt<UserCubit>();
         await userCubit.getUserData(userId: firebaseUser.uid);
-              } else {
+      } else {
         throw Exception('No user logged in');
       }
     } catch (e) {

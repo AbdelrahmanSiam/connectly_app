@@ -1,5 +1,6 @@
 import 'package:connectly_app/constants.dart';
 import 'package:connectly_app/core/routing/app_router.dart';
+import 'package:connectly_app/core/service/notification_service.dart';
 import 'package:connectly_app/core/utils/app_colors.dart';
 import 'package:connectly_app/core/utils/service_locator.dart';
 import 'package:connectly_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
@@ -23,10 +24,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  await NotificationService().requestPermission();
+
+
   setupLocator();
   runApp(const MyApp());
 }
-
+@pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
@@ -42,6 +46,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    NotificationService().requestPermission();
     _initializeApp(); // to load user profile data
   }
 
@@ -56,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         throw Exception('No user logged in');
       }
     } catch (e) {
-      throw Exception('Error initializing app: $e');
+      debugPrint('Initialization error: $e');
     }
   }
 

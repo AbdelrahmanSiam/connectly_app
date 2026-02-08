@@ -32,7 +32,9 @@ class AuthService {
         profilePictureUrl: profilePictureUrl,
         isOnline: true,
         createdAt: DateTime.now(),
-        lastSeen: DateTime.now());
+        lastSeen: DateTime.now(),
+        fcmToken: null,
+        );
       await firebaseFirestore.collection("users").doc(userId).set(userModel.toJson()); // add model to firestore
       return userModel;
   }

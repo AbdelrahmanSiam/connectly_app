@@ -9,16 +9,19 @@ class UserModel {
   final bool isOnline;
   final DateTime createdAt;
   final DateTime lastSeen;
+  final String? fcmToken;
 
-  UserModel(
-      {required this.id,
-      required this.name,
-      required this.email,
-      this.profilePictureUrl = "",
-      this.bio = '',
-      required this.isOnline,
-      required this.createdAt,
-      required this.lastSeen,});
+  UserModel({
+    required this.id,
+    required this.name,
+    required this.email,
+    this.profilePictureUrl = "",
+    this.bio = '',
+    required this.isOnline,
+    required this.createdAt,
+    required this.lastSeen,
+    this.fcmToken,
+  });
 
   factory UserModel.fromJson(Map<String, dynamic> user) {
     return UserModel(
@@ -30,6 +33,7 @@ class UserModel {
       isOnline: user["isOnline"] ?? false,
       createdAt: (user["createdAt"] as Timestamp).toDate(),
       lastSeen: (user["lastSeen"] as Timestamp).toDate(),
+      fcmToken: user["fcmToken"] ?? "",
     );
   }
 
@@ -43,6 +47,7 @@ class UserModel {
       "isOnline": isOnline,
       "createdAt": Timestamp.fromDate(createdAt),
       "lastSeen": Timestamp.fromDate(lastSeen),
+      "fcmToken": fcmToken,
     };
   }
 }

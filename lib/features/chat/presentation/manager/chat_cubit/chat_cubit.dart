@@ -31,4 +31,12 @@ class ChatCubit extends Cubit<ChatState> {
         createdAt: DateTime.now());
     await chatRepo.sendMessage(chatId: chatId, messageModel: messageModel);
   }
+
+  Future<void> editMessage(String chatId , String messageId , String newText)async{
+    await chatRepo.editMessage(chatId: chatId, messageId: messageId, newText: newText);
+  }
+
+  Future<void> deleteMessage(String chatId , String messageId )async{
+    await chatRepo.deleteMessage(chatId: chatId, messageId: messageId);
+  }
 }

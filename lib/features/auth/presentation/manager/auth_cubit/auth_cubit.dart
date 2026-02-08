@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:connectly_app/core/service/notification_service.dart';
 import 'package:connectly_app/features/auth/data/repo/auth_repo.dart';
 import 'package:connectly_app/features/auth/domain/errors/auth_exceptions.dart';
 import 'package:connectly_app/features/profile/presentation/manager/user_cubit/user_cubit.dart';
@@ -20,7 +21,7 @@ class AuthCubit extends Cubit<AuthState> {
   
   try {
     final userModel = await authRepo.login(email: email, password: password);
-    
+    await NotificationService().saveToken(userModel.id);
     userCubit.setUser(userModel);
 
     if (!authRepo.isEmailVerified()) {
@@ -50,6 +51,7 @@ class AuthCubit extends Cubit<AuthState> {
       name: name,
       imageFile: imageFile,
     );
+    await NotificationService().saveToken(userModel.id);
     userCubit.setUser(userModel);
     await authRepo.sendEmailVerification();
     emit(EmailNotVerifiedState());
@@ -87,6 +89,24 @@ class AuthCubit extends Cubit<AuthState> {
       emit(GoToLoginView());
     }
   }
+  Future<void> initAfterSplash() async {
+  final user = authRepo.currentUser();
+
+  if (user == null) {
+    emit(GoToLoginView());
+    return;
+  }
+
+  if (!authRepo.isEmailVerified()) {
+    emit(EmailNotVerifiedState());
+    return;
+  }
+
+  await NotificationService().saveToken(user.uid);
+
+  emit(AuthSuccessState());
+}
+
 
   Future<void> resendVerificationEmail() async {
   try {

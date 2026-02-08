@@ -49,7 +49,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        BlocProvider.of<AuthCubit>(context).checkAuthState();
+        context.read<AuthCubit>().initAfterSplash();
       }
     });
   }

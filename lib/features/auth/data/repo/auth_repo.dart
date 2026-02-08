@@ -20,4 +20,5 @@ abstract class AuthRepo {
 
   Future<void> forgetPassword({required String email});
   String currentUserId();
+  User? currentUser();
 }

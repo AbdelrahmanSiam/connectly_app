@@ -87,6 +87,11 @@ Future<void> sendEmailVerification() async {
   String currentUserId() {
     return  authService.currentUserId();
   }
+  
+  @override
+  User? currentUser() {
+   return authService.getCurrentUser;
+  }
     
   }
 

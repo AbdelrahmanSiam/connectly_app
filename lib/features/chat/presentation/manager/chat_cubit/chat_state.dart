@@ -14,4 +14,5 @@ final class ChatFailureState extends ChatState {
   final String errMessage;
 
   ChatFailureState({required this.errMessage});
+
 }

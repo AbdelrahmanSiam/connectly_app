@@ -6,31 +6,40 @@ class MessageModel {
   final String senderId;
   final bool isSeen;
   final DateTime createdAt;
+  final bool isEdited;
+  final bool isDeleted;
 
-  MessageModel(
-      {required this.messageId,
-      required this.text,
-      required this.senderId,
-      required this.isSeen,
-      required this.createdAt});
-
+  MessageModel({
+    required this.messageId,
+    required this.text,
+    required this.senderId,
+    required this.isSeen,
+    required this.createdAt,
+    required this.isEdited,
+    required this.isDeleted,
+  });
 
   factory MessageModel.fromFirebase(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return MessageModel(
         messageId: doc.id,
-        text: data["text"] ,
+        text: data["text"],
         senderId: data["senderId"],
         isSeen: data["isSeen"] ?? false,
-        createdAt: (data["createdAt"] as Timestamp).toDate());
+        createdAt: (data["createdAt"] as Timestamp).toDate(),
+        isEdited: data["isEdited"] ?? false,
+        isDeleted: data["isDeleted"] ?? false,
+        );
   }
 
-  Map<String , dynamic> toFirebase(){
-    return{
-      "text" : text,
-      "senderId" : senderId,
-      "isSeen" : isSeen,
-      "createdAt" : Timestamp.fromDate(createdAt),
+  Map<String, dynamic> toFirebase() {
+    return {
+      "text": text,
+      "senderId": senderId,
+      "isSeen": isSeen,
+      "createdAt": Timestamp.fromDate(createdAt),
+      "isEdited" : isEdited,
+      "isDeleted" : isDeleted,
     };
   }
 }

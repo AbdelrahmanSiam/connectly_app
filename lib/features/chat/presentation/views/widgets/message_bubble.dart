@@ -1,4 +1,5 @@
 import 'package:connectly_app/core/utils/app_colors.dart';
+import 'package:connectly_app/core/utils/app_text_styles.dart';
 import 'package:connectly_app/features/chat/data/model/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -36,10 +37,7 @@ class MessageBubble extends StatelessWidget {
         ),
         child: Text(
           messageModel.text,
-          style: TextStyle(
-            color: isMe ? Colors.white : Colors.black,
-            fontSize: 16,
-          ),
+          style: AppTextStyles.textStyle16.copyWith(color: isMe ? Colors.white : Colors.black,fontWeight: FontWeight.bold),
         ),
       ),
     )

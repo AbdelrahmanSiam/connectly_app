@@ -23,4 +23,14 @@ class NotificationService {
       'fcmToken': token,
     });
   }
+
+  void listenToTokenRefresh(String userId) {
+  FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .update({'fcmToken': newToken});
+  });
+}
+
 }

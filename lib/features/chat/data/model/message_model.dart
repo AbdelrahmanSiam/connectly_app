@@ -15,8 +15,8 @@ class MessageModel {
     required this.senderId,
     required this.isSeen,
     required this.createdAt,
-    required this.isEdited,
-    required this.isDeleted,
+     this.isEdited = false,
+     this.isDeleted = false,
   });
 
   factory MessageModel.fromFirebase(DocumentSnapshot doc) {

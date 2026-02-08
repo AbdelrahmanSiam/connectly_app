@@ -40,4 +40,14 @@ class ChatService {
         .doc(messageId)
         .update({"text": newText, "isEdited": true});
   }
+
+  Future<void> deleteMessage(
+      {required String chatId, required String messageId}) async {
+    await firestore
+        .collection("chats")
+        .doc(chatId)
+        .collection("messages")
+        .doc(messageId)
+        .update({"text": "This message was deleted", "isDeleted": true});
+  }
 }

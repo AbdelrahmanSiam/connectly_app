@@ -11,6 +11,7 @@ import 'package:connectly_app/features/profile/presentation/views/edit_profile_v
 import 'package:connectly_app/features/profile/presentation/views/profile_view.dart';
 import 'package:connectly_app/features/splash/presentation/views/splash_view.dart';
 import 'package:connectly_app/features/verifiy/presentation/views/verify_email_view.dart';
+import 'package:connectly_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,6 +26,7 @@ abstract class AppRouter {
   static const String chatView = '/chatView';
 
   static final GoRouter router = GoRouter(
+    navigatorKey: navigatorKey,
     initialLocation: splashView,
     routes: [
       GoRoute(

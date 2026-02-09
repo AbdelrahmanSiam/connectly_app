@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
@@ -27,10 +28,10 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await NotificationService().requestPermission();
 
-
   setupLocator();
   runApp(const MyApp());
 }
+
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -49,6 +50,20 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     NotificationService().requestPermission();
     _initializeApp(); // to load user profile data
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      final chatId = message.data['chatId'];
+      if (chatId != null) {
+        AppRouter.router.go('/chat/$chatId');
+      }
+    });
+
+    // Handle if app was completely closed
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      final chatId = message?.data['chatId'];
+      if (chatId != null) {
+        AppRouter.router.go('/chat/$chatId');
+      }
+    });
   }
 
   Future<void> _initializeApp() async {
@@ -84,6 +99,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
             brightness: Brightness.light,
             scaffoldBackgroundColor: AppColors.backgroundColor),
+            
       ),
     );
   }

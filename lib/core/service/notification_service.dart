@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectly_app/core/widgets/notification_scnakbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,11 @@ class NotificationService {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification == null) return;
 
-      debugPrint('🔔 Foreground Notification: ${message.notification!.title}');
+      final title = message.notification!.title ?? "New message";
+      final body = message.notification!.body ?? "";
+
+      // Use navigatorKey to show snackbar globally
+      NotificationScnakbar.show(title: title, message: body);
     });
   }
 }

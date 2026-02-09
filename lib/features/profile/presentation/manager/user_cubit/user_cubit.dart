@@ -7,18 +7,38 @@ part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
   UserCubit(this.userRepo) : super(UserInitialState());
-final UserRepo userRepo;
-  void setUser(UserModel userModel){
+  
+  final UserRepo userRepo;
+
+  // ✅ شيل الـ private variable - مش محتاجها
+  // UserModel? _currentUser; ❌
+
+  // ✅ getter واحد بس
+  UserModel? get currentUser {
+    final currentState = state;
+    
+    if (currentState is UserSuccessState) {
+      return currentState.userModel;
+    }
+    
+    return null;
+  }
+
+  // ✅ setUser - بدون حفظ في variable خاصة
+  void setUser(UserModel userModel) {
     emit(UserSuccessState(userModel: userModel));
   }
 
-  void clearUser(){
+  // ✅ clearUser
+  void clearUser() {
     emit(UserInitialState());
   }
   
-  void updateUser({ String ? name , String ? bio , String ? profilePictureUrl }){
-    final currentState  = state ;
-    if(currentState is UserSuccessState){
+  // ✅ updateUser
+  void updateUser({String? name, String? bio, String? profilePictureUrl}) {
+    final currentState = state;
+    
+    if (currentState is UserSuccessState) {
       final updatedState = currentState.copyWith(
         name: name,
         bio: bio,
@@ -31,23 +51,16 @@ final UserRepo userRepo;
     }
   }
 
-  UserModel? get currentUser {
-    final currentState = state;
-    
-    if (currentState is UserSuccessState) {
-      return currentState.userModel;
-    }
-    
-    return null;
-  } // to get current user
+  // ✅ check if user loaded
+  bool get isUserLoaded => state is UserSuccessState;
 
-    bool get isUserLoaded => state is UserSuccessState; // check there user or not
-
-  Future<int> getUserStats({required String userId})async{
+  // ✅ getUserStats
+  Future<int> getUserStats({required String userId}) async {
     final chatCount = await userRepo.getChatsCount(userId: userId);
     return chatCount;
   }
 
+  // ✅ getUserData
   Future<void> getUserData({required String userId}) async {
     try {      
       final userModel = await userRepo.getUserModelById(userId);

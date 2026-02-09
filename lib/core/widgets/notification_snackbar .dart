@@ -1,7 +1,7 @@
 import 'package:connectly_app/main.dart';
 import 'package:flutter/material.dart';
 
-class NotificationScnakbar {
+class NotificationSnackbar {
   static void show({required String title, required String message}) {
     final context = navigatorKey.currentState?.overlay?.context;
     if (context == null) return;

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 class MessageModel {
   final String messageId;
   final String text;
@@ -27,14 +26,14 @@ class MessageModel {
     final data = doc.data() as Map<String, dynamic>;
     return MessageModel(
       messageId: doc.id,
-      text: data["text"],
-      senderId: data["senderId"],
+      text: data["text"] ?? "",  // ✅ إضافة fallback
+      senderId: data["senderId"] ?? "",
       isSeen: data["isSeen"] ?? false,
-      createdAt: (data["createdAt"] as Timestamp).toDate(),
+      createdAt: (data["createdAt"] as Timestamp?)?.toDate() ?? DateTime.now(),  // ✅ إضافة null check
       isEdited: data["isEdited"] ?? false,
       isDeleted: data["isDeleted"] ?? false,
-      senderName: data["senderName"], 
-      receiverId: data["receiverId"],
+      senderName: data["senderName"] ?? "Unknown",  // ✅ إضافة fallback
+      receiverId: data["receiverId"] ?? "",  // ✅ إضافة fallback
     );
   }
 
@@ -46,7 +45,7 @@ class MessageModel {
       "createdAt": Timestamp.fromDate(createdAt),
       "isEdited": isEdited,
       "isDeleted": isDeleted,
-      "senderName": senderName, 
+      "senderName": senderName,
       "receiverId": receiverId,
     };
   }

@@ -32,7 +32,7 @@ void setupLocator() {
   getIt.registerLazySingleton<AuthRepo>(
       () => AuthRepoImpl(authService: getIt()));
   getIt.registerLazySingleton<AuthCubit>(
-      () => AuthCubit(getIt(), userCubit: getIt<UserCubit>()));
+      () => AuthCubit(getIt(), userCubit: getIt<UserCubit>(), userRepo: getIt<UserRepo>()),);
 
   getIt.registerLazySingleton<HomeService>(() => HomeService());
   getIt.registerLazySingleton<HomeRepo>(

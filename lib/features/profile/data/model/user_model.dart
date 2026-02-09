@@ -26,14 +26,14 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> user) {
     return UserModel(
       id: user["id"] ?? "",
-      name: user["name"] ?? "",
+      name: user["name"] ?? "Unknown",  // ✅ إضافة fallback
       email: user["email"] ?? "",
-      profilePictureUrl: user["profilePictureUrl"] ?? "",
-      bio: user["bio"] ?? "",
+      profilePictureUrl: user["profilePictureUrl"]?.toString() ?? "",
+      bio: user["bio"]?.toString() ?? "",
       isOnline: user["isOnline"] ?? false,
-      createdAt: (user["createdAt"] as Timestamp).toDate(),
-      lastSeen: (user["lastSeen"] as Timestamp).toDate(),
-      fcmToken: user["fcmToken"] ?? "",
+      createdAt: (user["createdAt"] as Timestamp?)?.toDate() ?? DateTime.now(),  // ✅ null check
+      lastSeen: (user["lastSeen"] as Timestamp?)?.toDate() ?? DateTime.now(),  // ✅ null check
+      fcmToken: user["fcmToken"]?.toString(),
     );
   }
 

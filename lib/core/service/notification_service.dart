@@ -1,11 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectly_app/core/widgets/notification_scnakbar.dart';
+import 'package:connectly_app/core/widgets/notification_snackbar%20.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class NotificationService {
+  static final NotificationService _instance = NotificationService._internal();
+  factory NotificationService() => _instance;
+  NotificationService._internal();
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
+  bool _isListening = false;
 
+  
   Future<void> requestPermission() async {
     await messaging.requestPermission(
       alert: true,
@@ -36,6 +41,8 @@ class NotificationService {
   }
 
   void listenToForegroundMessages() {
+    if (_isListening) return;
+    _isListening = true;
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification == null) return;
 
@@ -43,7 +50,7 @@ class NotificationService {
       final body = message.notification!.body ?? "";
 
       // Use navigatorKey to show snackbar globally
-      NotificationScnakbar.show(title: title, message: body);
+      NotificationSnackbar.show(title: title, message: body);
     });
   }
 }

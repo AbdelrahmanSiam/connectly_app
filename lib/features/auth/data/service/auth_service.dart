@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectly_app/core/service/notification_service.dart';
 import 'package:connectly_app/features/auth/domain/errors/auth_exceptions.dart';
 import 'package:connectly_app/features/profile/data/model/user_model.dart';
 import 'package:connectly_app/features/profile/presentation/views/helper/profile_helper.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance ;
+  final NotificationService notificationService = NotificationService();
 
   Future<UserModel> register(
       {required String email,
@@ -23,7 +25,8 @@ class AuthService {
     final userId = userCredential.user!.uid; // fetch user id
     // upload file to supbase and return url from this func
     String profilePictureUrl = await uploadImageToSupabase(imageFile: imageFile, uid: userId);
-    
+    await notificationService.requestPermission();
+    final fcmToken = await notificationService.getFcmToken();
     final userModel = UserModel(   // create userModel to add it to firebase
         id: userId,
         name: name,
@@ -33,9 +36,10 @@ class AuthService {
         isOnline: true,
         createdAt: DateTime.now(),
         lastSeen: DateTime.now(),
-        fcmToken: null,
+        fcmToken: fcmToken,
         );
       await firebaseFirestore.collection("users").doc(userId).set(userModel.toJson()); // add model to firestore
+      notificationService.listenToTokenRefresh(userId);
       return userModel;
   }
 
@@ -51,7 +55,10 @@ class AuthService {
       throw AuthException("User data not found in database");
     }
     final userModel = UserModel.fromJson(userDoc.data()!);
+    await notificationService.requestPermission();
+    await notificationService.saveToken(userId);
     await firebaseFirestore.collection("users").doc(userId).update({"isOnline" : true}); // update user state to be true
+    notificationService.listenToTokenRefresh(userId);
     return userModel ;
   }
 

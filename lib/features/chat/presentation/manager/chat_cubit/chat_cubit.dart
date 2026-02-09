@@ -23,7 +23,7 @@ class ChatCubit extends Cubit<ChatState> {
     });
   }
   // only text need to receive it from user
-  Future<void> sendMessage(String chatId, String text,String receiverId,String senderName) async {
+  Future<void> sendMessage(String chatId, String text, String senderName ,String receiverId,) async {
     if (text.trim().isEmpty) return;
     final messageModel = MessageModel(
         messageId: "",

@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatViewBody extends StatelessWidget {
-  const ChatViewBody({super.key, required this.chatId});
-  final String chatId;
+  const ChatViewBody({super.key, required this.chatId, required this.senderName, required this.receiverId});
+  final String chatId,senderName,receiverId;
   @override
   Widget build(BuildContext context) {
     TextEditingController messageController = TextEditingController();
@@ -52,6 +52,8 @@ class ChatViewBody extends StatelessWidget {
               context.read<ChatCubit>().sendMessage(
                     chatId,
                     messageController.text,
+                    senderName,
+                    receiverId,
                   );
               messageController.clear();
             })

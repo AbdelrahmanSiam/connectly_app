@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectly_app/core/utils/service_locator.dart';
 import 'package:connectly_app/features/chat/data/model/message_model.dart';
 import 'package:connectly_app/features/chat/data/repo/chat_repo.dart';
+import 'package:connectly_app/features/profile/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
@@ -21,14 +23,16 @@ class ChatCubit extends Cubit<ChatState> {
     });
   }
   // only text need to receive it from user
-  Future<void> sendMessage(String chatId, String text) async {
+  Future<void> sendMessage(String chatId, String text,String receiverId,String senderName) async {
     if (text.trim().isEmpty) return;
     final messageModel = MessageModel(
         messageId: "",
         text: text,
         senderId: myId,
         isSeen: false,
-        createdAt: DateTime.now());
+        createdAt: DateTime.now(),
+        senderName: senderName,
+        receiverId: receiverId);
     await chatRepo.sendMessage(chatId: chatId, messageModel: messageModel);
   }
 

@@ -18,6 +18,8 @@ class ChatView extends StatelessWidget {
         appBar: ChatViewAppBar(otherUser: otherUser),
         body: ChatViewBody(
           chatId: chatId,
+          receiverId:otherUser.id,
+          senderName: otherUser.name,
         ),
       ),
     );

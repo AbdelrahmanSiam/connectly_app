@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectly_app/core/utils/service_locator.dart';
@@ -13,10 +15,11 @@ class ChatCubit extends Cubit<ChatState> {
   ChatCubit(this.chatRepo) : super(ChatInitialState());
   final ChatRepo chatRepo;
   final String myId = FirebaseAuth.instance.currentUser!.uid;
-
+  StreamSubscription? _messagesSubscription;
   void loadMessages(String chatId) {
     emit(ChatLoadingState());
-    chatRepo.getChatMessages(chatId: chatId).listen((messageList) {
+    _messagesSubscription?.cancel();
+    _messagesSubscription=chatRepo.getChatMessages(chatId: chatId).listen((messageList) {
       emit(ChatSuccesState(messageList: messageList));
     }, onError: (error) {
       emit(ChatFailureState(errMessage: error.toString()));
@@ -42,5 +45,10 @@ class ChatCubit extends Cubit<ChatState> {
 
   Future<void> deleteMessage(String chatId , String messageId )async{
     await chatRepo.deleteMessage(chatId: chatId, messageId: messageId);
+  }
+  @override
+  Future<void> close() {
+    _messagesSubscription?.cancel(); 
+    return super.close();
   }
 }

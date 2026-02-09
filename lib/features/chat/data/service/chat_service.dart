@@ -39,6 +39,7 @@ class ChatService {
         .collection("messages")
         .doc(messageId)
         .update({"text": newText, "isEdited": true});
+        await _updateLastMessageIfNeeded(chatId, messageId, newText);
   }
 
   Future<void> deleteMessage(
@@ -49,5 +50,32 @@ class ChatService {
         .collection("messages")
         .doc(messageId)
         .update({"text": "This message was deleted", "isDeleted": true});
+        await _updateLastMessageIfNeeded(chatId, messageId,"This message was deleted");
+  }
+  Future<void> _updateLastMessageIfNeeded(
+    String chatId,
+    String messageId,
+    String newText,
+  ) async {
+    // fetch last message
+    final lastMessageQuery = await firestore
+        .collection("chats")
+        .doc(chatId)
+        .collection("messages")
+        .orderBy("createdAt", descending: true)
+        .limit(1)
+        .get();
+
+    if (lastMessageQuery.docs.isEmpty) return;
+
+    final lastMessage = lastMessageQuery.docs.first;
+    
+    // if message is last update chat
+    if (lastMessage.id == messageId) {
+      await firestore.collection("chats").doc(chatId).update({
+        "lastMessage": newText,
+        "lastMessageTime": lastMessage["createdAt"],
+      });
+    }
   }
 }

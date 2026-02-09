@@ -26,14 +26,14 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        HomeViewAppBar(),
-        SizedBox(
-          height: 10,
-        ),
-        CustomTextFormField(
+Widget build(BuildContext context) {
+  return Column(
+    children: [
+      const HomeViewAppBar(),
+      const SizedBox(height: 10),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: CustomTextFormField(
           icon: Icons.search,
           labelText: "Search by name or message",
           controller: search,
@@ -41,17 +41,14 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             context.read<ChatsCubit>().searchChat(query: query);
           },
         ),
-        BlocBuilder<ChatsCubit, ChatsState>(
+      ),
+      const SizedBox(height: 10),
+      
+      Expanded(
+        child: BlocBuilder<ChatsCubit, ChatsState>(
           builder: (context, state) {
             if (state is ChatsSuccessState && state.chats.isEmpty) {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 1.5,
-                    child: CustomInitialBody(text: 'No chats yet'),
-                  ),
-                ],
-              );
+              return const CustomInitialBody(text: 'No chats yet');
             }
 
             if (state is ChatsFailureState) {
@@ -59,34 +56,43 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                 text: 'Error: ${state.errMessage}',
               );
             }
+
             if (state is ChatsSuccessState) {
-              return Expanded(
+              // ✅ إضافة RefreshIndicator للـ pull to refresh
+              return RefreshIndicator(
+                onRefresh: () async {
+                  // Reload chats
+                  context.read<ChatsCubit>().loadChats();
+                },
                 child: ListView.builder(
-                    itemCount: state.chats.length,
-                    itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            GoRouter.of(context).push(
-                              AppRouter.chatView,
-                              extra: ChatArgumentsModel(chatId: state.chats[index].chatModel.chatId, otherUser: state.chats[index].userModel)
-                            );
-                          },
-                          child: CustomChatListTile(
-                            chatModel: state.chats[index].chatModel,
-                            userModel: state.chats[index].userModel,
-                          ),
-                        )),
+                  physics: const AlwaysScrollableScrollPhysics(), 
+                  itemCount: state.chats.length,
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).push(
+                        AppRouter.chatView,
+                        extra: ChatArgumentsModel(
+                          chatId: state.chats[index].chatModel.chatId,
+                          otherUser: state.chats[index].userModel,
+                        ),
+                      );
+                    },
+                    child: CustomChatListTile(
+                      chatModel: state.chats[index].chatModel,
+                      userModel: state.chats[index].userModel,
+                    ),
+                  ),
+                ),
               );
             } else {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height / 1.5,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
+              return const Center(
+                child: CircularProgressIndicator(),
               );
             }
           },
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 }

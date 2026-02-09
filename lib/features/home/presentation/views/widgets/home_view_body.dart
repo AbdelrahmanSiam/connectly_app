@@ -58,10 +58,8 @@ Widget build(BuildContext context) {
             }
 
             if (state is ChatsSuccessState) {
-              // ✅ إضافة RefreshIndicator للـ pull to refresh
               return RefreshIndicator(
                 onRefresh: () async {
-                  // Reload chats
                   context.read<ChatsCubit>().loadChats();
                 },
                 child: ListView.builder(

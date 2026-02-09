@@ -24,11 +24,11 @@ class CreateChatCubit extends Cubit<CreateChatState> {
   }
 
   // 2- create chat
-  Future<void> createChat(String otherUserId)async{
+  Future<void> createChat(UserModel otherUser)async{
     emit(CreateChatLoadingState());
     try {
-  final chatId = await homeRepo.createChat(myId, otherUserId);
-  emit(CreateChatCreated(chatId));
+  final chatId = await homeRepo.createChat(myId, otherUser.id);
+  emit(CreateChatCreated(chatId,otherUser));
 } catch (e) {
   emit(CreateChatFailureState(errMessage: e.toString()));
 }

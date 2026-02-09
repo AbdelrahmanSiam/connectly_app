@@ -102,48 +102,49 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> initAfterSplash() async {
-    try {
-      // 1️⃣ جلب الـ current user من Firebase Auth
-      final firebaseUser = authRepo.currentUser();
-
-      if (firebaseUser == null) {
-        emit(GoToLoginView());
-        return;
-      }
-
-      // 2️⃣ التحقق من الـ email verification
-      if (!authRepo.isEmailVerified()) {
-        emit(EmailNotVerifiedState());
-        return;
-      }
-
-      // 3️⃣ جلب بيانات الـ user من Firestore
-      final userModel = await userRepo.getUserModelById(firebaseUser.uid);
-
-      if (userModel == null) {
-        // لو البيانات مش موجودة في Firestore
-        await authRepo.logOut();
-        emit(GoToLoginView());
-        return;
-      }
-
-      // 4️⃣ حفظ الـ user في UserCubit
-      userCubit.setUser(userModel);
-
-      // 5️⃣ إعداد الـ Notifications
-      final notificationService = NotificationService();
-      await notificationService.requestPermission();
-      await notificationService.saveToken(firebaseUser.uid);
-      notificationService.listenToTokenRefresh(firebaseUser.uid);
-      notificationService.listenToForegroundMessages(); 
-
-      // 6️⃣ الانتقال للـ Home
-      emit(AuthSuccessState());
-    } catch (e) {
-      print('❌ Error in initAfterSplash: $e');
+  try {
+    final firebaseUser = authRepo.currentUser();
+    
+    if (firebaseUser == null) {
       emit(GoToLoginView());
+      return;
     }
+
+    if (!authRepo.isEmailVerified()) {
+      emit(EmailNotVerifiedState());
+      return;
+    }
+
+    final userModel = await userRepo.getUserModelById(firebaseUser.uid);
+    
+    if (userModel == null) {
+      await authRepo.logOut();
+      emit(GoToLoginView());
+      return;
+    }
+
+    userCubit.setUser(userModel);
+
+    // ✅ إعداد Notifications
+    final notificationService = NotificationService();
+    await notificationService.requestPermission();
+    
+    // ✅ جلب الـ token
+    final token = await notificationService.getFcmToken();
+    print("📱 FCM Token: $token"); // Debug
+    
+    // ✅ حفظ الـ token
+    await notificationService.saveToken(firebaseUser.uid);
+    
+    notificationService.listenToTokenRefresh(firebaseUser.uid);
+    notificationService.listenToForegroundMessages();
+
+    emit(AuthSuccessState());
+  } catch (e) {
+    print('❌ Error in initAfterSplash: $e');
+    emit(GoToLoginView());
   }
+}
 
   Future<void> resendVerificationEmail() async {
     try {

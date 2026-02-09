@@ -12,7 +12,8 @@ final class CreateChatSucessState extends CreateChatState {
 }
 class CreateChatCreated extends CreateChatState {
   final String chatId;
-  CreateChatCreated(this.chatId);
+  final UserModel otherUserModel;
+  CreateChatCreated(this.chatId,  this.otherUserModel);
 }
 final class CreateChatFailureState extends CreateChatState {
   final String errMessage;

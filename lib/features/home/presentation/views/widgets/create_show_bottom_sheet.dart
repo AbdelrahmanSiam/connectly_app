@@ -1,5 +1,6 @@
 import 'package:connectly_app/core/routing/app_router.dart';
 import 'package:connectly_app/core/utils/service_locator.dart';
+import 'package:connectly_app/features/chat/data/model/chat_arguments_model.dart';
 import 'package:connectly_app/features/home/presentation/manager/create_chat_cubit/create_chat_cubit.dart';
 import 'package:connectly_app/features/home/presentation/views/widgets/user_list_tile.dart';
 import 'package:connectly_app/core/widgets/custom_failure_body.dart';
@@ -21,7 +22,10 @@ class CreateChatBottomSheet extends StatelessWidget {
             Navigator.pop(context);
             context.push(
               AppRouter.chatView,
-              extra: state.chatId,
+              extra: ChatArgumentsModel(
+                chatId: state.chatId,
+                otherUser: state.otherUserModel,
+              ),
             );
           }
         },
@@ -44,7 +48,7 @@ class CreateChatBottomSheet extends StatelessWidget {
                       onTap: () {
                         context
                             .read<CreateChatCubit>()
-                            .createChat(state.userList[index].id);
+                            .createChat(state.userList[index]);
                       },
                     );
                   },

@@ -74,19 +74,15 @@ lib/
 └── features/
     ├── auth/
     │   ├── data/        # Firebase Auth datasource & repository impl
-    │   ├── domain/      # Auth entities, repository interface, use cases
     │   └── presentation/# Login, Register, Verify screens + Cubit
     ├── chat/
     │   ├── data/        # Firestore datasource & repository impl
-    │   ├── domain/      # Message entity, repository interface, use cases
     │   └── presentation/# Chat screen + Cubit
     ├── profile/
     │   ├── data/        # Supabase storage + Firestore datasource
-    │   ├── domain/      # Profile entity, repository interface, use cases
     │   └── presentation/# Profile, Edit Profile screens + Cubit
     └── home/
         ├── data/
-        ├── domain/
         └── presentation/# Home, Available Users screens + Cubit
 ```
 

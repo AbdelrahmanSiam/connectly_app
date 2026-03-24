@@ -89,7 +89,7 @@ lib/
 ### Data Flow
 
 ```
-UI → Cubit → UseCase → Repository (interface)
+UI → Cubit → Repository (interface)
                             ↓
                     RepositoryImpl → Firebase / Supabase
 ```

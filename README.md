@@ -23,7 +23,7 @@
 
 | Profile | Edit Profile | Logout Dialog |
 |:-------:|:-----------:|:-------------:|
-| ![Profile](profile.png) | ![Edit](edit_profile.png) | ![Logout](logout_dialog.png) |
+| ![Profile](profile.png) | ![Edit](update_profile.png) | ![Logout](logout.png) |
 
 ---
 
@@ -61,7 +61,7 @@
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture(MVVM)
 
 ```
 lib/

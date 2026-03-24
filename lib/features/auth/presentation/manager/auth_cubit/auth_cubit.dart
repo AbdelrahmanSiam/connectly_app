@@ -125,19 +125,22 @@ class AuthCubit extends Cubit<AuthState> {
 
     userCubit.setUser(userModel);
 
-    // ✅ إعداد Notifications
+    // ✅ Notifications Setup
     final notificationService = NotificationService();
+    
+    print('🔔 Setting up notifications for user: ${firebaseUser.uid}');
+    
     await notificationService.requestPermission();
-    
-    // ✅ جلب الـ token
     final token = await notificationService.getFcmToken();
-    print("📱 FCM Token: $token"); // Debug
+    print('📱 Got token: $token');
     
-    // ✅ حفظ الـ token
     await notificationService.saveToken(firebaseUser.uid);
+    print('✅ Token saved');
     
     notificationService.listenToTokenRefresh(firebaseUser.uid);
     notificationService.listenToForegroundMessages();
+    
+    print('✅ Notifications setup complete');
 
     emit(AuthSuccessState());
   } catch (e) {

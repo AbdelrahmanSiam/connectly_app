@@ -50,7 +50,7 @@ class ChatService {
         .collection("messages")
         .doc(messageId)
         .update({"text": "This message was deleted", "isDeleted": true});
-        await _updateLastMessageIfNeeded(chatId, messageId,"This message was deleted");
+        await _updateLastMessageIfNeeded(chatId, messageId,'🚫 Message deleted');
   }
   Future<void> _updateLastMessageIfNeeded(
     String chatId,
